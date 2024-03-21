@@ -1,0 +1,55 @@
+@font-face {
+    font-family: Fredoka;
+    src: url("@/assets/fonts/Fredoka.ttf");
+}
+
+body {
+    background: linear-gradient(-10deg, rgb(25, 26, 26).2%, rgb(0, 61, 23) 91.1%);
+    height: 100vh;
+    width: 100vw;
+    font-size: 20px;
+    font-family: Fredoka;
+    color: white;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+}
+
+:root {
+    --xs: .25rem;
+    --sm: .5rem;
+    --md: 1rem;
+    --lg: 1.5rem;
+    --xl: 2.25rem;
+}
+
+h1 {
+    font-size: 2.25rem;
+    width: 100%;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 450;
+    padding-bottom: var(--sm);
+    border-bottom: 1px solid white;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+}
+
+h6 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
