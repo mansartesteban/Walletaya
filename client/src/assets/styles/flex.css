@@ -16,7 +16,6 @@
 .flex-row,
 .flex:not(.flex-row):not(.flex-column) {
     flex-direction: row;
-    flex-wrap: wrap;
 }
 
 .flex-wrap {

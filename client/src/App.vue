@@ -1,23 +1,20 @@
 <template>
-  <div class="main">
-    <Portfolio></Portfolio>
+  <div class="main flex flex-column">
+    <div class="view flex-1 flex flex-column align-items-center justify-content-center">
+      <Portfolio></Portfolio>
+    </div>
+    <NavBar></NavBar>
   </div>
 </template>
 
 <script setup>
 import Portfolio from "./components/Portfolio.vue"
-
-const model = ref()
+import NavBar from "./components/NavBar.vue"
 </script>
 
 <style scoped>
 .main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   height: 100%;
-
 }
 </style>
 

@@ -2,9 +2,78 @@ input,
 .select {
     color: white;
     border-radius: 6px;
-    padding: var(--md);
     border: none;
     outline: none;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     background: rgba(0, 0, 0, 0.3);
+    min-width: 0;
+    width: -webkit-fill-available;
+}
+
+input {
+    padding: var(--md);
+}
+
+.select {
+    position: relative;
+    cursor: pointer;
+}
+
+.select .select__header {
+    display: flex;
+    flex: 1;
+    padding: var(--md);
+}
+
+.select .select__label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.select .select__option-menu {
+    position: absolute;
+    border-radius: 6px;
+    left: 0;
+    top: 100%;
+    border: none;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    background: rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+
+.select .select__option-menu {
+    height: 0;
+    transition: all .2s ease-out;
+    overflow-y: scroll;
+    padding: 0;
+}
+
+.select .select__option-menu.opened {
+    height: 200px;
+    padding: var(--md) 0;
+    transition: all .4s ease-out;
+}
+
+.select .select__option-menu .option.selected {
+    background: #1b8087;
+}
+
+.select .select__option-menu .option {
+    padding: var(--lg) var(--md);
+    user-select: none;
+}
+
+.select .option {
+    display: flex;
+    align-items: center;
+}
+
+.select .select__option-menu .option:not(.selected):hover {
+    background: rgba(255, 255, 255, .08)
+}
+
+.select .select__option-menu .option:active {
+    background: rgba(255, 255, 255, .15)
 }
