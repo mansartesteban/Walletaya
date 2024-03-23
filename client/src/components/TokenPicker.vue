@@ -23,8 +23,8 @@
 <script setup>
 import CIcon from "@/components/CIcon.vue"
 import Select from "@/components/Select.vue"
-import useSettings from "@/composables/useSettings.js"
-import tokens from "@/datas/tokens.js"
+import useSettings from "@/composables/useSettings"
+import tokens from "@/datas/tokens"
 import { onMounted } from "vue"
 
 const model = defineModel()

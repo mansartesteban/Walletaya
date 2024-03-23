@@ -1,6 +1,5 @@
 <template>
     <div class="portfolio flex flex-column gap-md">
-        <h2>Portfolio</h2>
 
         <div class="glass flex flex-column gap-md p-xl">
             <h3>Achat</h3>
@@ -25,13 +24,14 @@
             <input type="number" v-model="priceFrom" step=".01">
 
         </div>
+
     </div>
 </template>
 
 <script setup>
-import tokens from "@/datas/tokens.js"
+import tokens from "@/datas/tokens"
 import TokenPicker from "@/components/TokenPicker.vue"
-import useSettings from "@/composables/useSettings.js"
+import useSettings from "@/composables/useSettings"
 import { onMounted } from "vue"
 
 const tokenTo = ref(0)
@@ -49,9 +49,5 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.portfolio {
-    /* height: 500px; */
-    max-width: 75%;
-    padding: 2rem;
-}
+.portfolio {}
 </style>

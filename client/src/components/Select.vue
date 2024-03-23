@@ -41,7 +41,6 @@
 <script setup>
 import Icon from "@/components/Icon.vue"
 import { onClickOutside } from '@vueuse/core'
-import { nextTick, onMounted } from "vue"
 
 const props = defineProps({
     items: {

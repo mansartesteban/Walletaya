@@ -49,14 +49,13 @@ input {
 
 .select .select__option-menu {
     height: 0;
-    /* transition: all .2s ease-out; */
+    transition: var(--transition-menus);
     overflow-y: scroll;
     padding: 0;
 }
 
 .select .select__option-menu.opened {
     height: 240px;
-    /* transition: all .4s ease-out; */
 }
 
 .select .select__option-menu .option.selected {

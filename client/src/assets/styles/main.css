@@ -17,34 +17,14 @@
     --zi-sidebar: 5000;
     --zi-modal: 6000;
     --zi-dialog: var(--zi-modal);
-}
 
-body {
-    background: linear-gradient(-10deg, rgb(25, 26, 26) .2%, #1b8087 91.1%);
-    font-size: 20px;
-    font-family: Fredoka;
-    color: white;
+    --transition-menus: all .29s ease-out;
 }
 
 .debug {
     border: dashed 1px fuchsia;
 }
 
-body,
-#app {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-}
-
-.main {
-    height: 100vh;
-}
-
-.view {
-    overflow-y: auto;
-    overflow-x: hidden;
-}
 
 h1 {
     font-size: 2.25rem;

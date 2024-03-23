@@ -1,20 +1,27 @@
 <template>
-    <div class="mb-xl">
-        <input type="checkbox" v-model="fetchFromWeb"></input>
-        Chercher sur coinmarketcap
+    <div>
+        <div class="mb-xl">
+            <input type="checkbox" v-model="fetchFromWeb"></input>
+            Chercher sur coinmarketcap
+        </div>
+        <button @click="fetchTokens" class="py-md px-xl ">Fetch</button>
+        <pre style="background: rgb(50 73 75 / 95%); max-height: 400px; overflow-y: auto;" class="mb-md">
+            {{ response }}
+        </pre>
+
+        <Calculator v-model="calculatorModel"></Calculator>
     </div>
-    <button @click="fetchTokens" class="py-md px-xl ">Fetch</button>
-    <pre style="background: rgb(50 73 75 / 95%); max-height: 400px; overflow-y: auto;">
-        {{ response }}
-    </pre>
 </template>
 
 <script setup>
 import { coinmarketcapApi } from "@/plugins/axios"
 
+import Calculator from "@/components/Calculator.vue"
+
 const fetchFromWeb = ref(false)
 
 const response = ref(null)
+const calculatorModel = ref(0)
 
 async function fetchTokens() {
 
