@@ -8,4 +8,9 @@ import '@/assets/styles/main.css'
 import '@/assets/styles/reset.css'
 import '@/assets/styles/spacings.css'
 
-createApp(App).mount('#app')
+import router from "@/plugins/router"
+
+const app = createApp(App)
+router(app)
+
+app.mount('#app')
