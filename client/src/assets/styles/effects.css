@@ -1,9 +1,28 @@
 .glass {
-    background: rgba(255, 255, 255, .2);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    /* backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px); */
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(var(--md));
+    -webkit-backdrop-filter: blur(var(--md));
+    border: .5px solid rgba(255, 255, 255, .25);
+}
 
+.rounded-xs {
+    border-radius: var(--xs) !important;
+}
+
+.rounded-sm {
+    border-radius: var(--sm) !important;
+}
+
+.rounded-md {
+    border-radius: var(--md) !important;
+}
+
+.rounded-lg {
+    border-radius: var(--lg) !important;
+}
+
+.rounded-xl {
+    border-radius: var(--xl) !important;
 }

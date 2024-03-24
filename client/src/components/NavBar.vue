@@ -6,22 +6,41 @@
                 <div class="navbar-button-icon">
                     <Icon>{{ menu.icon }}</Icon>
                 </div>
-                <div class="navbar-button-label">{{ menu.label }}</div>
+                <div class="navbar-button-label" :style="{ fontSize: menu.size || '.75rem' }">{{ menu.label }}
+                </div>
             </router-link>
         </template>
+        <div class="navbar-button flex flex-column align-items-center justify-content-center gap-xs">
+            <div class="navbar-button-icon" @click="toolDockOpened = !toolDockOpened">
+                <Icon>tools</Icon>
+            </div>
+            <div class="navbar-button-label">Outils</div>
+            <div class="tool-dock flex flex-column gap-md mb-md" :class="{ 'tool-dock-opened': toolDockOpened }">
+                <div class="tool-dock-app flex glass align-items-center gap-sm p-sm py-xs" @click="toggleApp">
+                    <div class="tool-dock-button-label">Calculatrice</div>
+                    <Btn icon="calculator" class="p-sm rounded-md"></Btn>
+                </div>
+            </div>
+        </div>
         <div ref="indicator" class="navbar-button-indicator"></div>
     </div>
 </template>
 
 <script setup>
 import Icon from "@/components/Icon.vue"
-import { ref, watch } from "vue"
+import Btn from "@/components/Btn.vue"
+
+import { onMounted, ref, watch } from "vue"
 import { useRoute } from "vue-router"
+
+import WidgetService from "@/components/Widgets/WidgetService"
+
+const calculator = WidgetService.Calculator
 
 const route = useRoute()
 const indicator = ref()
 
-
+const toolDockOpened = ref(false)
 
 const menus = ref([
     {
@@ -37,7 +56,8 @@ const menus = ref([
     {
         label: "Mon compte",
         route: { name: "Account" },
-        icon: "account"
+        icon: "account",
+        size: ".6rem !important"
     },
     {
         label: "Sandbox",
@@ -46,9 +66,22 @@ const menus = ref([
     }
 ])
 
+function toggleApp(app = "") {
+    calculator.toggle()
+    toolDockOpened.value = false
+}
+
 watch(() => route.fullPath, () => {
     const foundIndex = menus.value.findIndex(menu => menu.route.name === route.name)
-    indicator.value.style.left = `calc(${foundIndex} * 25%)`
+    indicator.value.style.left = `calc(${foundIndex} * 20%)`
+})
+
+onMounted(() => {
+    let elements = [...document.querySelectorAll(".tool-dock-app")].reverse()
+
+    elements.forEach((item, index) => {
+        item.style.transitionDelay = (index * (200 / elements.length)) + "ms"
+    })
 })
 </script>
 
@@ -56,13 +89,13 @@ watch(() => route.fullPath, () => {
 .navbar {
     position: absolute;
     bottom: 0;
-    width: calc(100% - var(--md) * 2);
+    width: calc(100% - var(--sm) * 2);
     background: var(--primary);
     height: 64px;
-    margin: var(--md);
+    margin: var(--sm);
     border-radius: var(--md);
 
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    box-shadow: var(--volume-shadow);
 }
 
 .navbar .navbar-button {
@@ -79,21 +112,13 @@ watch(() => route.fullPath, () => {
     left: 0;
     border-radius: var(--md);
     background: rgba(255, 255, 255, 1);
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    padding: 0;
-    margin: 0px;
-    width: calc(25% - 0px);
+    box-shadow: var(--volume-shadow);
+    padding: .5rem 0;
+    margin: -.5rem 0;
+    width: calc(20% - 0px);
     height: calc(100% - 0px);
     pointer-events: none;
     transition: var(--transition-menus);
-
-    /* width: 100%; */
-    /* height: 100%;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: repeat;
-    background-image: url("data:image/svg+xml;utf8,%3Csvg viewBox=%220 0 1000 1000%22 xmlns=%22http:%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cdefs%3E%3CclipPath id=%22b%22%3E%3Cpath fill=%22currentColor%22 d=%22M838.5 633.5Q818 767 691 814t-282 79q-155 32-241.5-104.5T91 503.5q10-148.5 93-278t230-100Q561 155 712 175t149 172.5q-2 152.5-22.5 286Z%22%2F%3E%3C%2FclipPath%3E%3Cfilter id=%22a%22 x=%22-50vw%22 y=%22-50vh%22 width=%22100vw%22 height=%22100vh%22%3E%3CfeFlood flood-color=%22%23fff%22 result=%22neutral-gray%22%2F%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%222.5%22 numOctaves=%22100%22 stitchTiles=%22stitch%22 result=%22noise%22%2F%3E%3CfeColorMatrix in=%22noise%22 type=%22saturate%22 values=%220%22 result=%22destaturatedNoise%22%2F%3E%3CfeComponentTransfer in=%22desaturatedNoise%22 result=%22theNoise%22%3E%3CfeFuncA type=%22table%22 tableValues=%220 0 0.15 0%22%2F%3E%3C%2FfeComponentTransfer%3E%3CfeBlend in=%22SourceGraphic%22 in2=%22theNoise%22 mode=%22soft-light%22 result=%22noisy-image%22%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3Cg filter=%22url(%23a)%22 clip-path=%22url(%23b)%22%3E%3Cpath fill=%22%23fff%22 d=%22M838.5 633.5Q818 767 691 814t-282 79q-155 32-241.5-104.5T91 503.5q10-148.5 93-278t230-100Q561 155 712 175t149 172.5q-2 152.5-22.5 286Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"); */
-
 }
 
 .navbar .navbar-button.router-link-exact-active {
@@ -121,5 +146,32 @@ watch(() => route.fullPath, () => {
     text-overflow: ellipsis;
     overflow: hidden;
     font-size: .75rem;
+}
+
+.tool-dock {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    /* height: 0; */
+    height: fit-content;
+    overflow-y: hidden;
+    display: none;
+}
+
+.tool-dock.tool-dock-opened {
+    height: fit-content;
+    display: block;
+}
+
+.tool-dock .tool-dock-app {
+    /* position: absolute;
+    right: 0; */
+    transform: scale(0);
+    transition: var(--transition);
+}
+
+.tool-dock.tool-dock-opened .tool-dock-app {
+    transform: scale(1);
+    /* left: 0; */
 }
 </style>

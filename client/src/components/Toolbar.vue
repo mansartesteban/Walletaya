@@ -4,9 +4,9 @@
             <Icon>{{ icon }}</Icon>
         </div>
         <div class="toolbar-middle flex align-items-center justify-content-center">
-            {{ title }}
+            <div class="toolbar-title">{{ title }}</div>
         </div>
-        <div class="toolbar-right flex align-items-center justify-content-end gap-sm">
+        <div class="toolbar-right flex align-items-center justify-content-end gap-xs">
             <Btn v-for="item in items" @click="item.onClick" :icon="item.icon" :disabled="item.disabled" flat></Btn>
         </div>
     </div>
@@ -31,3 +31,16 @@ const props = defineProps({
     }
 })
 </script>
+
+<style scoped>
+.toolbar-middle {
+    min-width: 0;
+}
+
+.toolbar-title {
+    user-select: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+</style>

@@ -8,20 +8,43 @@
         <pre style="background: rgb(50 73 75 / 95%); max-height: 400px; overflow-y: auto;" class="mb-md">
             {{ response }}
         </pre>
+        <pre style="background: rgb(50 73 75 / 95%); max-height: 400px; overflow-y: auto;" class="mb-md">
+            {{ response }}
+        </pre>
+        <pre style="background: rgb(50 73 75 / 95%); max-height: 400px; overflow-y: auto;" class="mb-md">
+            {{ response }}
+        </pre>
+        <pre style="background: rgb(50 73 75 / 95%); max-height: 400px; overflow-y: auto;" class="mb-md">
+            {{ response }}
+        </pre>
+        <pre style="background: rgb(50 73 75 / 95%); max-height: 400px; overflow-y: auto;" class="mb-md">
+            {{ response }}
+        </pre>
+        <pre style="background: rgb(50 73 75 / 95%); max-height: 400px; overflow-y: auto;" class="mb-md">
+            {{ response }}
+        </pre>
+        <pre style="background: rgb(50 73 75 / 95%); max-height: 400px; overflow-y: auto;" class="mb-md">
+            {{ response }}
+        </pre>
+        <pre style="background: rgb(50 73 75 / 95%); max-height: 400px; overflow-y: auto;" class="mb-md">
+            {{ response }}
+        </pre>
+        <pre style="background: rgb(50 73 75 / 95%); max-height: 400px; overflow-y: auto;" class="mb-md">
+            {{ response }} 
+        </pre>
+        <pre style="background: rgb(50 73 75 / 95%); max-height: 400px; overflow-y: auto;" class="mb-md">
+            {{ response }}
+        </pre>
 
-        <Calculator v-model="calculatorModel"></Calculator>
     </div>
 </template>
 
 <script setup>
 import { coinmarketcapApi } from "@/plugins/axios"
 
-import Calculator from "@/components/Calculator.vue"
-
 const fetchFromWeb = ref(false)
 
 const response = ref(null)
-const calculatorModel = ref(0)
 
 async function fetchTokens() {
 

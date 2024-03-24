@@ -1,6 +1,5 @@
 <template>
-    <Toolbar :icon="icon" :title="title" :items="items"
-        style="background: rgba(0, 0, 0, .25); border-radius: 16px 16px 0 0">
+    <Toolbar :icon="icon" :title="title" :items="items" style="border-radius: 16px 16px 0 0">
     </Toolbar>
 </template>
 
@@ -46,7 +45,7 @@ const items = ref([
     {
         label: "Ferme",
         icon: "close",
-        disabled: props.closed,
+        // disabled: props.closed,
         onClick: () => emit("close")
     },
 ])

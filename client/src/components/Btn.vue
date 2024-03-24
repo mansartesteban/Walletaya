@@ -33,8 +33,17 @@ const emit = defineEmits(["click"])
 <style scoped>
 .btn {
     border-radius: 6px;
-    border: none;
+    border: 0;
     outline: none;
+    transition: var(--transition);
+    height: calc(100% - 8px);
+}
+
+.btn:active {
+    transition: var(--transition);
+    transform: translateY(4px);
+    box-shadow: none !important;
+    height: calc(100% - 12px) !important;
 }
 
 .btn.disabled {
@@ -43,7 +52,7 @@ const emit = defineEmits(["click"])
 }
 
 .btn:not(.flat) {
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    background: rgb(50 73 75 / 95%);
+    box-shadow: var(--volume);
+    background: var(--primary);
 }
 </style>

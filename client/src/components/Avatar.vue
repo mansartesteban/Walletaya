@@ -42,8 +42,8 @@ const style = computed(() => {
     height: calc(v-bind('size') * 1px);
     border-radius: 999px;
     color: white;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, .33);
     outline: none;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;   background: rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow);
 }
 </style>

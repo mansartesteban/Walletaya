@@ -1,7 +1,7 @@
 <template>
     <div class="portfolio flex flex-column gap-md">
 
-        <div class="glass flex flex-column gap-md p-xl">
+        <div class="flex flex-column gap-md p-md">
             <h3>Achat</h3>
             <div class="flex align-items-center gap-md">
                 <input type="number" v-model="tokenTo" step=".01" class="flex-1">
@@ -13,7 +13,7 @@
 
         </div>
 
-        <div class="glass flex flex-column gap-md p-xl">
+        <div class="flex flex-column gap-md p-md">
             <h3>Vente</h3>
             <div class="flex align-items-center gap-md">
                 <input type="number" v-model="tokenFrom" step=".01" class="flex-1">
