@@ -3,7 +3,7 @@
         <template v-for="menu in menus">
             <router-link class="navbar-button flex flex-column align-items-center justify-content-center gap-xs"
                 :to="menu.route">
-                <div class="navbar-button-icon">
+                <div class="navbar-button-icon" @click="click">
                     <Icon>{{ menu.icon }}</Icon>
                 </div>
                 <div class="navbar-button-label" :style="{ fontSize: menu.size || '.75rem' }">{{ menu.label }}
@@ -17,7 +17,7 @@
             <div class="navbar-button-label">Outils</div>
             <div class="tool-dock flex flex-column gap-md mb-md" :class="{ 'tool-dock-opened': toolDockOpened }">
                 <div class="tool-dock-app flex glass align-items-center gap-sm p-sm py-xs" @click="toggleApp">
-                    <div class="tool-dock-button-label">Calculatrice</div>
+                    <div class="tool-dock-button-label">Calculatrice</div> 
                     <Btn icon="calculator" class="p-sm rounded-md"></Btn>
                 </div>
             </div>
@@ -33,8 +33,11 @@ import Btn from "@/components/Btn.vue"
 import { onMounted, ref, watch } from "vue"
 import { useRoute } from "vue-router"
 
-import WidgetService from "@/components/Widgets/WidgetService"
+import WidgetService from "@/Services/WidgetService"
 
+function click() {
+    console.log("j'ai clické chef !")
+}
 const calculator = WidgetService.Calculator
 
 const route = useRoute()
@@ -94,7 +97,7 @@ onMounted(() => {
     height: 64px;
     margin: var(--sm);
     border-radius: var(--md);
-
+    z-index: 100000;
     box-shadow: var(--volume-shadow);
 }
 

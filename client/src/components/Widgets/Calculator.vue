@@ -4,7 +4,7 @@
             <Icon>calculator</Icon>
         </Btn>
     </div> -->
-    <Window :widget="calculator">
+    <Widget :widgetInstance="calculator">
         <div class="calculator flex flex-column align-items-stretch p-sm gap-sm">
             <div class="calculator-screen p-md">
                 <template v-if="calculation">
@@ -51,14 +51,14 @@
                 <Btn class="calculator-key" style="background: var(--primary)" @click="save">=</Btn>
             </div>
         </div>
-    </Window>
+    </Widget>
 </template>
 
 <script setup>
 import Btn from "@/components/Btn.vue"
 import Icon from "@/components/Icon.vue"
-import Window from "@/components/Window.vue"
-import WidgetService from "@/components/Widgets/WidgetService"
+import Widget from "@/components/Widgets/Widget.vue"
+import WidgetService from "@/Services/WidgetService"
 
 const calculator = WidgetService.Calculator
 
@@ -107,6 +107,10 @@ function clear() {
     height: fill-available;
     flex: 1;
     /* border: 1px solid yellow; */
+}
+
+.calculator * {
+    user-select: none;
 }
 
 .calculator-screen {

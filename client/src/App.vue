@@ -65,7 +65,7 @@ body,
   - TODO Historique
   - OK Pouvoir la déplacer facilement
   - WIP Pour la placer dans un dock ? C'est à dire qu'elle se désaffiche de l'écran sans perdre le calcul en cours
-  - WIP Du coup créer un composant "Window" qui peut être ouvert, fermé, déplacé, docké avec toolbar
+  - WIP Du coup créer un composant "Widget" qui peut être ouvert, fermé, déplacé, docké avec toolbar
 - TODO Avoir un calendrier
 - TODO Imaginer un système de variables stockables (boite à outils).
   - TODO Pouvoir stocker une valeur

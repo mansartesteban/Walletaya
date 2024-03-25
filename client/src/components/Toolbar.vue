@@ -23,7 +23,7 @@ const props = defineProps({
     },
     icon: {
         type: String,
-        default: "window"
+        default: "Widget"
     },
     items: {
         type: Array,
