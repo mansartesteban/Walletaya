@@ -1,9 +1,9 @@
 <template>
     <div ref="widget" class="widget flex flex-column glass" :class="{ closed: widgetInstance.closed, moving }"
         @touchstart.passive="onTouchStart" @touchmove.passive="onTouchMove" @touchend.passive="onTouchEnd">
-        <WidgetBar :title="widgetInstance.title" :icon="widgetInstance.icon" :minimized="widgetInstance.minimized" :maximized="widgetInstance.maximized"
-            :closed="widgetInstance.closed" @minimize="widgetInstance.onMinimize" @maximize="widgetInstance.onMaximize"
-            @close="widgetInstance.close()" />
+        <WidgetBar :title="widgetInstance.title" :icon="widgetInstance.icon" :minimized="widgetInstance.minimized"
+            :maximized="widgetInstance.maximized" :closed="widgetInstance.closed" @minimize="widgetInstance.onMinimize"
+            @maximize="widgetInstance.onMaximize" @close="widgetInstance.close()" />
         <div class="widget-content flex flex-column flex-1">
             <slot></slot>
         </div>
@@ -12,6 +12,7 @@
 
 <script setup>
 import WidgetBar from "@/components/Widgets/WidgetBar.vue"
+import useTouch from "@/composables/useTouch"
 
 const props = defineProps({
     widgetInstance: {
@@ -20,6 +21,7 @@ const props = defineProps({
 })
 
 const widget = ref()
+
 const offset = ref({
     x: 0,
     y: 0
@@ -37,13 +39,17 @@ const originalTransform = {
 const moving = ref(false)
 const released = ref(false)
 
+const touchable = useTouch(widget).onDoubleTap((e) => {
+    console.log("in 'onDoubleTap' callback")
+})
+
 const initiateDrag = () => {
     if (released.value) {
-        released.value = false;
-        moving.value = false;
+        released.value = false
+        moving.value = false
     } else {
-        window.navigator.vibrate([25])
-        moving.value = true;
+        // window.navigator.vibrate([25]) // TODO: Bind to user store
+        moving.value = true
         offset.value.x = e.touches[0].clientX
         offset.value.y = e.touches[0].clientY
         originalTransform.x = parseInt(transform.value.x.substr(0, transform.value.x.length - 2))
@@ -51,13 +57,13 @@ const initiateDrag = () => {
     }
 }
 
-const startCallback = null
+let startCallback = null
 
 function onTouchStart(e) {
-    released.value = false;
-    moving.value = false;
-    startCallback = setTimeout(initiateDrag ,2000) // Get the delay of android user preferences
-    
+    released.value = false
+    moving.value = false
+    startCallback = setTimeout(initiateDrag, 2000) // Get the delay of android user preferences
+
 }
 
 function onTouchMove(e) {
@@ -69,8 +75,8 @@ function onTouchMove(e) {
 }
 
 function onTouchEnd(e) {
-    released.value = true;
-    moving.value = false;
+    released.value = true
+    moving.value = false
     clearTimeout(startCallback)
 }
 
@@ -92,9 +98,11 @@ function onTouchEnd(e) {
     0% {
         transform: scale(1) translate(v-bind("transform.x"), v-bind("transform.y"));
     }
+
     50% {
         transform: scale(1.05) translate(v-bind("transform.x"), v-bind("transform.y"));
     }
+
     100% {
         transform: scale(1) translate(v-bind("transform.x"), v-bind("transform.y"));
     }
