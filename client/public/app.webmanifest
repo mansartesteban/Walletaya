@@ -1,0 +1,13 @@
+{
+  "name": "Tracrypto",
+  "short_name": "Tracrypto",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/assets/icons/dollars.png",
+      "type": "image/png",
+      "sizes": "  512x512"
+    }
+  ]
+}
