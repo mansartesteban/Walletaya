@@ -198,3 +198,10 @@ export default (element) => {
   }
 }
 
+// - TODO onSwipeUp + speed/acceleration + fingerCount
+// - TODO onSwipeDown + speed/acceleration + fingerCount
+// - TODO onSwipeLeft + speed/acceleration + fingerCount
+// - TODO onSwipeRight + speed/acceleration + fingerCount
+// - TODO onPinch (zoom) + speed/acceleration
+// - TODO onStretch (unzoom) + speed/acceleration
+
