@@ -18,17 +18,5 @@ const route = useRoute()
 <style scoped>
 .appbar {
     height: 64px;
-    background: var(--primary);
-    position: relative;
-}
-
-.appbar::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
-    height: var(--md);
-    background: linear-gradient(180deg, var(--primary) 0%, rgba(0, 0, 0, 0) 100%);
 }
 </style>

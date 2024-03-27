@@ -27,6 +27,11 @@ section {
     display: block;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 body {
     line-height: 1;
 }

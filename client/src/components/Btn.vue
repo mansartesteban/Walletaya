@@ -37,6 +37,7 @@ const emit = defineEmits(["click"])
     outline: none;
     transition: var(--transition);
     height: calc(100% - 8px);
+    user-select: none;
 }
 
 .btn:active {
