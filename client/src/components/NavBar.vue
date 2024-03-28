@@ -17,7 +17,7 @@
             <div class="navbar-button-label">Outils</div>
             <div class="tool-dock flex flex-column gap-md mb-md" :class="{ 'tool-dock-opened': toolDockOpened }">
                 <div class="tool-dock-app flex glass align-items-center gap-sm p-sm py-xs" @click="toggleApp">
-                    <div class="tool-dock-button-label">Calculatrice</div> 
+                    <div class="tool-dock-button-label">Calculatrice</div>
                     <Btn icon="calculator" class="p-sm rounded-md"></Btn>
                 </div>
             </div>
@@ -90,8 +90,8 @@ onMounted(() => {
 
 <style scoped>
 .navbar {
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    bottom: var(--sm);
     width: calc(100% - var(--sm) * 2);
     background: var(--primary);
     height: 64px;

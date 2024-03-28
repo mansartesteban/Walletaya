@@ -1,12 +1,9 @@
 <template>
-  <div class="main">
-
-    <AppHeader ref="appHeader"></AppHeader>
-    <div class="view flex-1 flex justify-content-center">
-      <router-view></router-view>
-    </div>
-    <NavBar></NavBar>
+  <AppHeader ref="appHeader"></AppHeader>
+  <div class="view flex-1 flex justify-content-center">
+    <router-view></router-view>
   </div>
+  <NavBar></NavBar>
 
   <WidgetDock></WidgetDock>
 </template>
@@ -15,43 +12,27 @@
 import AppHeader from "@/components/AppHeader.vue"
 import NavBar from "@/components/NavBar.vue"
 import WidgetDock from "@/components/Widgets/WidgetDock.vue"
-
-const appHeader = ref()
 </script>
 
 <style>
 .view {
-  /* margin: 0 var(--md) calc(var(--md)) var(--md); */
-  padding: 0 1rem;
-  height: calc(100% - v-bind('appHeader.height'));
-  overflow-y: auto;
-  border: 1px solid yellow;
-  /* overflow-x: hidden; */
+  /* padding-bottom: calc(64px + 4 * var(--sm)); */
+  padding-top: calc(64px);
+  /* height: calc(100vh - 64px - 64px - 4 * var(--sm)); */
+  height: calc(100vh - 64px);
+  overflow: hidden;
+  outline: 1px solid red;
 }
 
-/* .view>div {
-  height: fit-content;
-  padding-bottom: 80px;
-  max-width: 100%;
-  margin: 1rem;
-}
- */
+
 
 body {
+  overflow: hidden;
   background: linear-gradient(-10deg, rgb(25, 26, 26) .2%, #1b8087 91.1%);
+  background-attachment: fixed;
   font-size: 20px;
   font-family: Fredoka;
   color: white;
-}
-
-body,
-html,
-#app,
-.main {
-  height: 100dvh;
-  width: 100dvw;
-  overflow: hidden;
-  scroll-behavior: smooth;
 }
 </style>
 

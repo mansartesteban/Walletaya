@@ -1,11 +1,16 @@
 <template>
-    <div class="tabs">
-        <div class="tab-content" v-for="tab in tabs">
-            <Tab :anchor="tab.props.anchor">
+    <div class="flex flex-column">
+        <div v-if="tabs" class="tab-headers">
+            <nav class="tab-header-container flex align-items-center">
+                <a class="tab-header" v-for="tab in tabs" :href="tab.props.anchor">{{ tab.props.title }}</a>
+                <!-- <div class="tab-header-active-indicator"></div> -->
+            </nav>
+        </div>
+        <div class="tabs scroll-snap-x">
+            <Tab :anchor="tab.props.anchor" v-for="tab in tabs">
                 <component :is="tab.is" v-bind="tab.attrs"></component>
             </Tab>
         </div>
-
     </div>
 </template>
 
@@ -34,20 +39,71 @@ useTabs(tabs.value)
 
 <style scoped>
 .tabs {
-    /* outline: 1px dashed red; */
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    /* gap: 5rem; */
+}
+
+.tab-header-container {
+    overflow-x: scroll;
+
+    @media (hover: none) {
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+    }
+}
+
+.tab-headers {
+    user-select: none;
+    position: relative;
+    background: var(--primary);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    display: grid;
+
+
 }
 
 .tab-header {
-    /* outline: 1px dashed fuchsia; */
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: var(--md) var(--md);
+    font-size: 1.25rem;
 }
 
-.tabs-content {
-    /* outline: 1px dashed greenyellow; */
+.tab-header-active-indicator {
+    position: absolute;
+    top: calc(100% - 4px);
+    background: white;
+    width: calc(25%);
+    height: 4px;
+    left: 50%;
 }
 
 .tab {
-    height: 100%;
-    flex: 1;
-    outline: 1px dashed cornflowerblue;
+    scroll-snap-align: start;
+    overflow-y: auto;
+    padding: var(--lg);
+}
+
+.scroll-snap-x {
+    overflow: auto hidden;
+    scroll-snap-type: x mandatory;
+
+    scroll-behavior: smooth;
+
+    @media (hover: none) {
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+    }
 }
 </style>
