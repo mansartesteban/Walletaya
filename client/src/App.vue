@@ -1,6 +1,6 @@
 <template>
   <AppHeader ref="appHeader"></AppHeader>
-  <div class="view flex-1 flex justify-content-center">
+  <div class="view">
     <router-view></router-view>
   </div>
   <NavBar></NavBar>
@@ -9,26 +9,23 @@
 </template>
 
 <script setup>
-import AppHeader from "@/components/AppHeader.vue"
-import NavBar from "@/components/NavBar.vue"
-import WidgetDock from "@/components/Widgets/WidgetDock.vue"
+import AppHeader from "@/components/AppHeader.vue";
+import NavBar from "@/components/NavBar.vue";
+import WidgetDock from "@/components/widgets/WidgetDock.vue";
 </script>
 
 <style>
+#app {
+  height: 100dvh;
+}
 .view {
-  /* padding-bottom: calc(64px + 4 * var(--sm)); */
-  padding-top: calc(64px);
-  /* height: calc(100vh - 64px - 64px - 4 * var(--sm)); */
-  height: calc(100vh - 64px);
-  overflow: hidden;
-  outline: 1px solid red;
+  padding-bottom: calc(64px + 4 * var(--sm));
+  height: calc(100% - var(--header-height));
+  scrollbar-width: none;
 }
 
-
-
 body {
-  overflow: hidden;
-  background: linear-gradient(-10deg, rgb(25, 26, 26) .2%, #1b8087 91.1%);
+  background: linear-gradient(-10deg, rgb(25, 26, 26) 0.2%, #1b8087 91.1%);
   background-attachment: fixed;
   font-size: 20px;
   font-family: Fredoka;
@@ -47,7 +44,11 @@ body {
   - TODO Historique
   - OK Pouvoir la déplacer facilement
   - WIP Pour la placer dans un dock ? C'est à dire qu'elle se désaffiche de l'écran sans perdre le calcul en cours
-  - WIP Du coup créer un composant "Widget" qui peut être ouvert, fermé, déplacé, docké avec toolbar
+  - OK Du coup créer un composant "Widget" qui peut être ouvert, fermé, déplacé
+    - OK ouvert
+    - OK fermé
+    - OK Déplacé
+
 - TODO Avoir un calendrier
 - TODO Imaginer un système de variables stockables (boite à outils).
   - TODO Pouvoir stocker une valeur

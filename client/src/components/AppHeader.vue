@@ -1,45 +1,33 @@
 <template>
-    <div class="app-header">
-        <AppBar></AppBar>
+  <div class="app-header">
+    <div
+      class="appbar flex align-items-center justify-content-space-between px-md"
+    >
+      <div class="flex align-items-center gap-md">
+        <img src="/assets/icons/dollars.png" width="48" height="48" />
+        <div class="page-title">{{ route.meta.title }}</div>
+      </div>
+      <Avatar letters="EM"></Avatar>
     </div>
+  </div>
 </template>
 
 <script setup>
-import useTabs from "@/composables/useTabs"
-import AppBar from "@/components/AppBar.vue"
-// import { onMounted } from "vue"
-// import useApp from "@/composables/useApp"
+import Avatar from "@/components/Avatar.vue";
+import { useRoute } from "vue-router";
 
-const tabs = useTabs().tabs
-
-// useTabs().onChange(() => {
-//     useApp().headerHeight.value = tabs.value.length ? "96px" : "64px"
-//     setBodyHeight()
-// })
-
-// const setBodyHeight = () => {
-//     document.body.style.paddingTop = useApp().headerHeight.value
-// }
-
-// onMounted(setBodyHeight)
-
+const route = useRoute();
 </script>
 
 <style scoped>
 .app-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: var(--primary);
-    box-shadow: var(--shadow);
+  box-shadow: var(--shadow);
+  background: var(--primary);
 }
 
 .appbar {
-    height: 64px;
-    background: var(--primary);
-    position: relative;
+  height: var(--header-height);
+  background: var(--primary);
+  height: 64px;
 }
-
-/*  */
 </style>

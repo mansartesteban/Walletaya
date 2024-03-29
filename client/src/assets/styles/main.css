@@ -3,34 +3,9 @@
     src: url("@/assets/fonts/Fredoka.ttf");
 }
 
-:root {
-    --primary: #1b8087;
-
-    --xs: .25rem;
-    --sm: .5rem;
-    --md: 1rem;
-    --lg: 1.5rem;
-    --xl: 2.25rem;
-
-    --zi-menus: 1000;
-    --zi-tooltip: 10000;
-    --zi-sidebar: 5000;
-    --zi-modal: 6000;
-    --zi-dialog: var(--zi-modal);
-
-    --shadow: rgba(0, 0, 0, 0.33) 0px 1px 4px, rgba(0, 0, 0, 0.4) 0px 7px 16px -5px;
-    --volume: rgba(0, 0, 0, 0.2) 0px -4px 0px inset;
-    /* --volume-shadow: var(--shadow), var(--volume); */
-    --volume-shadow: var(--shadow);
-
-    --transition-menus: all .29s ease-out;
-    --transition: all .245s ease-out;
-}
-
 .debug {
     border: dashed 1px fuchsia;
 }
-
 
 h1 {
     font-size: 2.25rem;
