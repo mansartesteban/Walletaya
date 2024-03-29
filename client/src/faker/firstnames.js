@@ -1,0 +1,23 @@
+export default [
+  "Jacques",
+  "Michel",
+  "Laurine",
+  "Vitusha",
+  "Albert",
+  "Sarah",
+  "Youssef",
+  "Béatrice",
+  "Hubert",
+  "Hélène",
+  "Mohammed",
+  "Irène",
+  "Jules",
+  "Juliette",
+  "Esteban",
+  "Yolande",
+  "Steve",
+  "Dora",
+  "Diego",
+  "David",
+  "Isabelle"
+]

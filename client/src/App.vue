@@ -56,6 +56,6 @@ body {
   - TODO Que ces variables soient dynamiques (si elle change à un endroit, elle se met à jour partout)
   - TODO Pouvoir les dupliquer avec la valeur courante pour casser la réactivité
 - TODO Ajouter un widget "conversion" pour convertir une monnaie dans une autre (fiat ou token)
-
-
+- TODO Ajouter la traduction
+- TOFIX Sur les tabs, lorsque l'on fait précédent les tab ne sont pas retriggered
 -->
