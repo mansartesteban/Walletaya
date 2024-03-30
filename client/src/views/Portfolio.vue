@@ -25,6 +25,9 @@
 
         </div>
 
+        <Btn @click="dbSave">Save</Btn>
+        <Btn @click="dbGet">Get</Btn>
+
     </div>
 </template>
 
@@ -33,6 +36,8 @@ import tokens from "@/datas/tokens"
 import TokenPicker from "@/components/TokenPicker.vue"
 import useSettings from "@/composables/useSettings"
 import { onMounted } from "vue"
+import useDatabase from "@/composables/useDatabase"
+import Btn from "@/components/Btn.vue"
 
 const tokenTo = ref(0)
 const selectedTokenTo = ref()
@@ -41,6 +46,21 @@ const priceTo = ref(0)
 const tokenFrom = ref(0)
 const selectedTokenFrom = ref()
 const priceFrom = ref(0)
+const db = useDatabase().database.value
+
+function dbSave() {
+    db.setItem("user", { id: "1", value: "toto2" }).then((response) => {
+        console.log("db response", response)
+    })
+
+
+}
+
+function dbGet() {
+    db.getItem("user", "1").then((response) => {
+        console.log("db response", response)
+    })
+}
 
 onMounted(() => {
     selectedTokenFrom.value = tokens.find(c => c.value === useSettings().defaultTokenTo)

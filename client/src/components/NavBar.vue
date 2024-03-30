@@ -94,11 +94,8 @@ watch(
       easingFunctions.easeOutBack,
       true
     )
-    // animateIndicator(oldValue < newValue ? 30 : -30, 290, easingFunctions.easeOutBack)
   }
 )
-
-
 
 onMounted(() => {
   let elements = [...document.querySelectorAll(".tool-dock-app")].reverse()
