@@ -5,13 +5,10 @@
         class="navbar-button flex flex-column align-items-center justify-content-center gap-xs"
         :to="menu.route"
       >
-        <div class="navbar-button-icon" @click="click">
+        <div class="navbar-button-icon">
           <Icon>{{ menu.icon }}</Icon>
         </div>
-        <div
-          class="navbar-button-label"
-          :style="{ fontSize: menu.size || '.75rem' }"
-        >
+        <div class="navbar-button-label">
           {{ menu.label }}
         </div>
       </router-link>
@@ -36,11 +33,15 @@
         </div>
       </div>
     </div>
-    <div ref="indicator" class="navbar-button-indicator"></div>
+    <navbar-indicator
+      class="navbar-button-indicator"
+      fill="var(--primary)"
+    ></navbar-indicator>
   </div>
 </template>
 
 <script setup>
+import NavbarIndicator from "@/components/NavBarIndicator.vue";
 import Icon from "@/components/Icon.vue";
 import Btn from "@/components/Btn.vue";
 
@@ -49,9 +50,6 @@ import { useRoute } from "vue-router";
 
 import WidgetService from "@/Services/WidgetService";
 
-function click() {
-  console.log("j'ai clické chef !");
-}
 const calculator = WidgetService.Calculator;
 
 const route = useRoute();
@@ -74,7 +72,6 @@ const menus = ref([
     label: "Mon compte",
     route: { name: "Account" },
     icon: "account",
-    size: ".6rem !important",
   },
   {
     label: "Sandbox",
@@ -94,7 +91,10 @@ watch(
     const foundIndex = menus.value.findIndex(
       (menu) => menu.route.name === route.name
     );
-    indicator.value.style.left = `calc(${foundIndex} * 20%)`;
+    let indicator = document.querySelector(".navbar-button-indicator");
+    if (indicator) {
+      indicator.style.left = `calc(${foundIndex} * 20%)`;
+    }
   }
 );
 
@@ -110,12 +110,12 @@ onMounted(() => {
 <style scoped>
 .navbar {
   position: fixed;
-  bottom: var(--sm);
-  width: calc(100% - var(--sm) * 2);
+  bottom: 0;
+  width: 100%;
   background: var(--primary);
-  height: 64px;
-  margin: var(--sm);
-  border-radius: var(--md);
+  height: 56px;
+  /* margin: var(--sm); */
+  /* border-radius: var(--md); */
   z-index: 100000;
   box-shadow: var(--volume-shadow);
 }
@@ -125,43 +125,42 @@ onMounted(() => {
   flex: 1;
   text-align: center;
   cursor: pointer;
-  color: white;
+  color: rgba(255, 255, 255, 0.66);
   text-decoration: none;
+  position: relative;
+  top: 0;
+  transition: var(--transition-menus);
 }
 
 .navbar .navbar-button-indicator {
-  --indicator-margin: 0.75rem;
+  --indicator-margin: 0rem;
   position: absolute;
+  bottom: 100%;
   left: 0;
-  border-radius: var(--md);
-  background: rgba(255, 255, 255, 1);
-  box-shadow: var(--volume-shadow);
-  padding: 0.5rem 0;
-  margin: calc(var(--indicator-margin) / -2);
   width: calc(20% + var(--indicator-margin));
-  height: calc(100% + var(--indicator-margin));
   pointer-events: none;
   transition: var(--transition-menus);
 }
 
 .navbar .navbar-button.router-link-exact-active {
-  color: var(--primary);
   z-index: 1;
   animation: navbar-indicator-animation 0.29s ease-in-out;
+  color: white;
 }
 
-@keyframes navbar-indicator-animation {
-  0% {
-    transform: scale(1);
-  }
+.navbar .navbar-button svg {
+  position: relative;
+  top: 0;
+  transition: var(--transition-menus);
+}
 
-  50% {
-    transform: scale(0.7);
-  }
-
-  100% {
-    transform: scale(1);
-  }
+.navbar .navbar-button.router-link-exact-active svg {
+  top: -8px;
+  width: 32px;
+  height: 32px;
+}
+.navbar .navbar-button.router-link-exact-active .navbar-button-label {
+  top: -6px;
 }
 
 .navbar .navbar-button-label {
@@ -169,6 +168,13 @@ onMounted(() => {
   text-overflow: ellipsis;
   overflow: hidden;
   font-size: 0.75rem;
+  position: relative;
+  top: 0;
+  transition: var(--transition-menus);
+}
+.navbar .navbar-button-icon svg {
+  width: 20px;
+  height: 20px;
 }
 
 .tool-dock {
