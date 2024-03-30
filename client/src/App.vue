@@ -9,15 +9,16 @@
 </template>
 
 <script setup>
-import AppHeader from "@/components/AppHeader.vue";
-import NavBar from "@/components/NavBar.vue";
-import WidgetDock from "@/components/widgets/WidgetDock.vue";
+import AppHeader from "@/components/AppHeader.vue"
+import NavBar from "@/components/NavBar.vue"
+import WidgetDock from "@/components/widgets/WidgetDock.vue"
 </script>
 
 <style>
 #app {
   height: 100dvh;
 }
+
 .view {
   padding-bottom: calc(64px + 4 * var(--sm));
   height: calc(100% - var(--header-height));
@@ -58,4 +59,7 @@ body {
 - TODO Ajouter un widget "conversion" pour convertir une monnaie dans une autre (fiat ou token)
 - TODO Ajouter la traduction
 - TOFIX Sur les tabs, lorsque l'on fait précédent les tab ne sont pas retriggered
+- TODO Créer un fichier JS qui contient les variables CSS (pour partager les valeurs entre les 2, commme pour les animations)
+- TODO Trouver un moyen plus sexy pour l'aller/retour sur les animations
+- TODO Le menu outils ne se referme pas lorsque l'on clique en dehors
 -->
