@@ -22,12 +22,14 @@
 
 <script setup>
 import CIcon from "@/components/CIcon.vue"
-import Select from "@/components/Select.vue"
+import Select from "@/components/forms/Select.vue"
 import useSettings from "@/composables/useSettings"
 import tokens from "@/datas/tokens"
 import { onMounted } from "vue"
 
-const model = defineModel()
+const model = defineModel({
+    default: { value: "BTC" }
+})
 
 onMounted(() => {
     model.value = tokens.find(c => c.value === useSettings().defaultTokenFrom)

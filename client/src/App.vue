@@ -14,7 +14,9 @@ import NavBar from "@/components/NavBar.vue"
 import WidgetDock from "@/components/widgets/WidgetDock.vue"
 </script>
 
-<style>
+<style lang="scss">
+@import "@/assets/styles/vars";
+
 #app {
   height: 100dvh;
 }
@@ -26,9 +28,9 @@ import WidgetDock from "@/components/widgets/WidgetDock.vue"
 }
 
 body {
-  background: linear-gradient(-10deg, rgb(25, 26, 26) 0.2%, #1b8087 91.1%);
+  background: linear-gradient(-10deg, rgb(5, 6, 6) 0.2%, rgb(10, 50, 50) 91.1%);
   background-attachment: fixed;
-  font-size: 20px;
+  font-size: 16px;
   font-family: Fredoka;
   color: white;
 }
@@ -62,4 +64,6 @@ body {
 - TODO Créer un fichier JS qui contient les variables CSS (pour partager les valeurs entre les 2, commme pour les animations)
 - TODO Trouver un moyen plus sexy pour l'aller/retour sur les animations
 - TODO Le menu outils ne se referme pas lorsque l'on clique en dehors
+- TODO Recherhe sur les select
+
 -->

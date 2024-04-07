@@ -1,44 +1,43 @@
 .input,
 .select {
 
-  /* color: white;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, .2);
-    outline: none;
-    box-shadow: var(--inset-shadow);
-    min-width: 0;
-    width: -webkit-fill-available; */
-
-  position: relative;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.33);
   color: white;
-  outline: 0 rgba(255, 255, 255, .25) solid;
+  outline: 1px rgba($colorPrimary, 1) solid;
   border-radius: 8px;
-  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, .2);
+  // font-size: .75rem;
+  // box-shadow: 1px 1px 10px rgba($colorPrimary, .5), 1px 1px 10px 5px rgba(50, 120, 90, .5);
+  // box-shadow: inset 0px 0px 0.5em 0px var(--color-primary),
+  //   0px 0px 0.5em 0px var(--color-primary);
   padding: .33rem .55rem;
   transition: var(--transition);
 
+  &:not(.input) {
+    padding: .25rem .33rem;
+  }
 
+  &:not(.select) {
+    position: relative;
+  }
+
+  &.focused,
+  &.filled {
+    label {
+      left: .55rem;
+      top: .5rem;
+      color: white;
+    }
+  }
 
   &.focused {
-    outline: 2px rgba(255, 255, 255, .25) solid;
-
-    &.filled {
-
-      label {
-        left: .55rem;
-        top: .33rem;
-        color: white;
-        font-size: var(--md);
-      }
-    }
+    outline: 1px rgba(255, 255, 255, .5) solid;
   }
 
   &:not(.filled):not(.focused) {
     label {
       top: 50%;
-      transform: translateY(-.7rem) translateX(.5rem);
-      font-size: 1.4rem;
+      transform: translateY(-.5rem) translateX(.5rem);
+      font-size: 1rem;
     }
   }
 
@@ -57,7 +56,15 @@
     position: absolute;
     transition: var(--transition);
     color: rgba(255, 255, 255, .66);
-    display: block;
+  }
+
+  .append {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-.5rem) translateX(-.5rem);
+    font-size: 1rem;
+    right: 0;
+
   }
 }
 
@@ -72,13 +79,13 @@
   cursor: pointer;
 
   &.mini {
-    width: fit-content;
+    width: 50px;
   }
 
   .select__header {
     display: flex;
     flex: 1;
-    padding: var(--md);
+    padding: var(--sm);
   }
 
   .select__label {
@@ -93,12 +100,14 @@
     border: none;
     outline: none;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    background: rgb(50 73 75 / 95%);
+    background: rgba($colorPrimary, .25);
     width: 240px;
     height: 0;
     transition: var(--transition-menus);
     overflow-y: scroll;
     padding: 0;
+    backdrop-filter: blur(8px);
+    z-index: 1;
 
     &.opened {
       height: 240px;
@@ -109,7 +118,7 @@
       user-select: none;
 
       &.selected {
-        background: #1b8087;
+        background: $colorPrimary;
       }
 
       &:not(.selected):hover {

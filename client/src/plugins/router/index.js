@@ -21,7 +21,7 @@ const routes = [
                 meta: {
                     title: "Portfolio"
                 },
-                component: () => import("@/views/Portfolio.vue")
+                component: () => import("@/views/Portfolio/index.vue")
             },
             {
                 path: "account",

@@ -62,10 +62,9 @@ const menus = ref([
   {
     label: "Sandbox",
     route: { name: "Sandbox" },
-    icon: "lifebuoy",
+    icon: "chart",
   },
 ])
-
 
 const routeMenuIndex = computed(() => {
   const foundIndex = menus.value.findIndex(
@@ -74,7 +73,8 @@ const routeMenuIndex = computed(() => {
   return foundIndex > -1 ? foundIndex : 0
 })
 const indicatorStyle = computed(() => ({
-  left: `calc(${routeMenuIndex.value} * 20%)`
+  left: `calc(${routeMenuIndex.value} * ${100 / (menus.value.length + 1)}%)`,
+  width: `calc(${100 / (menus.value.length + 1)}%)`
 }))
 
 function toggleApp(app = "") {
@@ -89,7 +89,7 @@ watch(
       (value) => {
         direction.value = value
       },
-      oldValue < newValue ? 30 : -30,
+      oldValue < newValue ? -30 : 30,
       290,
       easingFunctions.easeOutBack,
       true
@@ -111,10 +111,9 @@ onMounted(() => {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background: var(--primary);
+  background: var(--color-primary);
   height: 56px;
   z-index: 100000;
-  box-shadow: var(--volume-shadow);
 }
 
 .navbar .navbar-button {
@@ -127,6 +126,7 @@ onMounted(() => {
   position: relative;
   top: 0;
   transition: var(--transition-menus);
+  width: calc(100% / (v-bind("menus.length") + 1))
 }
 
 .navbar .navbar-button-indicator {

@@ -1,5 +1,11 @@
+$colorPrimary: #054f61;
+$colorSuccess: #009b5f;
+$colorError: #b8351e;
+
 :root {
-  --primary: #1b8087;
+  --color-primary: #{$colorPrimary};
+  --color-success: #{$colorSuccess};
+  --color-error: #{$colorError};
 
   --xs: .25rem;
   --sm: .5rem;
@@ -15,8 +21,6 @@
 
   --shadow: rgba(0, 0, 0, 0.33) 0px 1px 4px, rgba(0, 0, 0, 0.3) 5px 5px 8px -5px;
   --volume: rgba(0, 0, 0, 0.2) 0px -4px 0px inset;
-  /* TODO: Rename */
-  --volume-shadow: var(--shadow);
 
   --transition-menus: all .290s ease-out;
   --transition: all .245s ease-out;

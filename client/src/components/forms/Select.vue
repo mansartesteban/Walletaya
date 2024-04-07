@@ -80,19 +80,25 @@ function resize() {
     let menuHeight = 240
 
     if (selectOptionMenu.value) {
+
         let rect = selectOptionMenu.value.getBoundingClientRect()
+        console.log("rect", { rect, margin, menuWidth, innerHeight: window.innerHeight, innerWidth: window.innerWidth })
 
         if (rect.left <= margin) {
+            console.log("rect.left <= margin")
             selectOptionMenu.value.style.left = [margin, "px"].join("")
         }
         if (rect.top <= margin) {
+            console.log("rect.top <= margin")
             selectOptionMenu.value.style.top = [margin, "px"].join("")
         }
 
         if (rect.left + menuWidth >= window.innerWidth - margin) {
+            console.log("rect.left + menuWidth >= window.innerWidth - margin")
             selectOptionMenu.value.style.left = [window.innerWidth - (margin + menuWidth), "px"].join("")
         }
         if (rect.top + menuHeight >= window.innerHeight - margin) {
+            console.log("rect.top + menuHeight >= window.innerHeight - margin")
             selectOptionMenu.value.style.top = [window.innerHeight - (margin + menuHeight), "px"].join("")
         }
     }
