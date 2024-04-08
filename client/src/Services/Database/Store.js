@@ -5,17 +5,18 @@ class Store {
     name
     db
 
-    // autoSaveInterval
-
     datas = [];
+
+    callbacks = {
+        onSave: []
+    }
 
     constructor(name) {
         this.name = name
         Store.STORES.push(this.name)
-        // this.autoSaveInterval = 0
     }
 
-    save(id, value, immediate = false) {
+    save(id, value) {
 
         let findIndex = this.datas.findIndex(data => data.id === id)
         if (findIndex !== -1) {
@@ -24,9 +25,7 @@ class Store {
             this.datas.push({ id, value })
         }
 
-        if (immediate) {
-            this.saveAll()
-        }
+        return this.saveAll()
     }
 
     get(id) {
@@ -44,13 +43,9 @@ class Store {
         return Promise.resolve(true)
     }
 
-    // autosave() {
-    //     this.saveAll().then(() => {
-    //         if (this.autoSaveInterval > 0) {
-    //             setTimeout(this.autosave.bind(this), this.autoSaveInterval)
-    //         }
-    //     })
-    // }
+    onSave(callback) {
+        callback && this.callbacks.onSave.push(callback)
+    }
 
     saveAll() {
         const promises = []
@@ -59,7 +54,12 @@ class Store {
                 promises.push(this.db.setItem(this, data))
             }
         })
-        return Promise.all(promises)
+        let onFinished = Promise.all(promises)
+        onFinished.then(() => {
+            this.callbacks.onSave.forEach(cb => cb())
+
+        })
+        return onFinished
     }
 
     attachDB(db) {

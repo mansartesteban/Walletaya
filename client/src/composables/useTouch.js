@@ -115,7 +115,7 @@ export default function useTouch(element) {
         callbacks.forEach(({ callback, options }) => {
             callback(event, ...params)
             if (options?.vibrate && unref(options.vibrate)) {
-                window.navigator.vibrate([30])
+                window.navigator.vibrate(typeof (options.vibrate) === "boolean" ? [30] : options.vibrate)
             }
         })
     }

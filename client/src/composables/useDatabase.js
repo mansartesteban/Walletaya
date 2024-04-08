@@ -1,9 +1,8 @@
-const database = ref()
-
+let database = null
 export default () => {
 
     const attach = (databaseInstance) => {
-        database.value = databaseInstance
+        database = databaseInstance
     }
 
     return {

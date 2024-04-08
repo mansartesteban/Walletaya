@@ -114,13 +114,11 @@ class Database {
 
         return new Promise((resolve, reject) => {
             this.addRequest(db => {
-                console.log("this.name", store.name)
                 let transaction = db.transaction(store.name, "readonly")
                 let storeObject = transaction.objectStore(store.name)
                 let req = storeObject.get(id)
 
                 req.onsuccess = (res) => {
-                    console.log("req", req, res)
                     if (successCallback) successCallback(req.result.value)
                     resolve(req.result.value)
                 }
@@ -136,21 +134,17 @@ class Database {
     }
 
     setItem(store, value) {
-        if (typeof (store) === "string") {
-            store = this.getStore(store)
-        }
         return new Promise((resolve, reject) => {
             this.addRequest(db => {
 
                 let transaction = db.transaction(store.name, "readwrite")
                 let storeObject = transaction.objectStore(store.name)
 
-                console.log("what to poutine ?", JSON.stringify(value))
                 let req = storeObject.put(value)
 
                 let result = null
                 req.onsuccess = () => {
-                    setTimeout(() => resolve(req.result), 5000)
+                    resolve(req.result)
                 }
 
                 req.onerror = () => {

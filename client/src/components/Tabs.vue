@@ -14,7 +14,7 @@
   <!-- Tab contents container -->
   <div ref="tabs" class="tabs-content-container scroll-snap-x">
     <!-- Tab contents -->
-    <Tab :anchor="tab.props.anchor" v-for="tab in tabsContent">
+    <Tab v-for="tab in tabsContent" v-bind="tab.props">
       <component :is="tab.is" v-bind="tab.attrs"></component>
     </Tab>
   </div>
@@ -39,11 +39,13 @@ const tabsContent = computed(() =>
   slots
     .default()
     .filter((node) => node.type.name === "Tab")
-    .map((tab) => ({
-      is: tab.children.default,
-      attrs: tab.attrs,
-      props: tab.props,
-    }))
+    .map((tab) =>({
+        is: tab.children.default,
+        attrs: tab.attrs,
+        props: tab.props
+      }
+    ))
+  
 )
 
 /**

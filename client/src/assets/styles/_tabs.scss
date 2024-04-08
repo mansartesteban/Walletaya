@@ -26,14 +26,15 @@
   justify-content: center;
   padding: 0 1rem;
   scroll-snap-align: start;
+
+  >div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0.25rem 0;
+  }
 }
 
-.tab-header>div {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding: 0.25rem 0;
-}
 
 .tab-header-active-indicator {
   --indicator-height: 2px;
@@ -48,4 +49,9 @@
   scroll-snap-align: start;
   overflow-y: auto;
   padding: var(--lg);
+
+  &.no-gutters {
+    padding: 0;
+  }
+
 }

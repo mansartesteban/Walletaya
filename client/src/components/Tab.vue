@@ -1,14 +1,14 @@
 <template>
-  <article class="tab-content" :id="computedAnchor">
+  <article class="tab-content" :class="{'no-gutters': noGutters}" :id="computedAnchor">
     <slot></slot>
   </article>
 </template>
 
 <script setup>
 const props = defineProps({
-  title: {
-    type: String,
-    default: "[Onglet]",
+  noGutters: {
+    type: Boolean,
+    default: false
   },
   anchor: {
     type: String,

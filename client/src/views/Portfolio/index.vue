@@ -4,7 +4,7 @@
         <Tab title="Portefeuille" anchor="wallet">
             <PortfolioWallet></PortfolioWallet>
         </Tab>
-        <Tab title="Historique" anchor="history">
+        <Tab title="Historique" anchor="history2" noGutters>
             <PortfolioHistory></PortfolioHistory>
         </Tab>
     </Tabs>
