@@ -1,8 +1,8 @@
 <template>
+  <!-- :class="{ closed: widgetInstance.closed, moving: draggable.moving.value }" -->
   <div
     ref="widget"
     class="widget flex flex-column glass"
-    :class="{ closed: widgetInstance.closed, moving: draggable.moving.value }"
     @touchstart.passive="onTouchStart"
     @touchmove.passive="onTouchMove"
     @touchend.passive="onTouchEnd"
@@ -25,8 +25,7 @@
 
 <script setup>
 import WidgetBar from "@/components/widgets/WidgetBar.vue";
-import useTouch from "@/composables/useTouch";
-import useDrag from "@/composables/useDrag";
+// import useDrag from "@/composables/useDrag";
 
 const props = defineProps({
   widgetInstance: {
@@ -35,19 +34,18 @@ const props = defineProps({
 });
 
 const widget = ref();
-const touchable = useTouch(widget);
-const draggable = useDrag(widget);
+// const draggable = useDrag(widget);
 
-touchable.onDragStart(draggable.startDrag, { vibrate: true });
-touchable.onDrag(draggable.drag);
-touchable.onDragEnd(draggable.stopDrag);
+// touchable.onDragStart(draggable.startDrag, { vibrate: true });
+// touchable.onDrag(draggable.drag);
+// touchable.onDragEnd(draggable.stopDrag);
 </script>
 
 <style scoped>
 .widget {
   position: fixed;
-  top: v-bind("widgetInstance.position.y");
-  left: v-bind("widgetInstance.position.x");
+  /* top: v-bind("widgetInstance.position.y");
+  left: v-bind("widgetInstance.position.x"); */
   width: 75%;
   height: 75%;
   border-radius: 16px;
@@ -60,27 +58,27 @@ touchable.onDragEnd(draggable.stopDrag);
 
 @keyframes widget-moving {
   0% {
-    transform: scale(1)
-      translate(
+    transform: scale(1);
+      /* translate(
         v-bind("draggable.transform.value.x"),
         v-bind("draggable.transform.value.y")
-      );
+      ); */
   }
 
   50% {
-    transform: scale(1.05)
-      translate(
+    transform: scale(1.05);
+      /* translate(
         v-bind("draggable.transform.value.x"),
         v-bind("draggable.transform.value.y")
-      );
+      ); */
   }
 
   100% {
-    transform: scale(1)
-      translate(
+    transform: scale(1);
+      /* translate(
         v-bind("draggable.transform.value.x"),
         v-bind("draggable.transform.value.y")
-      );
+      ); */
   }
 }
 
