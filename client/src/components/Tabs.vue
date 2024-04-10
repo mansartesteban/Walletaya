@@ -32,7 +32,6 @@
 </template>
 
 <script setup>
-import { onMounted, useSlots, watch } from "vue";
 import Tab from "@/components/Tab.vue";
 import { useRoute, useRouter } from "vue-router";
 

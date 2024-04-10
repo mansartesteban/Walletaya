@@ -1,21 +1,18 @@
 <template>
-
-    <Tabs>
-        <Tab title="Portefeuille" anchor="wallet">
-            <PortfolioWallet></PortfolioWallet>
-        </Tab>
-        <Tab title="Historique" anchor="history2" noGutters>
-            <PortfolioHistory></PortfolioHistory>
-        </Tab>
-    </Tabs>
+  <Tabs>
+    <Tab title="Historique" anchor="history2" noGutters>
+      <PortfolioHistory></PortfolioHistory>
+    </Tab>
+    <Tab title="Portefeuille" anchor="wallet">
+      <PortfolioWallet></PortfolioWallet>
+    </Tab>
+  </Tabs>
 </template>
 
 <script setup>
+import PortfolioWallet from "./Wallet.vue";
+import PortfolioHistory from "./History.vue";
 
-import PortfolioWallet from "./Wallet.vue"
-import PortfolioHistory from "./History.vue"
-
-import Tabs from "@/components/Tabs.vue"
-import Tab from "@/components/Tab.vue"
-
+import Tabs from "@/components/Tabs.vue";
+import Tab from "@/components/Tab.vue";
 </script>

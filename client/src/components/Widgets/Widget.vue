@@ -44,6 +44,8 @@ const widget = ref();
 <style scoped>
 .widget {
   position: fixed;
+  /* top: 12.5%;
+  left: 12.5%; */
   /* top: v-bind("widgetInstance.position.y");
   left: v-bind("widgetInstance.position.x"); */
   width: 75%;
@@ -59,7 +61,7 @@ const widget = ref();
 @keyframes widget-moving {
   0% {
     transform: scale(1);
-      /* translate(
+    /* translate(
         v-bind("draggable.transform.value.x"),
         v-bind("draggable.transform.value.y")
       ); */
@@ -67,7 +69,7 @@ const widget = ref();
 
   50% {
     transform: scale(1.05);
-      /* translate(
+    /* translate(
         v-bind("draggable.transform.value.x"),
         v-bind("draggable.transform.value.y")
       ); */
@@ -75,7 +77,7 @@ const widget = ref();
 
   100% {
     transform: scale(1);
-      /* translate(
+    /* translate(
         v-bind("draggable.transform.value.x"),
         v-bind("draggable.transform.value.y")
       ); */

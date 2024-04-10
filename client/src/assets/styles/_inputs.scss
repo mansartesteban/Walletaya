@@ -94,47 +94,5 @@
     text-overflow: ellipsis;
   }
 
-  .select__option-menu {
-    position: absolute;
-    border-radius: 6px;
-    border: none;
-    outline: none;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px;
-    background: rgba($colorPrimary, .25);
-    width: 240px;
-    height: 0;
-    transition: var(--transition-menus);
-    overflow-y: scroll;
-    padding: 0;
-    backdrop-filter: blur(8px);
-    z-index: 1;
 
-    &.opened {
-      height: 240px;
-    }
-
-    .option {
-      padding: var(--lg) var(--md);
-      user-select: none;
-
-      &.selected {
-        background: $colorPrimary;
-      }
-
-      &:not(.selected):hover {
-        background: rgba(255, 255, 255, .08)
-      }
-
-      &:active {
-        background: rgba(255, 255, 255, .15)
-      }
-
-    }
-
-  }
-
-  .option {
-    display: flex;
-    align-items: center;
-  }
 }

@@ -1,0 +1,46 @@
+.menu {
+   
+
+    .menu-panel {
+      box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      background: rgba($colorPrimary, .25);
+      width: 240px;
+      transition: var(--transition-menus);
+      padding: 0;
+      position: absolute;
+      height: 0;
+      overflow-y: scroll;
+      backdrop-filter: blur(8px);
+      z-index: 1;
+
+      &.opened {
+        height: fit-content;
+        max-height: 240px;
+      }
+    }
+
+    .option {
+      padding: var(--md) var(--md);
+      user-select: none;
+      display: flex;
+    align-items: center;
+
+      &.selected {
+        background: $colorPrimary;
+      }
+
+      &:not(.selected):hover {
+        background: rgba(255, 255, 255, .08)
+      }
+
+      &:active {
+        background: rgba(255, 255, 255, .15)
+      }
+
+    }
+
+  }
+

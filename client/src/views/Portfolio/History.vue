@@ -1,5 +1,6 @@
 <template>
   <!-- Wallet -->
+  <Menu :items="items"></Menu>
   <div class="flex flex-column">
     <template v-for="transaction in history">
       <div
@@ -32,6 +33,26 @@
 import useDatabase from "@/composables/useDatabase";
 import { getToken } from "@/utils/Token";
 import CIcon from "@/components/CIcon.vue";
+
+import Menu from "@/components/Menu.vue";
+
+const items = ref([
+  {
+    label: "Supprimer",
+    icon: "delete",
+    sublabel: "Supprimer la transaction",
+  },
+  {
+    label: "Modifier",
+    icon: "edit",
+    sublabel: "Modifier la transaction",
+  },
+  {
+    label: "Copier",
+    icon: "copy",
+    sublabel: "Copier la transaction",
+  },
+]);
 
 const db = useDatabase().database;
 const store = db.getStore("transactions");
