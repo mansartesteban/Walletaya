@@ -1,6 +1,28 @@
 <template>
-  <div ref="select" class="select flex flex-column gap-md" :class="{ mini }">
-    <div
+  <div ref="select" class="select" :class="{ mini }">
+
+    <Menu
+      :modelValue="model"
+      :items="items"
+      @itemClick="selectItem"
+      closeOnCLick
+    >
+    <template #activator="{on}">
+      <slot name="activator" v-bind="{on, item: model}">
+        <div class="select-activator" @click="on.onClick">
+          <slot name="selected-option-mini-icon" v-bind="{item: model}">
+            <div v-if="icon" class="select-activator-icon"></div>
+          </slot>
+          <slot name="selected-option-mini-label" v-bind="{item: model}">
+            <div v-if="label" class="select-activator-label"></div>
+          </slot>
+        </div>
+      </slot>
+    </template>
+
+    </Menu>
+
+    <!-- <div
       class="select__header flex align-items-center"
       :class="mini ? 'justify-content-center' : 'justify-content-space-between'"
     >
@@ -22,21 +44,9 @@
         <template v-else>
           <span class="select__label">{{ label }}</span>
         </template>
-        <!-- <Icon>chevron-down</Icon> -->
       </template>
-    </div>
-    <Menu
-      :modelValue="model"
-      :items="items"
-      @itemClick="selectItem"
-      closeOnCLick
-    >
-      <!-- <template
-        v-for="slot in slots"
-        #[slot]="slotProps"
-        v-bind="slotProps"
-      ></template> -->
-    </Menu>
+    </div> -->
+    
   </div>
 </template>
 
@@ -51,6 +61,10 @@ const props = defineProps({
   label: {
     type: String,
     default: "Sélectionner une valeur",
+  },
+  icon: {
+    type: String,
+    default: ""
   },
   mini: {
     type: Boolean,

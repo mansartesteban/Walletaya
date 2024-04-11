@@ -1,6 +1,6 @@
 <template>
-    <div class="toggle flex w-100">
-        <div v-for="item in items" class="item" :class="{ active: item.value === model?.value }"
+    <div class="toggle flex w-100 h-100">
+        <div v-for="item in items" class="item  flex align-items-center justify-content-center" :class="{ active: item.value === model?.value }"
             @click="selectItem(item)">{{ item.label }}</div>
     </div>
 
@@ -37,7 +37,7 @@ onMounted(() => model.value = props.items[0])
             border-width: 1px 0 1px 1px;
             border-style: solid;
             border-color: var(--color-primary);
-            border-radius: 6px 0 0 6px;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
 
             &.active {
                 background: var(--color-success);
@@ -49,7 +49,7 @@ onMounted(() => model.value = props.items[0])
             border-width: 1px 1px 1px 0;
             border-style: solid;
             border-color: var(--color-primary);
-            border-radius: 0 6px 6px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
 
             &.active {
                 border-color: var(--color-error);

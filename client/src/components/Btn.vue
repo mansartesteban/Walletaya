@@ -56,7 +56,7 @@ function onClick(e) {
 <style scoped lang="scss">
 .btn {
     overflow: hidden;
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     border: 0;
     outline: none;
     transition: var(--transition);

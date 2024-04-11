@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-column gap-md">
-    <div class="flex gap-md">
+    <div class="form-line flex gap-md">
       <InputNumber
         v-model="toAmount"
         label="Montant"
@@ -10,7 +10,7 @@
       </InputNumber>
       <TokenPicker v-model="selectedTokenTo"></TokenPicker>
     </div>
-    <div class="flex gap-md align-items-center text-sm">
+    <div class="form-line flex gap-md align-items-center text-sm">
       <InputNumber
         v-model="toValue"
         label="Valeur"
@@ -18,7 +18,9 @@
         append="USDT"
       ></InputNumber>
     </div>
-    <Toggle v-model="positive" :items="buyOrSellItems"></Toggle>
+    <div class="form-line">
+      <Toggle v-model="positive" :items="buyOrSellItems"></Toggle>
+    </div>
     <div
       class="amount-display flex align-items-center gap-xs"
       :class="positive.value === 'positive' ? 'positive' : 'negative'"

@@ -1,20 +1,20 @@
 <template>
     <Select v-model="model" :items="tokens" label="Sélectionner une monnaie" mini>
-        <template #selected-option-mini="item">
-            <CIcon :token="item.value"></CIcon>
+        <template #selected-option-mini-icon="{item}">
+            <CIcon :token="item?.value"></CIcon>
         </template>
-        <template #selected-option-icon="item">
-            <CIcon :token="item.value"></CIcon>
+        <template #selected-option-icon="{item}">
+            <!-- <CIcon :token="item.value"></CIcon> -->
         </template>
-        <template #selected-option-label="item">
-            {{ item.label }} ({{ item.value }})
+        <template #selected-option-label="{item}">
+            <!-- {{ item.label }} ({{ item.value }}) -->
         </template>
 
-        <template #option-icon="item">
-            <CIcon :token="item.value"></CIcon>
+        <template #option-icon="{item}">
+            <!-- <CIcon :token="item.value"></CIcon> -->
         </template>
-        <template #option-label="item">
-            {{ item.label }} ({{ item.value }})
+        <template #option-label="{item}">
+            <!-- {{ item.label }} ({{ item.value }}) -->
         </template>
     </Select>
 

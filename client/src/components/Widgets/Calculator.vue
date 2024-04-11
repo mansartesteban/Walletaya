@@ -156,7 +156,7 @@ function clear() {
 .calculator-screen {
   /* margin: var(--sm); */
   background: rgba(0, 0, 0, 0.5);
-  border-radius: 0.75rem;
+  border-radius: var(--border-radius);
   text-align: right;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -177,7 +177,7 @@ function clear() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: var(--border-radius);
   background: rgba(0, 0, 0, 0.5);
 }
 </style>

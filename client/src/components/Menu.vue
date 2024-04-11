@@ -1,7 +1,9 @@
 <template>
   <div ref="menu" class="menu">
-    <slot name="activator">
-      <div class="menu-activator" @click="toggle">test</div>
+    <slot name="activator" v-bind="{ on: activatorEvents }">
+      <!-- <div class="menu-activator" v-on="activatorEvents">
+        <Icon>chevron-down</Icon>
+      </div> -->
     </slot>
 
     <div ref="menuPanel" class="menu-panel" :class="{ opened }">
@@ -43,6 +45,11 @@ const props = defineProps({
 const emits = defineEmits(["item-click"]);
 
 const model = defineModel();
+
+const activatorEvents = ref({
+  onClick: toggle
+})
+
 
 const opened = ref(false);
 const menuPanel = ref(null);

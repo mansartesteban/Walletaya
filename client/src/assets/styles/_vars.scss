@@ -2,6 +2,8 @@ $colorPrimary: #054f61;
 $colorSuccess: #009b5f;
 $colorError: #b8351e;
 
+$borderRadius: 10px;
+
 :root {
   --color-primary: #{$colorPrimary};
   --color-success: #{$colorSuccess};
@@ -28,4 +30,6 @@ $colorError: #b8351e;
 
   --tab-header-height: 32px;
   --header-height: 64px;
+
+  --border-radius: #{$borderRadius};
 }

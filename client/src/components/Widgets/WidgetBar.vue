@@ -3,7 +3,7 @@
     :icon="icon"
     :title="title"
     :items="items"
-    style="border-radius: 16px 16px 0 0"
+    style="border-radius: var(--border-radius) var(--border-radius) 0 0"
   >
   </Toolbar>
 </template>

@@ -64,12 +64,10 @@ h6 {
     height: 100%;
 }
 
-*::-webkit-scrollbar-thumb {
-    background: red;
-    border-radius: 10px;
+::-webkit-scrollbar-thumb {
+    border-radius: var(--border-radius);
 }
 
 * {
-    scrollbar-color: red;
-    scrollbar-width: 30px;
+    // scrollbar-width: 30px;
 }

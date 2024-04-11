@@ -1,14 +1,13 @@
-.input,
-.select {
+.form-line {
+  height: 48px;
+}
+
+.input {
 
   background: rgba(0, 0, 0, 0.33);
   color: white;
   outline: 1px rgba($colorPrimary, 1) solid;
-  border-radius: 8px;
-  // font-size: .75rem;
-  // box-shadow: 1px 1px 10px rgba($colorPrimary, .5), 1px 1px 10px 5px rgba(50, 120, 90, .5);
-  // box-shadow: inset 0px 0px 0.5em 0px var(--color-primary),
-  //   0px 0px 0.5em 0px var(--color-primary);
+  border-radius: var(--border-radius);
   padding: .33rem .55rem;
   transition: var(--transition);
 
@@ -31,6 +30,7 @@
 
   &.focused {
     outline: 1px rgba(255, 255, 255, .5) solid;
+    box-shadow: 0px 0px 0.5em 0px var(--color-primary);
   }
 
   &:not(.filled):not(.focused) {
@@ -76,23 +76,36 @@
 
 
 .select {
-  cursor: pointer;
 
-  &.mini {
-    width: 50px;
-  }
+  .select-activator {
+    background: rgba(0, 0, 0, 0.33);
+    color: white;
+    outline: 1px rgba($colorPrimary, 1) solid;
+    border-radius: var(--border-radius);
+    padding: .33rem .55rem;
+    transition: var(--transition);
 
-  .select__header {
+    height: 48px;
+    width: 48px;
     display: flex;
-    flex: 1;
-    padding: var(--sm);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
+
+  // &.mini {
+  //   width: 50px;
+  // }
+
+  // .select__header {
+  //   display: flex;
+  //   flex: 1;
+  // }
 
   .select__label {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
 
 }
