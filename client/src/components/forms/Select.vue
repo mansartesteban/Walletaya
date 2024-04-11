@@ -1,25 +1,57 @@
 <template>
   <div ref="select" class="select" :class="{ mini }">
+    <Menu :modelValue="model" :options="options" @optionClick="selectOption">
+      <template #activator="{ on }">
+        <slot v-if="model" name="activator" v-bind="{ on, option: model }">
+          <div class="select-activator" @click="on.onClick">
+            <slot
+              v-if="model"
+              name="selected-option-mini-icon"
+              v-bind="{ option: model }"
+            >
+              <div v-if="icon" class="select-activator-icon"></div>
+            </slot>
+            <slot
+              v-if="model"
+              name="selected-option-mini-label"
+              v-bind="{ option: model }"
+            >
+              <div v-if="label" class="select-activator-label"></div>
+            </slot>
+          </div>
+        </slot>
+      </template>
 
-    <Menu
-      :modelValue="model"
-      :items="items"
-      @itemClick="selectItem"
-      closeOnCLick
-    >
-    <template #activator="{on}">
-      <slot name="activator" v-bind="{on, item: model}">
-        <div class="select-activator" @click="on.onClick">
-          <slot name="selected-option-mini-icon" v-bind="{item: model}">
-            <div v-if="icon" class="select-activator-icon"></div>
-          </slot>
-          <slot name="selected-option-mini-label" v-bind="{item: model}">
-            <div v-if="label" class="select-activator-label"></div>
-          </slot>
-        </div>
-      </slot>
-    </template>
+      <template #option="{ on, option }">
+        <slot name="option" v-bind="{ option }" v-on="on"></slot>
+      </template>
+      <template #option-icon="{ option }">
+        <slot name="option-icon" v-bind="{ option }"></slot>
+      </template>
+      <template #option-label="{ option }">
+        <slot name="option-label" v-bind="{ option }"></slot>
+      </template>
+      <!-- <template v-if="slots?.option" #option="{ on, option }">
+        <slot name="option" v-bind="{ on, option }"></slot>
+      </template> -->
+      <!-- weh slots {{ slots }} -->
 
+      <template v-for="slot in $slots" #[slot]="slotProps">
+        <slot :name="slot" v-bind="slotProps"></slot>
+      </template>
+
+      <!-- <template v-if="slots?.optionIcon">
+        <slot name="option-icon" v-bind="{ option }">
+          <template #option-icon="{ option }">test</template>
+        </slot>
+      </template> -->
+      <!-- <template v-if="slot.option"> -->
+      <!-- <slot name="option-label" v-bind="{ option }"></slot> -->
+      <!-- </template> -->
+      <!-- <template v-else> -->
+      <!-- <slot name="option-icon" v-bind="{ option }"></slot> -->
+      <!-- <slot name="option-label" v-bind="{ option }"></slot> -->
+      <!-- </template> -->
     </Menu>
 
     <!-- <div
@@ -46,7 +78,7 @@
         </template>
       </template>
     </div> -->
-    
+    <!-- <slot></slot> -->
   </div>
 </template>
 
@@ -54,7 +86,7 @@
 import Menu from "@/components/Menu.vue";
 
 const props = defineProps({
-  items: {
+  options: {
     type: Array,
     default: () => [],
   },
@@ -64,7 +96,7 @@ const props = defineProps({
   },
   icon: {
     type: String,
-    default: ""
+    default: "",
   },
   mini: {
     type: Boolean,
@@ -76,8 +108,8 @@ const select = ref();
 
 const model = defineModel();
 
-function selectItem(item) {
-  model.value = item;
+function selectOption(option) {
+  model.value = option;
 }
 </script>
 

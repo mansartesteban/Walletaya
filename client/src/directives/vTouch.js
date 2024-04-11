@@ -12,7 +12,18 @@ export default (app) => {
 
       Object.keys(touchable.events).forEach((event) => {
         event = new Event(event);
-        touchable.events[event.type](() => {
+        touchable.events[event.type]((e) => {
+          event.view = e.view;
+          event.detail = e.detail;
+          event.ctrlKey = e.ctrlKey;
+          event.altKey = e.altKey;
+          event.shiftKey = e.shiftKey;
+          event.metaKey = e.metaKey;
+          event.touches = e.touches;
+          event.targetTouches = e.targetTouches;
+          event.changedTouches = e.changedTouches;
+          event.scale = e.scale;
+          event.rotation = e.rotation;
           el.dispatchEvent(event);
         });
       });

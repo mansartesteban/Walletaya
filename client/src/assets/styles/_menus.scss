@@ -4,7 +4,6 @@
     .menu-panel {
       box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px;
       border-radius: var(--border-radius);
-      border: none;
       outline: none;
       background: rgba($colorPrimary, .25);
       width: 240px;
@@ -15,6 +14,7 @@
       overflow-y: scroll;
       backdrop-filter: blur(8px);
       z-index: 1;
+      // border: 1px solid var(--color-primary);
 
       &.opened {
         height: fit-content;
@@ -29,7 +29,11 @@
     align-items: center;
 
       &.selected {
-        background: $colorPrimary;
+        background: rgba($colorPrimary, .5);
+        border-top: 1px solid var(--color-primary);
+        border-bottom: 1px solid var(--color-primary);
+        margin: -1px 0;
+        box-shadow: var(--shadow);
       }
 
       &:not(.selected):hover {

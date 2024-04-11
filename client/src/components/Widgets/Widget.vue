@@ -44,8 +44,8 @@ const widget = ref();
 <style scoped>
 .widget {
   position: fixed;
-  top: 12.5%;
-  left: 12.5%;
+  /* top: 12.5%;
+  left: 12.5%; */
   /* top: v-bind("widgetInstance.position.y");
   left: v-bind("widgetInstance.position.x"); */
   width: 75%;

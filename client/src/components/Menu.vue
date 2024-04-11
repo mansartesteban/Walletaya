@@ -1,30 +1,38 @@
 <template>
   <div ref="menu" class="menu">
-    <slot name="activator" v-bind="{ on: activatorEvents }">
-      <!-- <div class="menu-activator" v-on="activatorEvents">
-        <Icon>chevron-down</Icon>
-      </div> -->
-    </slot>
-
+    <template v-if="!noActivator">
+      <slot name="activator" v-bind="{ on: activatorEvents }">
+        <div class="menu-activator" v-on="activatorEvents">
+          <Icon>chevron-down</Icon>
+        </div>
+      </slot>
+    </template>
     <div ref="menuPanel" class="menu-panel" :class="{ opened }">
       <!-- <input class="search"> -->
-      <template v-for="item in items">
-        <div
-          @click.native="emits('item-click', item)"
-          class="option flex gap-md"
-          :class="{ selected: model && item.value === model.value }"
+      <template v-for="option in options">
+        <slot
+          v-if="option"
+          name="option"
+          v-bind="{ on: optionEvents, option: option }"
         >
-          <slot name="option-icon" v-bind="item">
-            <Icon :size="20">{{ item.icon }}</Icon>
-          </slot>
+          <div
+            @click="optionEvents.onClick(option)"
+            class="option flex gap-md"
+            :class="{ selected: model && option.value === model.value }"
+          >
+            <slot name="option-icon" v-bind="{ option: option }">
+              <Icon :size="20">{{ option.icon }}</Icon>
+            </slot>
 
-          <div class="select__label">
-            <slot name="option-label" v-bind="item">{{ item.label }}</slot>
+            <slot name="option-label" v-bind="{ option: option }">
+              {{ option.label }}
+            </slot>
           </div>
-        </div>
+        </slot>
       </template>
     </div>
   </div>
+  <slot></slot>
 </template>
 
 <script setup>
@@ -32,27 +40,57 @@ import Icon from "@/components/Icon.vue";
 import { onClickOutside } from "@vueuse/core";
 
 const props = defineProps({
-  items: {
+  options: {
     type: Array,
     default: () => [],
   },
-  closeOnClick: {
+  persistOnClick: {
     type: Boolean,
     default: false,
   },
+  noActivator: {
+    type: Boolean,
+    default: false,
+  },
+  position: {
+    type: Object,
+    default: null,
+  },
 });
 
-const emits = defineEmits(["item-click"]);
+const emits = defineEmits(["option-click"]);
 
 const model = defineModel();
+const opened = ref(false);
+const localPosition = ref({ x: 0, y: 0 });
+const computedPosition = computed(() => props.position || localPosition.value);
 
 const activatorEvents = ref({
-  onClick: toggle
-})
+  onClick: onActivatorClick,
+});
 
-
-const opened = ref(false);
+const optionEvents = ref({
+  onClick: selectValue,
+});
+const menu = ref(null);
 const menuPanel = ref(null);
+
+function onActivatorClick(e) {
+  localPosition.value.x = e.target.offsetLeft;
+  localPosition.value.y = e.target.offsetTop + 48;
+  toggle();
+}
+
+function selectValue(option) {
+  if (option.callback) {
+    option.callback(option);
+  }
+  model.value = option;
+  emits("option-click", option);
+  if (!props.persistOnClick) {
+    close();
+  }
+}
 
 function resize() {
   let margin = 16;
@@ -60,22 +98,26 @@ function resize() {
   let menuHeight = 240;
 
   if (menuPanel.value) {
-    let rect = menuPanel.value.getBoundingClientRect();
+    let left = computedPosition.value.x;
+    let top = computedPosition.value.y;
 
-    if (rect.left <= margin) {
+    menuPanel.value.style.left = [left, "px"].join("");
+    menuPanel.value.style.top = [top, "px"].join("");
+
+    if (left < margin) {
       menuPanel.value.style.left = [margin, "px"].join("");
     }
-    if (rect.top <= margin) {
+    if (top < margin) {
       menuPanel.value.style.top = [margin, "px"].join("");
     }
 
-    if (rect.left + menuWidth >= window.innerWidth - margin) {
+    if (left + menuWidth > window.innerWidth - margin) {
       menuPanel.value.style.left = [
         window.innerWidth - (margin + menuWidth),
         "px",
       ].join("");
     }
-    if (rect.top + menuHeight >= window.innerHeight - margin) {
+    if (top + menuHeight > window.innerHeight - margin) {
       menuPanel.value.style.top = [
         window.innerHeight - (margin + menuHeight),
         "px",
@@ -94,9 +136,14 @@ function close() {
 }
 
 function toggle() {
-  console.log("clickked?");
   opened.value ? close() : open();
 }
 
-onClickOutside(menuPanel, (e) => close());
+onClickOutside(menu, (e) => close());
+
+defineExpose({
+  open,
+  close,
+  toggle,
+});
 </script>

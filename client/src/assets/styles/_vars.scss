@@ -1,6 +1,6 @@
 $colorPrimary: #054f61;
 $colorSuccess: #009b5f;
-$colorError: #b8351e;
+$colorError: #c0243e;
 
 $borderRadius: 10px;
 
@@ -21,7 +21,7 @@ $borderRadius: 10px;
   --zi-modal: 6000;
   --zi-dialog: var(--zi-modal);
 
-  --shadow: rgba(0, 0, 0, 0.33) 0px 1px 4px, rgba(0, 0, 0, 0.3) 5px 5px 8px -5px;
+  --shadow: rgba(0, 0, 0, 0.33) 0px 1px 4px, rgba(0, 0, 0, 0.3) 5px 5px 8px -5px, 0 0 15px 2px rgba(0, 0,, 0, .2);
   --volume: rgba(0, 0, 0, 0.2) 0px -4px 0px inset;
 
   --transition-menus: all .290s ease-out;

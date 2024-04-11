@@ -6,12 +6,14 @@
   <NavBar></NavBar>
 
   <WidgetDock></WidgetDock>
+  <ContextMenu></ContextMenu>
 </template>
 
 <script setup>
-import AppHeader from "@/components/AppHeader.vue"
-import NavBar from "@/components/NavBar.vue"
-import WidgetDock from "@/components/widgets/WidgetDock.vue"
+import AppHeader from "@/components/AppHeader.vue";
+import NavBar from "@/components/NavBar.vue";
+import WidgetDock from "@/components/widgets/WidgetDock.vue";
+import ContextMenu from "@/components/ContextMenu.vue";
 </script>
 
 <style lang="scss">
