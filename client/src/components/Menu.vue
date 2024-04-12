@@ -1,5 +1,5 @@
 <template>
-  <div ref="menu" class="menu">
+  <div ref="menu " class="menu">
     <template v-if="!noActivator">
       <slot name="activator" v-bind="{ on: activatorEvents }">
         <div class="menu-activator" v-on="activatorEvents">
@@ -7,7 +7,7 @@
         </div>
       </slot>
     </template>
-    <div ref="menuPanel" class="menu-panel" :class="{ opened }">
+    <div ref="menuPanel" class="menu-panel blurry" :class="{ opened }">
       <!-- <input class="search"> -->
       <template v-for="option in options">
         <slot

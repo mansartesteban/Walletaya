@@ -41,6 +41,7 @@ export default function Touch(element) {
 
     // When screen is touched
     element.ontouchstart = (e) => {
+      console.log("start");
       e.preventDefault();
       // Always trigger touch event
       trigger(callbacks.onTouch, e);
@@ -65,18 +66,19 @@ export default function Touch(element) {
 
     // When user move his digit
     element.ontouchmove = (e) => {
+      console.log("move");
       e.preventDefault();
       // If drag mode is enable trigger the drag event
       if (isDragging.value) {
         trigger(callbacks.onDrag, e);
+        // Resets the touching state and clear the longTouch trigger so the touch and longTouch events are not triggered
+        clearTimeout(longTouchTrigger);
       }
-
-      // Resets the touching state and clear the longTouch trigger so the touch and longTouch events are not triggered
-      clearTimeout(longTouchTrigger);
     };
 
     // When the user release his digit
     element.ontouchend = (e) => {
+      console.log("end");
       e.preventDefault();
       // If drag mode is enable, triggers the dragEnd event
       if (isDragging.value) {

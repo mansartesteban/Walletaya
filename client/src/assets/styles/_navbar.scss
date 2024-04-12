@@ -1,0 +1,65 @@
+
+.navbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: $appColor;
+    height: 56px;
+    z-index: 100000;
+  
+    .navbar-button {
+      height: 100%;
+      flex: 1;
+      text-align: center;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.66);
+      text-decoration: none;
+      position: relative;
+      top: 0;
+      transition: var(--transition-menus);
+      width: calc(100% / (v-bind("menus.length") + 1));
+  
+      &.router-link-exact-active {
+        z-index: 1;
+        animation: navbar-indicator-animation 0.29s ease-in-out;
+        color: white;
+  
+        svg {
+          top: -8px;
+          width: 32px;
+          height: 32px;
+        }
+      }
+      svg {
+        position: relative;
+        top: 0;
+        transition: var(--transition-menus);
+      }
+      .navbar-button-label {
+        top: -6px;
+      }
+       .navbar-button-label {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: 0.75rem;
+        position: relative;
+        top: 0;
+        transition: var(--transition-menus);
+      }
+      .navbar-button-icon svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  
+    .navbar-button-indicator {
+      --indicator-margin: 0rem;
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      width: calc(20% + var(--indicator-margin));
+      pointer-events: none;
+      transition: var(--transition-menus);
+    }
+  }

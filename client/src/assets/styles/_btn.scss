@@ -1,0 +1,59 @@
+.btn {
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    border: 0;
+    outline: none;
+    transition: var(--transition);
+    padding: var(--md);
+    font-size: 1rem;
+    text-align: center;
+    position: relative;
+
+    &.fab {
+        position: fixed;
+        right: var(--md);
+        bottom: calc(var(--md) + 56px);
+        box-shadow: var(--shadow);
+        border-radius: 999px;
+        padding: var(--lg);
+    }
+  
+    * {
+      user-select: none;
+    }
+  
+    &:active {
+      transition: var(--transition);
+      /*transform: translateY(4px);*/
+      box-shadow: none !important;
+      /*height: calc(100% - 120px) !important;*/
+    }
+  
+    &.disabled {
+      color: rgba(255, 255, 255, 0.25);
+      pointer-events: none;
+    }
+  
+    &:not(.flat) {
+      background: var(--color-primary);
+    }
+  
+    .ripple {
+      position: absolute;
+      top: v-bind("ripple.y");
+      left: v-bind("ripple.x");
+      background: rgba(255, 255, 255, 0.25);
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      animation: ripple 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+      transform: translate(-50%, -50%);
+      display: none;
+    }
+  
+    .ripple.active {
+      display: block;
+    }
+  }
+  
+  

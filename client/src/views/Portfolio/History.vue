@@ -1,12 +1,14 @@
 <template>
-  <!-- Wallet -->
+  <Btn v-if="!drawerOpened" @click="drawerOpened = true" fab>
+    <Icon>transaction-add</Icon>
+  </Btn>
   <div class="flex flex-column">
     <template v-for="transaction in history">
       <div
         class="transaction-line flex align-items-center justify-content-space-between gap-md p-md"
-        v-touch
-        @longTouch="onLongTouch($event, transaction)"
       >
+        <!-- v-touch -->
+        <!-- @touch="onTouch($event, transaction)" -->
         <div class="flex align-items-center gap-md">
           <CIcon :token="transaction.token.value"></CIcon>
           <div class="flex flex-column gap-xs">
@@ -26,9 +28,17 @@
       </div>
     </template>
   </div>
+
+  <Drawer v-model:opened="drawerOpened">
+    <TransitionForm></TransitionForm>
+  </Drawer>
 </template>
 
 <script setup>
+import Btn from "@/components/Btn.vue";
+import Icon from "@/components/Icon.vue";
+import TransitionForm from "./TransactionForm.vue";
+import Drawer from "@/components/Drawer.vue";
 import useDatabase from "@/composables/useDatabase";
 import { getToken } from "@/utils/Token";
 import CIcon from "@/components/CIcon.vue";
@@ -39,6 +49,7 @@ const contextMenu = useContextMenu();
 const db = useDatabase().database;
 const store = db.getStore("transactions");
 const history = ref([]);
+const drawerOpened = ref(false);
 
 const amount = (value, noSymbol = false) => {
   return value
@@ -62,7 +73,7 @@ function copyTransaction(transaction) {
   // store.delete(transaction.id);
 }
 
-const onLongTouch = (e, transaction) => {
+const onTouch = (e, transaction) => {
   console.log("on long teouch");
   contextMenu.open(e, [
     {
@@ -113,6 +124,10 @@ onMounted(() => {
 <style scoped lang="scss">
 .transaction-line {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  &:active {
+    background: rgba(255, 255, 255, 0.1);
+  }
 }
 
 .positive {

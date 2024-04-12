@@ -1,6 +1,14 @@
+// @font-face {
+//     font-family: Fredoka;
+//     src: url("@/assets/fonts/Fredoka.ttf");
+// }
 @font-face {
-    font-family: Fredoka;
-    src: url("@/assets/fonts/Fredoka.ttf");
+    font-family: Satoshi;
+    src: url("@/assets/fonts/Satoshi.ttf");
+}
+
+*:not(p) {
+    user-select: none;
 }
 
 .debug {

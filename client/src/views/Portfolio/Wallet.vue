@@ -1,100 +1,67 @@
 <template>
-  <div class="flex flex-column gap-md">
-    <div class="form-line flex gap-md">
-      <InputNumber
-        v-model="toAmount"
-        label="Montant"
-        class="min-width-0 flex-1"
-        :append="selectedTokenTo?.value"
-      >
-      </InputNumber>
-      <TokenPicker v-model="selectedTokenTo"></TokenPicker>
-    </div>
-    <div class="form-line flex gap-md align-items-center text-sm">
-      <InputNumber
-        v-model="toValue"
-        label="Valeur"
-        class="min-width-0 flex-1"
-        append="USDT"
-      ></InputNumber>
-    </div>
-    <div class="form-line">
-      <Toggle v-model="positive" :items="buyOrSellItems"></Toggle>
-    </div>
-    <div
-      class="amount-display flex align-items-center gap-xs"
-      :class="positive.value === 'positive' ? 'positive' : 'negative'"
-    >
-      <div>{{ positive.value === "positive" ? "+" : "-" }}</div>
-      <div>{{ computedAmount }}</div>
-      <div>USTD</div>
-    </div>
-    <Btn @click="save" class="p-md">Ajouter</Btn>
+  <div class="flex flex-column">
+    <template v-for="tokenLine in tokenLines">
+      <WalletTokenLine :tokenLine="tokenLine"></WalletTokenLine>
+    </template>
   </div>
 </template>
 
 <script setup>
-import Btn from "@/components/Btn.vue";
-import InputNumber from "@/components/forms/InputNumber.vue";
-import TokenPicker from "@/components/TokenPicker.vue";
-import Toggle from "@/components/forms/Toggle.vue";
 import useDatabase from "@/composables/useDatabase";
-import { v4 as uuid } from "uuid";
-import { onMounted } from "vue";
-
-const toAmount = ref();
-const toValue = ref(1);
-const selectedTokenTo = ref(null);
-
-const buyOrSellItems = ref([
-  { label: "Acheter", value: "positive" },
-  { label: "Vente", value: "negative" },
-]);
-const positive = ref(buyOrSellItems.value[0]);
+import { getToken } from "@/utils/Token";
+import WalletTokenLine from "./WalletTokenLine.vue";
 
 const db = useDatabase().database;
 const store = db.getStore("transactions");
+const history = ref([]);
 
-const computedAmount = computed(() => {
-  let amount = 0;
-  if (toAmount.value && toValue.value) {
-    amount = toAmount.value * toValue.value;
-  }
+const tokenLines = computed(() => {
+  return history.value.reduce((groups, line) => {
+    let groupFound = groups.find(
+      (group) => group.token.value === line.token.value
+    );
+    if (groupFound) {
+      groupFound.amount += line.positive ? +line.toAmount : -line.toAmount;
+      groupFound.value +=
+        (line.positive ? +line.toAmount : -line.toAmount) * line.toValue;
+      groupFound.cumulativeAmount += +line.toAmount;
+    } else {
+      let group = {
+        amount: line.positive ? +line.toAmount : -line.toAmount,
+        value: (line.positive ? +line.toAmount : -line.toAmount) * line.toValue,
+        token: line.token,
+        cumulativeAmount: +line.toAmount,
+      };
 
-  return amount
-    .toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    })
-    .replace("$", "");
+      groups.push(group);
+    }
+
+    return groups;
+  }, []);
 });
 
-const save = () => {
-  store.save(uuid(), {
-    toAmount: toAmount.value,
-    toValue: toValue.value,
-    token: selectedTokenTo.value.value,
-    positive: positive.value.value === "positive",
+onMounted(() => {
+  history.value = store?.getAll().map((transaction) => ({
+    ...transaction.value,
+    token: getToken(transaction.value.token),
+    id: transaction.id,
+  }));
+
+  store.onSave(() => {
+    history.value = store?.getAll().map((transaction) => ({
+      ...transaction.value,
+      token: getToken(transaction.value.token),
+      id: transaction.id,
+    }));
   });
-};
+  store.onDelete(() => {
+    history.value = store?.getAll().map((transaction) => ({
+      ...transaction.value,
+      token: getToken(transaction.value.token),
+      id: transaction.id,
+    }));
+  });
+});
 </script>
 
-<style scoped lang="scss">
-.amount-display {
-  text-align: center;
-
-  :first-child {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  &.positive {
-    color: var(--color-success);
-  }
-
-  &.negative {
-    color: var(--color-error);
-  }
-}
-</style>
+<style scoped lang="scss"></style>

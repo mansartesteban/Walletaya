@@ -1,4 +1,5 @@
 <template>
+  <AppBackground></AppBackground>
   <AppHeader ref="appHeader"></AppHeader>
   <div class="view">
     <router-view></router-view>
@@ -10,6 +11,7 @@
 </template>
 
 <script setup>
+import AppBackground from "@/components/AppBackground.vue";
 import AppHeader from "@/components/AppHeader.vue";
 import NavBar from "@/components/NavBar.vue";
 import WidgetDock from "@/components/widgets/WidgetDock.vue";
@@ -30,10 +32,11 @@ import ContextMenu from "@/components/ContextMenu.vue";
 }
 
 body {
-  background: linear-gradient(-10deg, rgb(5, 6, 6) 0.2%, rgb(10, 50, 50) 91.1%);
+  background: linear-gradient(-10deg, rgb(6, 9, 9) 0%, rgb(9, 26, 26) 100%);
   background-attachment: fixed;
   font-size: 16px;
-  font-family: Fredoka;
+  font-family: Satoshi;
+  font-weight: 500;
   color: white;
 }
 </style>

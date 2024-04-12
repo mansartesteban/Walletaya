@@ -1,13 +1,15 @@
 $colorPrimary: #054f61;
 $colorSuccess: #009b5f;
 $colorError: #c0243e;
+$appColor: rgba($colorPrimary, 0);
 
-$borderRadius: 10px;
+$borderRadius: 16px;
 
 :root {
   --color-primary: #{$colorPrimary};
   --color-success: #{$colorSuccess};
   --color-error: #{$colorError};
+  --app-color: #{$appColor};
 
   --xs: .25rem;
   --sm: .5rem;
@@ -22,11 +24,14 @@ $borderRadius: 10px;
   --zi-dialog: var(--zi-modal);
 
   --shadow: rgba(0, 0, 0, 0.33) 0px 1px 4px, rgba(0, 0, 0, 0.3) 5px 5px 8px -5px, 0 0 15px 2px rgba(0, 0,, 0, .2);
-  --volume: rgba(0, 0, 0, 0.2) 0px -4px 0px inset;
 
-  --transition-menus: all .290s ease-out;
-  --transition: all .245s ease-out;
-
+  --transition-menus-timing: ease-out;
+  --transition-menus-duration: .290s;
+  --transition-menus: all var(--transition-menus-duration) var(--transition-menus-timing);
+  
+  --transition-timing: ease-out;
+  --transition-duration: .245s ;
+  --transition: all var(--transition-duration) var(--transition-timing);
 
   --tab-header-height: 32px;
   --header-height: 64px;
