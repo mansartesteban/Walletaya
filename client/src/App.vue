@@ -71,4 +71,8 @@ body {
 - TODO Le menu outils ne se referme pas lorsque l'on clique en dehors
 - TODO Recherhe sur les select
 
+APP
+Nom de l'app : Walletaya
+
+
 -->

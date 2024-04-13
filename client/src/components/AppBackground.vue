@@ -1,6 +1,6 @@
 <template>
   <div class="app-background">
-    <div class="blob" v-for="blob in blobs" :style="blob">
+    <!-- <div class="blob" v-for="blob in blobs" :style="blob">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
@@ -31,7 +31,7 @@
           ></animate>
         </path>
       </svg>
-    </div>
+    </div> -->
   </div>
 </template>
 
