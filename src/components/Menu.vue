@@ -7,29 +7,31 @@
         </div>
       </slot>
     </template>
-    <div ref="menuPanel" class="menu-panel blurry" :class="{ opened }">
-      <!-- <input class="search"> -->
-      <template v-for="option in options">
-        <slot
-          v-if="option"
-          name="option"
-          v-bind="{ on: optionEvents, option: option }"
-        >
-          <div
-            @click="optionEvents.onClick(option)"
-            class="option flex gap-md"
-            :class="{ selected: model && option.value === model.value }"
+    <div ref="menuPanel" class="menu-panel" :class="{ opened }">
+      <div class="blurry-container">
+        <!-- <input class="search"> -->
+        <template v-for="option in options">
+          <slot
+            v-if="option"
+            name="option"
+            v-bind="{ on: optionEvents, option: option }"
           >
-            <slot name="option-icon" v-bind="{ option: option }">
-              <Icon :size="20">{{ option.icon }}</Icon>
-            </slot>
+            <div
+              @click="optionEvents.onClick(option)"
+              class="option flex gap-md"
+              :class="{ selected: model && option.value === model.value }"
+            >
+              <slot name="option-icon" v-bind="{ option: option }">
+                <Icon :size="20">{{ option.icon }}</Icon>
+              </slot>
 
-            <slot name="option-label" v-bind="{ option: option }">
-              {{ option.label }}
-            </slot>
-          </div>
-        </slot>
-      </template>
+              <slot name="option-label" v-bind="{ option: option }">
+                {{ option.label }}
+              </slot>
+            </div>
+          </slot>
+        </template>
+      </div>
     </div>
   </div>
   <slot></slot>
@@ -58,7 +60,7 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits(["option-click"]);
+const emits = defineEmits(["option-clicked"]);
 
 const model = defineModel();
 const opened = ref(false);
@@ -86,7 +88,8 @@ function selectValue(option) {
     option.callback(option);
   }
   model.value = option;
-  emits("option-click", option);
+
+  emits("option-clicked", option);
   if (!props.persistOnClick) {
     close();
   }

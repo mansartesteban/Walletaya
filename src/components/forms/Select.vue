@@ -1,6 +1,6 @@
 <template>
   <div ref="select" class="select" :class="{ mini }">
-    <Menu :modelValue="model" :options="options" @optionClick="selectOption">
+    <Menu :modelValue="model" :options="options" @optionClicked="selectOption">
       <template #activator="{ on }">
         <slot v-if="model" name="activator" v-bind="{ on, option: model }">
           <div class="select-activator" @click="on.onClick">
@@ -104,12 +104,15 @@ const props = defineProps({
   },
 });
 
+const emits = defineEmits(["changed"]);
+
 const select = ref();
 
 const model = defineModel();
 
 function selectOption(option) {
   model.value = option;
+  emits("changed", model.value);
 }
 </script>
 

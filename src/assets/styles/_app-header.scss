@@ -1,11 +1,11 @@
 .app-header {
     // box-shadow: var(--shadow);
     /* background: var(--color-primary); */
-    background: $appColor;
+    background-color: $appColor;
+    background-image: $appColorNoise;
   }
   
   .appbar {
     height: var(--header-height);
     /* background: var(--color-primary); */
-    height: 64px;
   }

@@ -1,16 +1,29 @@
 <template>
-  <div class="wallet-token-detail" :class="{ opened }">
+  <div class="wallet-token-detail flex flex-column gap-sm" :class="{ opened }">
     <div class="detail">
-      Avg. Price :
-      {{ amount(averagePrice) }}
+      <span class="sublabel">Smoothed. Price :</span>
+      {{ amount(smoothedPrice) }}
     </div>
     <div class="detail">
-      Invested :
+      <span class="sublabel">Avg. Buy Price :</span>
+      {{ amount(averageBuyPrice) }}
+    </div>
+    <div class="detail">
+      <span class="sublabel">Invested :</span>
       {{ amount(invested) }}
     </div>
     <div class="detail">
-      Var. :
-      {{ Math.round(priceVariation * 100, 4) }} %
+      <span class="sublabel">Var. : </span>
+      <span :class="priceVariation > 0 ? 'positive' : 'negative'">
+        {{ priceVariation > 0 ? "+" : ""
+        }}{{ (priceVariation * 100).toFixed(2) }} %
+      </span>
+    </div>
+    <div class="detail">
+      <span class="sublabel">Profit. : </span>
+      <span :class="profit > 0 ? 'positive' : 'negative'">
+        {{ profit > 0 ? "+" : "" }}{{ amount(profit) }}
+      </span>
     </div>
   </div>
 </template>
@@ -26,8 +39,19 @@ const props = defineProps({
 
 const opened = defineModel("opened");
 
-const averagePrice = computed(() => {
+const smoothedPrice = computed(() => {
   return props.walletToken.value / props.walletToken.cumulativeAmount;
+});
+
+const averageBuyPrice = computed(() => {
+  return props.walletToken.value / props.walletToken.cumulativeBuyAmount;
+});
+
+const profit = computed(() => {
+  return (
+    props.walletToken.cumulativeAmount * props.walletToken.token.marketValue -
+    invested.value
+  );
 });
 
 const priceVariation = computed(() => {
@@ -38,27 +62,7 @@ const priceVariation = computed(() => {
   );
 });
 
-const valueVariation = computed(() => {
-  return priceVariation;
-});
-
 const invested = computed(() => {
   return props.walletToken.value;
 });
 </script>
-
-<style scoped lang="scss">
-.wallet-token-detail {
-  height: 0;
-  padding: 0 var(--md);
-  overflow: hidden;
-
-  transition: padding var(--transition-timing) var(--transition-duration),
-    height var(--transition-timing) var(--transition-duration);
-
-  &.opened {
-    padding: var(--md);
-    height: fit-content;
-  }
-}
-</style>

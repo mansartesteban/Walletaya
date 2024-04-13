@@ -4,6 +4,7 @@
     :options="tokens"
     label="Sélectionner une monnaie"
     mini
+    @changed="emits('changed', model)"
   >
     <template #selected-option-mini-icon="{ option }">
       <CIcon :token="option.value"></CIcon>
@@ -33,10 +34,19 @@ import tokens from "@/datas/tokens";
 import { onMounted } from "vue";
 
 const model = defineModel({
-  default: { value: "BTC" },
+  default: () => ({ value: "BTC" }),
 });
 
+const emits = defineEmits(["changed"]);
+
 onMounted(() => {
+  console.log("mounted?");
   model.value = tokens.find((c) => c.value === useSettings().defaultTokenFrom);
+  console.log(
+    "useSettings().defaultTokenFrom",
+    useSettings().defaultTokenFrom,
+    tokens.find((c) => c.value === useSettings().defaultTokenFrom),
+    model.value
+  );
 });
 </script>

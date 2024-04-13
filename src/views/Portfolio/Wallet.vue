@@ -21,16 +21,52 @@ const tokenLines = computed(() => {
       (group) => group.token.value === line.token.value
     );
     if (groupFound) {
+      console.table("amount", {
+        groupeAmount: groupFound.amount,
+        linePositive: line.positive,
+        lineToAmount: line.toAmount,
+        amount: line.positive ? +line.toAmount : -line.toAmount,
+        value: (line.positive ? +line.toAmount : -line.toAmount) * line.toValue,
+      });
       groupFound.amount += line.positive ? +line.toAmount : -line.toAmount;
+      console.log("amount afdter", groupFound.amount);
       groupFound.value +=
         (line.positive ? +line.toAmount : -line.toAmount) * line.toValue;
-      groupFound.cumulativeAmount += +line.toAmount;
+      groupFound.cumulativeAmount += line.positive
+        ? +line.toAmount
+        : -line.toAmount;
+      groupFound.cumulativeValue += line.positive
+        ? +line.toValue
+        : -line.toValue;
+      (groupFound.buyCount += line.positive ? 1 : 0),
+        (groupFound.sellCount += line.positive ? 0 : 1),
+        (groupFound.transactionCount += 1);
+      groupFound.cumulativeBuyValue += line.positive ? +line.toValue : 0;
+      groupFound.cumulativeSellValue += line.positive ? 0 : +line.toValue;
+      groupFound.cumulativeBuyAmount += line.positive
+        ? +line.toAmount
+        : -line.toAmount;
     } else {
+      console.log(
+        "amount",
+        0,
+        line.positive,
+        line.toAmount,
+        line.toValue,
+        (line.positive ? +line.toAmount : -line.toAmount) * line.toValue
+      );
       let group = {
         amount: line.positive ? +line.toAmount : -line.toAmount,
         value: (line.positive ? +line.toAmount : -line.toAmount) * line.toValue,
         token: line.token,
-        cumulativeAmount: +line.toAmount,
+        cumulativeAmount: line.positive ? +line.toAmount : -line.toAmount,
+        cumulativeValue: line.positive ? +line.toValue : -line.toAmount,
+        cumulativeBuyValue: line.positive ? +line.toValue : 0,
+        cumulativeBuyAmount: line.positive ? +line.toAmount : 0,
+        cumulativeSellValue: line.positive ? 0 : +line.toValue,
+        buyCount: line.positive ? 1 : 0,
+        sellCount: line.positive ? 0 : 1,
+        transactionCount: 1,
       };
 
       groups.push(group);
@@ -63,5 +99,3 @@ onMounted(() => {
   });
 });
 </script>
-
-<style scoped lang="scss"></style>

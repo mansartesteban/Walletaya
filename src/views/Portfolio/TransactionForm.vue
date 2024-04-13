@@ -8,8 +8,12 @@
         :append="selectedTokenTo?.value"
       >
       </InputNumber>
-      <TokenPicker v-model="selectedTokenTo"></TokenPicker>
+      <TokenPicker
+        v-model="selectedTokenTo"
+        @changed="changedToken"
+      ></TokenPicker>
     </div>
+
     <div class="form-line flex gap-md align-items-center text-sm">
       <InputNumber
         v-model="toValue"
@@ -23,13 +27,15 @@
     </div>
     <div
       class="amount-display flex align-items-center gap-xs"
-      :class="positive.value === 'positive' ? 'positive' : 'negative'"
+      :class="positive ? 'positive' : 'negative'"
     >
-      <div>{{ positive.value === "positive" ? "+" : "-" }}</div>
+      <div>{{ positive ? "+" : "-" }}</div>
       <div>{{ computedAmount }}</div>
       <div>USTD</div>
     </div>
-    <Btn @click="save" class="p-md">Ajouter</Btn>
+    <Btn @click="save(transactionId)" class="p-md">{{
+      transactionId ? "Modifier" : "Ajouter"
+    }}</Btn>
   </div>
 </template>
 
@@ -44,12 +50,13 @@ import { v4 as uuid } from "uuid";
 const toAmount = ref();
 const toValue = ref(1);
 const selectedTokenTo = ref(null);
+const transactionId = ref(null);
 
-const buyOrSellItems = ref([
-  { label: "Acheter", value: "positive" },
-  { label: "Vente", value: "negative" },
-]);
-const positive = ref(buyOrSellItems.value[0]);
+const buyOrSellItems = [
+  { label: "Acheter", value: true },
+  { label: "Vente", value: false },
+];
+const positive = ref(true);
 
 const db = useDatabase().database;
 const store = db.getStore("transactions");
@@ -68,14 +75,41 @@ const computedAmount = computed(() => {
     .replace("$", "");
 });
 
-const save = () => {
-  store.save(uuid(), {
+const changedToken = (v) => {
+  toValue.value = selectedTokenTo.value.marketValue;
+};
+
+const reset = () => {
+  toAmount.value = "";
+  positive.value = true;
+  transactionId.value = null;
+  // selectedTokenTo.value = null;
+};
+
+const fillForm = (data) => {
+  toAmount.value = data.toAmount;
+  positive.value = data.positive;
+  selectedTokenTo.value = data.token;
+  toValue.value = data.toValue;
+  transactionId.value = data.id;
+};
+
+const save = (id) => {
+  if (!id) {
+    id = uuid();
+  }
+  store.save(id, {
     toAmount: toAmount.value,
     toValue: toValue.value,
     token: selectedTokenTo.value.value,
-    positive: positive.value.value === "positive",
+    positive: positive.value,
   });
 };
+
+defineExpose({
+  fillForm,
+  reset,
+});
 </script>
 
 <style scoped lang="scss">

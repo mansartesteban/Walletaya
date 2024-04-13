@@ -9,9 +9,8 @@
 .tab-headers {
   user-select: none;
   position: relative;
-  // background: var(--color-primary);
-  background: $appColor;
-  // box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.35);
+  background-color: $appColor;
+    background-image: $appColorNoise;
   display: grid;
   height: var(--tab-header-height);
   scrollbar-width: none;

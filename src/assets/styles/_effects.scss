@@ -1,10 +1,9 @@
 .glass {
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+    border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     backdrop-filter: blur(var(--md));
     -webkit-backdrop-filter: blur(var(--md));
-    border: .5px solid rgba(255, 255, 255, .25);
 }
 
 .rounded-xs {
@@ -68,10 +67,11 @@
         position: absolute;
         top: 0;
         left: 0;
+        min-height: 100%;
+        flex: 1;
         width: 100%;
-        height: 100%;
         backdrop-filter: blur(var(--md));
-        z-index: -1;
+        z-index: -1;    
       }
 }
 

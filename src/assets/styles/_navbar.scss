@@ -3,8 +3,9 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    background: $appColor;
-    height: 56px;
+    background-color: $appColor;
+    background-image: $appColorNoise;
+    height: var(--navbar-height);
     z-index: 100000;
   
     .navbar-button {
@@ -24,10 +25,14 @@
         animation: navbar-indicator-animation 0.29s ease-in-out;
         color: white;
   
+        --delta-resize: .3;
         svg {
-          top: -8px;
-          width: 32px;
-          height: 32px;
+          top: calc(var(--md) * var(--delta-resize) * -1);
+          width: calc(var(--md) * (1 + 2 * var(--delta-resize))) !important;
+          height: calc(var(--md) * (1 + 2 * var(--delta-resize))) !important;
+        }
+        .navbar-button-label {
+          top: calc(var(--md) * var(--delta-resize) * -1);
         }
       }
       svg {
@@ -35,9 +40,7 @@
         top: 0;
         transition: var(--transition-menus);
       }
-      .navbar-button-label {
-        top: -6px;
-      }
+
        .navbar-button-label {
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -47,18 +50,14 @@
         top: 0;
         transition: var(--transition-menus);
       }
-      .navbar-button-icon svg {
-        width: 20px;
-        height: 20px;
-      }
+
     }
   
     .navbar-button-indicator {
-      --indicator-margin: 0rem;
       position: absolute;
       bottom: 100%;
       left: 0;
-      width: calc(20% + var(--indicator-margin));
+      height: var(--lg);
       pointer-events: none;
       transition: var(--transition-menus);
     }

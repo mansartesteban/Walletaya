@@ -26,7 +26,7 @@ import ContextMenu from "@/components/ContextMenu.vue";
 }
 
 .view {
-  padding-bottom: calc(64px + 4 * var(--sm));
+  padding-bottom: calc(var(--navbar-height));
   height: calc(100% - var(--header-height));
   scrollbar-width: none;
 }
@@ -34,10 +34,14 @@ import ContextMenu from "@/components/ContextMenu.vue";
 body {
   background: linear-gradient(-10deg, rgb(6, 9, 9) 0%, rgb(9, 26, 26) 100%);
   background-attachment: fixed;
-  font-size: 16px;
-  font-family: Satoshi;
   font-weight: 500;
   color: white;
+}
+
+html,
+body {
+  font-size: var(--default-font-size);
+  font-family: Satoshi;
 }
 </style>
 

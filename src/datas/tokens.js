@@ -12,12 +12,12 @@ export default [
   {
     value: "BTC",
     label: "Bitcoin",
-    marketValue: 674632.89,
+    marketValue: 62370.93,
   },
   {
     value: "CAPS",
     label: "Ternoa",
-    marketValue: 0.0234,
+    marketValue: 0.01808,
   },
   {
     value: "EGLD",

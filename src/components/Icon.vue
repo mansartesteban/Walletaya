@@ -1,5 +1,11 @@
 <template>
-  <component :is="icon" :width="size" :height="size"></component>
+  <component
+    :is="icon"
+    :style="{
+      height: size,
+      width: size,
+    }"
+  ></component>
 </template>
 
 <script setup>
@@ -8,7 +14,7 @@ import { defineAsyncComponent } from "vue";
 const props = defineProps({
   size: {
     type: [Number, String],
-    default: 24,
+    default: "1rem",
   },
 });
 const slot = useSlots();

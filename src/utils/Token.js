@@ -8,6 +8,8 @@ export const amount = (value, noSymbol = false) => {
     ?.toLocaleString("en-US", {
       style: "currency",
       currency: "USD",
+      maximumFractionDigits: noSymbol ? 8 : 2,
+      minimumFractionDigits: 2,
     })
     .replace("$", noSymbol ? "" : "$");
 };

@@ -1,11 +1,12 @@
 <template>
-  <Btn v-if="!drawerOpened" @click="drawerOpened = true" fab>
+  <Btn v-if="!drawerOpened" @click="showTransactionForm" fab>
     <Icon>transaction-add</Icon>
   </Btn>
   <div class="flex flex-column">
     <template v-for="transaction in history">
       <div
         class="transaction-line flex align-items-center justify-content-space-between gap-md p-md"
+        @click="fillForm(transaction)"
       >
         <!-- v-touch -->
         <!-- @touch="onTouch($event, transaction)" -->
@@ -19,7 +20,7 @@
         <div class="flex flex-column align-items-end gap-xs">
           <div :class="transaction.positive ? 'positive' : 'negative'">
             {{ transaction.positive ? "+" : "-" }}
-            {{ amount(transaction.toAmount, true) }}
+            {{ transaction.toAmount }}
           </div>
           <div class="sublabel">
             {{ amount(transaction.toValue * transaction.toAmount) }}
@@ -30,7 +31,7 @@
   </div>
 
   <Drawer v-model:opened="drawerOpened">
-    <TransitionForm></TransitionForm>
+    <TransitionForm ref="transactionForm"></TransitionForm>
   </Drawer>
 </template>
 
@@ -50,6 +51,7 @@ const db = useDatabase().database;
 const store = db.getStore("transactions");
 const history = ref([]);
 const drawerOpened = ref(false);
+const transactionForm = ref();
 
 const amount = (value, noSymbol = false) => {
   return value
@@ -73,6 +75,15 @@ function copyTransaction(transaction) {
   // store.delete(transaction.id);
 }
 
+function fillForm(transaction) {
+  transactionForm.value.fillForm(transaction);
+  drawerOpened.value = true;
+}
+
+function showTransactionForm() {
+  transactionForm.value.reset();
+  drawerOpened.value = true;
+}
 const onTouch = (e, transaction) => {
   console.log("on long teouch");
   contextMenu.open(e, [
@@ -121,24 +132,4 @@ onMounted(() => {
 });
 </script>
 
-<style scoped lang="scss">
-.transaction-line {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
-  &:active {
-    background: rgba(255, 255, 255, 0.1);
-  }
-}
-
-.positive {
-  color: var(--color-success);
-}
-
-.negative {
-  color: var(--color-error);
-}
-
-.sublabel {
-  color: rgba(255, 255, 255, 0.5);
-}
-</style>
+<style scoped lang="scss"></style>

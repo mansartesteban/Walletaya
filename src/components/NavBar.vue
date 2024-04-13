@@ -33,11 +33,11 @@
         </div>
       </div>
     </div>
-    <navbar-indicator
+    <!-- <navbar-indicator
       class="navbar-button-indicator"
       :direction="direction"
       :style="indicatorStyle"
-    ></navbar-indicator>
+    ></navbar-indicator> -->
   </div>
 </template>
 
@@ -89,6 +89,7 @@ const routeMenuIndex = computed(() => {
 const indicatorStyle = computed(() => ({
   left: `calc(${routeMenuIndex.value} * ${100 / (menus.value.length + 1)}%)`,
   width: `calc(${100 / (menus.value.length + 1)}%)`,
+  transform: "translateX(-50%);",
 }));
 
 function toggleApp(app = "") {

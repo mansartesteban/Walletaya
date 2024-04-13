@@ -5,7 +5,6 @@
     outline: none;
     transition: var(--transition);
     padding: var(--md);
-    font-size: 1rem;
     text-align: center;
     position: relative;
 
@@ -15,7 +14,14 @@
         bottom: calc(var(--md) + 56px);
         box-shadow: var(--shadow);
         border-radius: 999px;
-        padding: var(--lg);
+        width: calc(var(--md) * 4);
+        height: calc(var(--md) * 4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--color-primary);
+        // background-color: var(--app-color);
+        // background-image: var(--app-color-noise);
     }
   
     * {
@@ -24,9 +30,7 @@
   
     &:active {
       transition: var(--transition);
-      /*transform: translateY(4px);*/
       box-shadow: none !important;
-      /*height: calc(100% - 120px) !important;*/
     }
   
     &.disabled {
@@ -34,7 +38,7 @@
       pointer-events: none;
     }
   
-    &:not(.flat) {
+    &:not(.flat):not(.fab) {
       background: var(--color-primary);
     }
   
@@ -43,8 +47,8 @@
       top: v-bind("ripple.y");
       left: v-bind("ripple.x");
       background: rgba(255, 255, 255, 0.25);
-      width: 10px;
-      height: 10px;
+      width: 1rem;
+      height: 1rem;
       border-radius: 999px;
       animation: ripple 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
       transform: translate(-50%, -50%);
