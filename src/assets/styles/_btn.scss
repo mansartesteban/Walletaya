@@ -8,6 +8,30 @@
     text-align: center;
     position: relative;
 
+    &.primary {
+      background: var(--color-primary);
+    }
+    &.success {
+      background: var(--color-success);
+    }
+    &.warning {
+      background: var(--color-warning);
+    }
+    &.error {
+      background: var(--color-error);
+    }
+    &.info {
+      background: var(--color-info);
+    }
+
+    &.icon {
+      flex: unset !important;
+    }
+
+    &.flat {
+      background: none;
+    }
+
     &.fab {
         position: fixed;
         right: var(--md);
@@ -20,8 +44,6 @@
         align-items: center;
         justify-content: center;
         background-color: var(--color-primary);
-        // background-color: var(--app-color);
-        // background-image: var(--app-color-noise);
     }
   
     * {
@@ -36,10 +58,6 @@
     &.disabled {
       color: rgba(255, 255, 255, 0.25);
       pointer-events: none;
-    }
-  
-    &:not(.flat):not(.fab) {
-      background: var(--color-primary);
     }
   
     .ripple {

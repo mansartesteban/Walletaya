@@ -1,27 +1,26 @@
 <template>
   <Select
     v-model="model"
-    :options="tokens"
+    :options="options"
     label="Sélectionner une monnaie"
     mini
-    @changed="emits('changed', model)"
+    @changed="emit('changed', $event)"
   >
     <template #selected-option-mini-icon="{ option }">
-      <CIcon :token="option.value"></CIcon>
+      <CIcon :token="option.id"></CIcon>
     </template>
-    <!-- <template #selected-option-icon="{ option }">
-      item {{ option }}
-      <CIcon :token="option.value"></CIcon>
-    </template> -->
-    <!-- <template #selected-option-label="{ option }">
-      {{ option.label }} ({{ option.value }})
-    </template> -->
 
     <template #option-icon="{ option }">
-      <CIcon :token="option?.value"></CIcon>
+      <CIcon :token="option?.id"></CIcon>
     </template>
+
     <template #option-label="{ option }">
-      {{ option.label }} ({{ option.value }})
+      <div class="flex flex-1 justify-content-space-between">
+        <div>{{ option.label }}</div>
+        <div>
+          <span class="sublabel">{{ option.symbol }}</span>
+        </div>
+      </div>
     </template>
   </Select>
 </template>
@@ -30,23 +29,41 @@
 import CIcon from "@/components/CIcon.vue";
 import Select from "@/components/forms/Select.vue";
 import useSettings from "@/composables/useSettings";
-import tokens from "@/datas/tokens";
 import { onMounted } from "vue";
+import { getToken } from "@/utils/Token";
+
+import useTokenStore from "@/plugins/stores/Token";
 
 const model = defineModel({
-  default: () => ({ value: "BTC" }),
+  get: (v) => {
+    return getToken(v || useSettings().defaultTokenFrom);
+  },
+  set: (v) => {
+    return v.value;
+  },
 });
 
-const emits = defineEmits(["changed"]);
+const emit = defineEmits(["changed"]);
+
+const tokenStore = useTokenStore();
+
+const options = computed(() => {
+  return tokenStore.tokenList;
+  // return Object.values(tokenList.value);
+});
+
+const favoriteTokens = ["tether", "ternoa", "bitcoin", "sleepless-ai", ""];
+const defaultTokens = ["tether", "bitcoin", "ethereum", "solana"];
+
+// const filterToken = (token) => {
+//   if (favoriteTokens.length > 0) {
+//     return token === model.value.value || favoriteTokens.includes(token.slug);
+//   }
+
+//   return token === model.value.value || defaultTokens.includes(token.slug);
+// };
 
 onMounted(() => {
-  console.log("mounted?");
-  model.value = tokens.find((c) => c.value === useSettings().defaultTokenFrom);
-  console.log(
-    "useSettings().defaultTokenFrom",
-    useSettings().defaultTokenFrom,
-    tokens.find((c) => c.value === useSettings().defaultTokenFrom),
-    model.value
-  );
+  model.value = getToken(useSettings().defaultTokenFrom);
 });
 </script>

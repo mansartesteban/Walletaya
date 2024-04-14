@@ -9,6 +9,16 @@
     height: 0;
     padding: 0 var(--md);
     overflow: hidden;
+
+    .detail {
+      display: flex;
+      align-items: baseline;
+      gap: var(--sm);
+
+      .value {
+        font-size: .75rem;
+      }
+    }
   
     transition: padding var(--transition-timing) var(--transition-duration);
     
@@ -29,8 +39,8 @@
     color: var(--color-error);
   }
   
-  .sublabel {
-    color: rgba(255, 255, 255, 0.5);
-  }
+}
+.sublabel {
+  color: rgba(255, 255, 255, 0.5);
 }
 

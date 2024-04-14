@@ -1,11 +1,13 @@
 <template>
   <div class="transaction-form flex flex-column gap-md">
-    <div class="form-line flex gap-md">
+    <div
+      class="form-line flex gap-md"
+      :class="{ 'flex-reverse': settings.leftHanded }"
+    >
       <InputNumber
         v-model="toAmount"
         label="Montant"
-        class="min-width-0 flex-1"
-        :append="selectedTokenTo?.value"
+        :append="selectedTokenTo?.symbol"
       >
       </InputNumber>
       <TokenPicker
@@ -14,13 +16,8 @@
       ></TokenPicker>
     </div>
 
-    <div class="form-line flex gap-md align-items-center text-sm">
-      <InputNumber
-        v-model="toValue"
-        label="Valeur"
-        class="min-width-0 flex-1"
-        append="USDT"
-      ></InputNumber>
+    <div class="form-line flex gap-md">
+      <InputNumber v-model="toValue" label="Valeur" append="USDT"></InputNumber>
     </div>
     <div class="form-line">
       <Toggle v-model="positive" :items="buyOrSellItems"></Toggle>
@@ -33,9 +30,21 @@
       <div>{{ computedAmount }}</div>
       <div>USTD</div>
     </div>
-    <Btn @click="save(transactionId)" class="p-md">{{
-      transactionId ? "Modifier" : "Ajouter"
-    }}</Btn>
+
+    <div class="flex gap-md" :class="{ 'flex-reverse': settings.leftHanded }">
+      <Btn
+        v-if="transactionId"
+        @click="deleteTransaction(transactionId)"
+        severity="error"
+      >
+        <Icon>delete</Icon>
+        {{ "Supprimer" }}
+      </Btn>
+      <Btn @click="saveTransaction(transactionId)">
+        <Icon>save</Icon>
+        {{ transactionId ? "Modifier" : "Ajouter" }}
+      </Btn>
+    </div>
   </div>
 </template>
 
@@ -45,15 +54,23 @@ import InputNumber from "@/components/forms/InputNumber.vue";
 import TokenPicker from "@/components/TokenPicker.vue";
 import Toggle from "@/components/forms/Toggle.vue";
 import useDatabase from "@/composables/useDatabase";
+import Icon from "@/components/Icon.vue";
 import { v4 as uuid } from "uuid";
+import useSettings from "@/composables/useSettings";
+import useTokenStore from "@/plugins/stores/Token";
+
+const emit = defineEmits(["saving", "saved", "deleting", "deleted"]);
+
+const settings = useSettings();
 
 const toAmount = ref();
 const toValue = ref(1);
 const selectedTokenTo = ref(null);
 const transactionId = ref(null);
+const tokenStore = useTokenStore();
 
 const buyOrSellItems = [
-  { label: "Acheter", value: true },
+  { label: "Achat", value: true },
   { label: "Vente", value: false },
 ];
 const positive = ref(true);
@@ -76,34 +93,53 @@ const computedAmount = computed(() => {
 });
 
 const changedToken = (v) => {
-  toValue.value = selectedTokenTo.value.marketValue;
+  console.log("change", v, tokenStore.prices);
+  toValue.value = tokenStore.prices[v.id];
 };
 
-const reset = () => {
+const reset = (resetToken = true) => {
   toAmount.value = "";
   positive.value = true;
   transactionId.value = null;
-  // selectedTokenTo.value = null;
+  if (resetToken) {
+    selectedTokenTo.value = useSettings().defaultTokenFrom;
+  }
 };
 
 const fillForm = (data) => {
   toAmount.value = data.toAmount;
   positive.value = data.positive;
-  selectedTokenTo.value = data.token;
+  selectedTokenTo.value = data.token.value;
   toValue.value = data.toValue;
   transactionId.value = data.id;
 };
 
-const save = (id) => {
+const saveTransaction = (id) => {
   if (!id) {
     id = uuid();
   }
-  store.save(id, {
-    toAmount: toAmount.value,
-    toValue: toValue.value,
-    token: selectedTokenTo.value.value,
-    positive: positive.value,
-  });
+  emit("saving");
+  store
+    .save(id, {
+      toAmount: toAmount.value,
+      toValue: toValue.value,
+      token: selectedTokenTo.value,
+      positive: positive.value,
+    })
+    .then(() => {
+      emit("saved");
+      reset(false);
+    });
+};
+
+const deleteTransaction = (id) => {
+  if (id) {
+    emit("deleting");
+    store.delete(id).then(() => {
+      emit("deleted");
+      reset();
+    });
+  }
 };
 
 defineExpose({

@@ -1,5 +1,9 @@
 <template>
-  <div class="btn" @click.native="onClick" :class="{ flat, disabled, fab }">
+  <div
+    class="btn flex flex-1 align-items-center justify-content-center gap-sm"
+    @click.native="onClick"
+    :class="[severity, { flat, disabled, fab, icon }]"
+  >
     <Icon v-if="icon">{{ icon }}</Icon>
     <slot>{{ label }}</slot>
     <div class="ripple" :class="{ active: ripple.state }"></div>
@@ -29,6 +33,13 @@ const props = defineProps({
   fab: {
     type: Boolean,
     default: false,
+  },
+  severity: {
+    type: String,
+    default: "primary",
+    validator: (v) => {
+      return [("primary", "success", "warning", "error", "info")];
+    },
   },
 });
 

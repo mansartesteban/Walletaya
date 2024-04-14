@@ -1,6 +1,7 @@
 <template>
   <AppBackground></AppBackground>
   <AppHeader ref="appHeader"></AppHeader>
+
   <div class="view">
     <router-view></router-view>
   </div>
@@ -16,6 +17,13 @@ import AppHeader from "@/components/AppHeader.vue";
 import NavBar from "@/components/NavBar.vue";
 import WidgetDock from "@/components/widgets/WidgetDock.vue";
 import ContextMenu from "@/components/ContextMenu.vue";
+import useTokenStore from "@/plugins/stores/Token";
+
+const tokenStore = useTokenStore();
+
+onMounted(() => {
+  tokenStore.refresh();
+});
 </script>
 
 <style lang="scss">

@@ -60,7 +60,7 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits(["option-clicked"]);
+const emit = defineEmits(["option-clicked"]);
 
 const model = defineModel();
 const opened = ref(false);
@@ -87,9 +87,10 @@ function selectValue(option) {
   if (option.callback) {
     option.callback(option);
   }
+
   model.value = option;
 
-  emits("option-clicked", option);
+  emit("option-clicked", option);
   if (!props.persistOnClick) {
     close();
   }
@@ -142,7 +143,7 @@ function toggle() {
   opened.value ? close() : open();
 }
 
-onClickOutside(menu, (e) => close());
+onClickOutside(menuPanel, (e) => close());
 
 defineExpose({
   open,

@@ -52,7 +52,7 @@ const opened = defineModel("opened");
     border-radius: var(--border-radius) var(--border-radius) 0 0;
     box-shadow: var(--shadow);
     max-height: 100%;
-    overflow-y: hidden;
+    // overflow-y: hidden;
 
     .scrollable {
       padding: var(--md);

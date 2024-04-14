@@ -1,5 +1,11 @@
 <template>
-  <div class="input input-text" :class="{ focused: isFocused, filled: model }">
+  <div
+    class="input input-text"
+    :class="{
+      focused: isFocused,
+      filled: model !== undefined && model !== null,
+    }"
+  >
     <label v-if="label" :for="id">{{ label }}</label>
     <input
       type="text"

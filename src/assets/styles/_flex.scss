@@ -10,12 +10,19 @@
 
 .flex-column {
     flex-direction: column;
-
+    
+    &.flex-reverse {
+        flex-direction: column-reverse;
+    }
 }
 
 .flex-row,
 .flex:not(.flex-row):not(.flex-column) {
     flex-direction: row;
+
+    &.flex-reverse {
+        flex-direction: row-reverse;
+    }
 }
 
 .flex-wrap {

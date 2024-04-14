@@ -4,11 +4,13 @@
 
 .input {
 
+  --float-label-size: .75rem; 
+  flex: 1;
   background: rgba(0, 0, 0, 0.33);
   color: white;
   outline: 1px rgba($colorPrimary, 1) solid;
   border-radius: var(--border-radius);
-  padding: .33rem .55rem;
+  padding: var(--sm) var(--md);
   transition: var(--transition);
 
   &:not(.input) {
@@ -22,9 +24,10 @@
   &.focused,
   &.filled {
     label {
-      left: .55rem;
-      top: .5rem;
+      left: var(--md);
+      top: var(--sm);
       color: white;
+      font-size: var(--float-label-size);
     }
   }
 
@@ -36,19 +39,26 @@
   &:not(.filled):not(.focused) {
     label {
       top: 50%;
-      transform: translateY(-.5rem) translateX(.5rem);
+      transform: translateY(calc(var(--md) / -2));
       font-size: 1rem;
     }
   }
 
   input {
-    margin-top: 1.25rem;
+    margin-top: var(--float-label-size);
     background: transparent;
     outline: none;
     color: white;
+    width: 100%;
 
     &::placeholder {
       color: rgba(255, 255, 255, .4);
+    }
+  }
+
+  &:has(.append) {
+    input {
+    width: 80%;
     }
   }
 
@@ -64,7 +74,10 @@
     transform: translateY(-.5rem) translateX(-1rem);
     font-size: 1rem;
     right: 0;
-
+    max-width: 20%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 }
 
@@ -92,15 +105,6 @@
     align-items: center;
     justify-content: center;
   }
-
-  // &.mini {
-  //   width: 50px;
-  // }
-
-  // .select__header {
-  //   display: flex;
-  //   flex: 1;
-  // }
 
   .select__label {
     white-space: nowrap;

@@ -4,7 +4,7 @@
     .menu-panel {
       box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px;
       outline: none;
-      // background: rgba($colorPrimary, .25);
+      border: none;
       width: 240px;
       transition: var(--transition-menus);
       padding: 0;
@@ -13,7 +13,6 @@
       height: 0;
       border-radius: var(--border-radius);
       overflow: hidden;
-
   
       &::before {
         content: "";
@@ -28,7 +27,6 @@
         border-radius: var(--border-radius);
       }
       
-      // border: 1px solid var(--color-primary);
       .blurry-container  {
         height: 0;
         overflow-y: hidden;
@@ -41,6 +39,8 @@
           height: unset;
           overflow-y: scroll;
         }
+      border: 1px solid rgba(255, 255, 255, .1);
+
         
       }
       
@@ -51,6 +51,7 @@
       user-select: none;
       display: flex;
       align-items: center;
+      height: 48px;
 
       &.selected {
         background: rgba($colorPrimary, .5);
