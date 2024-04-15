@@ -1,11 +1,3 @@
-.glass {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    backdrop-filter: blur(var(--md));
-    -webkit-backdrop-filter: blur(var(--md));
-}
-
 .rounded-xs {
     border-radius: var(--xs) !important;
 }
@@ -25,7 +17,6 @@
 .rounded-xl {
     border-radius: var(--xl) !important;
 }
-
 
 .scroll-snap-x {
     overflow: auto hidden;
@@ -59,8 +50,9 @@
     }
 }
 
-.blurry {
+.glass {
     position: relative;
+    border: 1px solid rgba(255, 255, 255, .1);
 
     &::before {
         content: "";
@@ -70,7 +62,7 @@
         min-height: 100%;
         flex: 1;
         width: 100%;
-        backdrop-filter: blur(var(--md));
+        backdrop-filter: blur(var(--sm));
         z-index: -1;    
       }
 }

@@ -7,13 +7,12 @@
 </template>
 
 <script setup>
-import useDatabase from "@/composables/useDatabase";
 import { getToken } from "@/utils/Token";
 import WalletTokenLine from "./WalletTokenLine.vue";
 import useWalletStore from "@/plugins/stores/Wallet";
+import database from "@/plugins/database";
 
-const db = useDatabase().database;
-const store = db.getStore("transactions");
+const store = database.getStore("transactions");
 const walletStore = useWalletStore();
 
 const aggregations = computed(() => walletStore.aggregatedTransactions);

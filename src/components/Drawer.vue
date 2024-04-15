@@ -1,7 +1,7 @@
 <template>
   <div class="drawer" :class="{ opened }">
     <div class="drawer-backdrop" @click="opened = false"></div>
-    <div class="drawer-view blurry">
+    <div class="drawer-view glass">
       <div class="drawer-touch"></div>
 
       <div class="scrollable">

@@ -6,6 +6,20 @@
     <router-view></router-view>
   </div>
   <NavBar></NavBar>
+  <Dialog
+    :opened="
+      settings.hasRedWelcomeMessage !== undefined &&
+      !settings.hasRedWelcomeMessage
+    "
+    title="Bienvenue !"
+    @click="onConfirm"
+  >
+    <p>Bonjour à toi !</p>
+    <p>
+      Voici ton espace personnel pour connaître l'état de ton ou tes
+      portefeuilles.
+    </p>
+  </Dialog>
 
   <WidgetDock></WidgetDock>
   <ContextMenu></ContextMenu>
@@ -16,13 +30,22 @@ import AppBackground from "@/components/AppBackground.vue";
 import AppHeader from "@/components/AppHeader.vue";
 import NavBar from "@/components/NavBar.vue";
 import WidgetDock from "@/components/widgets/WidgetDock.vue";
+import Dialog from "@/components/Dialog.vue";
 import ContextMenu from "@/components/ContextMenu.vue";
+
 import useTokenStore from "@/plugins/stores/TokenList";
+import useSettingsStore from "@/plugins/stores/Settings";
 
 const tokenStore = useTokenStore();
+const settings = useSettingsStore();
+
+const onConfirm = () => {
+  settings.setSetting("hasRedWelcomeMessage", true);
+};
 
 onMounted(() => {
   tokenStore.refresh();
+  settings.retrieve();
 });
 </script>
 
@@ -82,6 +105,12 @@ body {
 - TODO Trouver un moyen plus sexy pour l'aller/retour sur les animations
 - TODO Le menu outils ne se referme pas lorsque l'on clique en dehors
 - TODO Recherhe sur les select
+- TODO Virtual scroll
+- TODO Biometric auth/ Authenticator
+- TODO Calcul globaux (les mêmes que sur le détail de chaque crypto mais pour toutes)
+- TODO Card/dialog d'accueil (avec steps ?)
+- TODO Page d'accueil
+- TODO Plusieurs portfolios
 
 APP
 Nom de l'app : Walletaya

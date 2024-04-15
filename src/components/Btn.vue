@@ -2,10 +2,12 @@
   <div
     class="btn flex flex-1 align-items-center justify-content-center gap-sm"
     @click.native="onClick"
-    :class="[severity, { flat, disabled, fab, icon }]"
+    :class="[severity, { flat, disabled, fab, icon, glass: fab }]"
   >
     <Icon v-if="icon">{{ icon }}</Icon>
-    <slot>{{ label }}</slot>
+    <div class="btn-label">
+      <slot>{{ label }}</slot>
+    </div>
     <div class="ripple" :class="{ active: ripple.state }"></div>
   </div>
 </template>

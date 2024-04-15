@@ -53,15 +53,15 @@ import Btn from "@/components/Btn.vue";
 import InputNumber from "@/components/forms/InputNumber.vue";
 import TokenPicker from "@/components/TokenPicker.vue";
 import Toggle from "@/components/forms/Toggle.vue";
-import useDatabase from "@/composables/useDatabase";
 import Icon from "@/components/Icon.vue";
 import { v4 as uuid } from "uuid";
-import useSettings from "@/composables/useSettings";
+import database from "@/plugins/database";
 import useTokenStore from "@/plugins/stores/TokenList";
+import useSettingsStore from "@/plugins/stores/Settings";
 
 const emit = defineEmits(["saving", "saved", "deleting", "deleted"]);
 
-const settings = useSettings();
+const settings = useSettingsStore();
 
 const toAmount = ref();
 const toValue = ref(1);
@@ -75,8 +75,7 @@ const buyOrSellItems = [
 ];
 const positive = ref(true);
 
-const db = useDatabase().database;
-const store = db.getStore("transactions");
+const store = database.getStore("transactions");
 
 const computedAmount = computed(() => {
   let amount = 0;
@@ -93,7 +92,6 @@ const computedAmount = computed(() => {
 });
 
 const changedToken = (v) => {
-  console.log("change", v, tokenStore.prices);
   toValue.value = tokenStore.prices[v.id];
 };
 
@@ -102,7 +100,7 @@ const reset = (resetToken = true) => {
   positive.value = true;
   transactionId.value = null;
   if (resetToken) {
-    selectedTokenTo.value = useSettings().defaultTokenFrom;
+    selectedTokenTo.value = settings.defaultTokenFrom;
   }
 };
 

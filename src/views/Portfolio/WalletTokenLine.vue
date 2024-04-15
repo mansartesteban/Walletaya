@@ -8,7 +8,9 @@
         <div class="flex flex-column gap-xs">
           <div>{{ aggregate.token.label }}</div>
           <div class="sublabel">
-            {{ amount(tokenListStore.getTokenPrice(aggregate.token)) }}
+            {{
+              amount(tokenListStore.getTokenPrice(aggregate.token), false, 4)
+            }}
           </div>
         </div>
       </div>

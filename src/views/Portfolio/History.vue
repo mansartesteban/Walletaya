@@ -46,14 +46,12 @@ import Btn from "@/components/Btn.vue";
 import Icon from "@/components/Icon.vue";
 import TransitionForm from "./TransactionForm.vue";
 import Drawer from "@/components/Drawer.vue";
-import useDatabase from "@/composables/useDatabase";
+import database from "@/plugins/database";
 import { getToken } from "@/utils/Token";
 import CIcon from "@/components/CIcon.vue";
-// import useContextMenu from "@/composables/useContextMenu";
 import { amount } from "@/utils/Token";
 
-const db = useDatabase().database;
-const store = db.getStore("transactions");
+const store = database.getStore("transactions");
 const history = ref([]);
 const drawerOpened = ref(false);
 const transactionForm = ref();

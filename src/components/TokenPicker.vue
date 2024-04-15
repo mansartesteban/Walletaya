@@ -28,15 +28,17 @@
 <script setup>
 import CIcon from "@/components/CIcon.vue";
 import Select from "@/components/forms/Select.vue";
-import useSettings from "@/composables/useSettings";
+import useSettingsStore from "@/plugins/stores/Settings";
 import { onMounted } from "vue";
 import { getToken } from "@/utils/Token";
 
 import useTokenStore from "@/plugins/stores/TokenList";
 
+const settings = useSettingsStore();
+
 const model = defineModel({
   get: (v) => {
-    return getToken(v || useSettings().defaultTokenFrom);
+    return getToken(v || settings.defaultTokenFrom);
   },
   set: (v) => {
     return v.value;
@@ -64,6 +66,6 @@ const defaultTokens = ["tether", "bitcoin", "ethereum", "solana"];
 // };
 
 onMounted(() => {
-  model.value = getToken(useSettings().defaultTokenFrom);
+  model.value = getToken(settings.defaultTokenFrom);
 });
 </script>

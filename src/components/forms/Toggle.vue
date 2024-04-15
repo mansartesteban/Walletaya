@@ -33,7 +33,11 @@ function selectItem(item) {
   model.value = item;
 }
 
-onMounted(() => (model.value = props.items[0]));
+onMounted(() => {
+  if (model.value === undefined) {
+    model.value = props.items[0];
+  }
+});
 </script>
 
 <style scoped lang="scss">
@@ -44,6 +48,11 @@ onMounted(() => (model.value = props.items[0]));
     font-size: 1rem;
     padding: var(--sm) var(--md);
     transition: var(--transition);
+    color: rgba(255, 255, 255, 0.5);
+
+    &.active {
+      color: rgba(255, 255, 255, 1);
+    }
 
     &:first-child {
       border-width: 1px 0 1px 1px;

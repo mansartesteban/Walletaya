@@ -12,7 +12,6 @@ const app = createApp(App);
 
 stores(app);
 router(app);
-database(app);
 directives(app);
 
 app.mount("#app");
