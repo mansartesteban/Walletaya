@@ -57,7 +57,7 @@ import useDatabase from "@/composables/useDatabase";
 import Icon from "@/components/Icon.vue";
 import { v4 as uuid } from "uuid";
 import useSettings from "@/composables/useSettings";
-import useTokenStore from "@/plugins/stores/Token";
+import useTokenStore from "@/plugins/stores/TokenList";
 
 const emit = defineEmits(["saving", "saved", "deleting", "deleted"]);
 

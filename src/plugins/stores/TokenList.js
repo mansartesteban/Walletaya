@@ -4,8 +4,6 @@ import { coinmarketcapApi } from "@/plugins/axios";
 
 import { defineStore } from "pinia";
 
-const fetchApi = true;
-
 export default defineStore("token", {
   state: () => {
     return {
@@ -46,13 +44,13 @@ export default defineStore("token", {
         prices[tokenValue.id] = tokenValue.quote.USD.price;
       });
       return prices;
-    },
+    }
   },
   actions: {
     getTokenPrice(token) {
       return this.prices[token.id] || 0;
     },
-    refresh() {
+    refresh(fetchApi = false) {
       if (fetchApi) {
         coinmarketcapApi
           .get("/v2/cryptocurrency/quotes/latest", {

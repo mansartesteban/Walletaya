@@ -4,29 +4,24 @@
       class="flex align-items-center justify-content-space-between gap-md p-md"
     >
       <div class="flex align-items-center gap-md">
-        <CIcon :token="tokenLine.token.id"></CIcon>
+        <CIcon :token="aggregate.token.id"></CIcon>
         <div class="flex flex-column gap-xs">
-          <div>{{ tokenLine.token.label }}</div>
+          <div>{{ aggregate.token.label }}</div>
           <div class="sublabel">
-            {{ amount(tokenStore.getTokenPrice(tokenLine.token)) }}
+            {{ amount(tokenListStore.getTokenPrice(aggregate.token)) }}
           </div>
         </div>
       </div>
       <div class="flex flex-column align-items-end gap-xs">
-        {{ amount(tokenLine.amount, true) }}
+        {{ WalletAggregator.amount(aggregate) }}
         <div class="sublabel">
-          {{
-            amount(
-              tokenLine.cumulativeAmount *
-                tokenStore.getTokenPrice(tokenLine.token)
-            )
-          }}
+          {{ WalletAggregator.assets(aggregate) }}
         </div>
       </div>
     </div>
     <WalletTokenDetail
       v-model:opened="detailsOpened"
-      :walletToken="tokenLine"
+      :aggregate="aggregate"
     ></WalletTokenDetail>
   </div>
 </template>
@@ -35,12 +30,13 @@
 import CIcon from "@/components/CIcon.vue";
 import WalletTokenDetail from "./WalletTokenDetail.vue";
 
-import useTokenStore from "@/plugins/stores/Token";
+import useTokenListStore from "@/plugins/stores/TokenList";
 
+import WalletAggregator from "@/utils/WalletAggregator";
 import { amount } from "@/utils/Token";
 
 const props = defineProps({
-  tokenLine: {
+  aggregate: {
     type: Object,
     default: null,
   },
@@ -48,5 +44,5 @@ const props = defineProps({
 
 const detailsOpened = ref(false);
 
-const tokenStore = useTokenStore();
+const tokenListStore = useTokenListStore();
 </script>

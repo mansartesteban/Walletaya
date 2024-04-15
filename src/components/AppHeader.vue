@@ -20,13 +20,13 @@
 import Avatar from "@/components/Avatar.vue";
 import { useRoute } from "vue-router";
 import Btn from "@/components/Btn.vue";
-import useTokenStore from "@/plugins/stores/Token";
+import useTokenStore from "@/plugins/stores/TokenList";
 
 const route = useRoute();
 
 const tokenStore = useTokenStore();
 
 const refresh = () => {
-  tokenStore.refresh();
+  tokenStore.refresh(true);
 };
 </script>

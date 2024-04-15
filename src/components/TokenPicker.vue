@@ -32,7 +32,7 @@ import useSettings from "@/composables/useSettings";
 import { onMounted } from "vue";
 import { getToken } from "@/utils/Token";
 
-import useTokenStore from "@/plugins/stores/Token";
+import useTokenStore from "@/plugins/stores/TokenList";
 
 const model = defineModel({
   get: (v) => {

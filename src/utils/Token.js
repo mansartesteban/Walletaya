@@ -1,6 +1,6 @@
 // import tokens from "@/endpoints/cryptocurrency-list";
 // import listingLatest from "@/endpoints/cryptocurrency-listing-latest";
-import useTokenStore from "@/plugins/stores/Token";
+import useTokenStore from "@/plugins/stores/TokenList";
 
 const tokenStore = useTokenStore();
 
@@ -21,5 +21,5 @@ export const amount = (value, noSymbol = false, fractionDigit = 2) => {
       maximumFractionDigits: noSymbol ? 8 : fractionDigit,
       minimumFractionDigits: fractionDigit,
     })
-    .replace("$", noSymbol ? "" : "$");
+    .replace("$", noSymbol ? "" : "$ ");
 };
