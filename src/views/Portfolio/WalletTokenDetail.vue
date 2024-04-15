@@ -48,7 +48,7 @@
           "
         >
           {{ WalletAggregator.profit(aggregate) > 0 ? "+" : "" }}
-          {{ WalletAggregator.profit(aggregate) }}
+          {{ amount(WalletAggregator.profit(aggregate)) }}
         </span>
       </span>
     </div>
@@ -59,6 +59,7 @@
 import useTokenStore from "@/plugins/stores/TokenList";
 
 import WalletAggregator from "@/utils/WalletAggregator";
+import { amount } from "@/utils/Token";
 
 const props = defineProps({
   aggregate: {

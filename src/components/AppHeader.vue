@@ -11,7 +11,9 @@
         <div class="page-title">{{ route.meta.title }}</div>
       </div>
       <Btn icon="refresh" @click="refresh" flat></Btn>
-      <Avatar letters="EM"></Avatar>
+      <Avatar
+        src="https://avatars.githubusercontent.com/u/25709401?s=96&v=4"
+      ></Avatar>
     </div>
   </div>
 </template>

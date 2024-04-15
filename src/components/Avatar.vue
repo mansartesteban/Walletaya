@@ -6,7 +6,9 @@
     <template v-if="letters">
       {{ letters }}
     </template>
-    <template v-else></template>
+    <template v-else>
+      <img :src="src" width="100%" height="100%" />
+    </template>
   </div>
 </template>
 
@@ -19,7 +21,7 @@ const props = defineProps({
     type: String,
     default: "calc(var(--md) * 3)",
   },
-  img: {
+  src: {
     type: String,
     default: "",
   },
@@ -41,14 +43,18 @@ const style = computed(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .avatar {
-  width: calc(v-bind("size") * (1 / 1rem));
-  height: calc(v-bind("size") * (1 / 1rem));
+  width: calc(v-bind("size") / 1rem);
+  height: calc(v-bind("size") / 1rem);
   border-radius: 999px;
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.33);
   outline: none;
   box-shadow: var(--shadow);
+  overflow: hidden;
+
+  &:not(:has(img)) {
+    border: 1px solid rgba(255, 255, 255, 0.33);
+  }
 }
 </style>
