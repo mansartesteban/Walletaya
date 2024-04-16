@@ -1,6 +1,7 @@
 <template>
-  Accueil
-  <TokenPicker v-model="model"></TokenPicker>
+  <div class="p-md">
+    <TokenPicker v-model="model"></TokenPicker>
+  </div>
   <!-- <div class="flex flex-column gap-md">
     <img src="https://picsum.photos/id/237/200/300" width="200" height="300" />
     <p>

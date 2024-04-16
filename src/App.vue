@@ -111,9 +111,9 @@ body {
 - TODO Card/dialog d'accueil (avec steps ?)
 - TODO Page d'accueil
 - TODO Plusieurs portfolios
-
-APP
-Nom de l'app : Walletaya
+- TODO Préférence d'affichage :
+        - Séparateur de milliers et décimaux (point/virgule, virgule/point, espace/virgule, espace/point)
+- TODO Pouvoir mettre en favoris les tokens
 
 
 -->

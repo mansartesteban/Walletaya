@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-column gap-md p-xl">
     <div class="form-group">
       <InputText
         label="Prénom"
@@ -11,14 +11,13 @@
       ></InputText>
     </div>
 
-    <div class="mt-xl p-md flex flex-column gap-md">
+    <div class="flex flex-column gap-md">
       Monnaie par défaut :
       <InputText
         v-model="defaultCurrencySymbol"
         label="Symbol"
         :placeholder="`Ex: £`"
       ></InputText>
-      Main principale : leftHanded {{ leftHanded }}
       <Toggle v-model="leftHanded" :items="hands"></Toggle>
 
       <Btn severity="success" icon="save" @click="save">Sauvegarder</Btn>

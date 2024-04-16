@@ -1,11 +1,11 @@
 <template>
   <div
     class="btn flex flex-1 align-items-center justify-content-center gap-sm"
-    @click.native="onClick"
+    @click="onClick"
     :class="[severity, { flat, disabled, fab, icon, glass: fab }]"
   >
     <Icon v-if="icon">{{ icon }}</Icon>
-    <div class="btn-label">
+    <div v-if="label || $slots.default" class="btn-label">
       <slot>{{ label }}</slot>
     </div>
     <div class="ripple" :class="{ active: ripple.state }"></div>
@@ -63,9 +63,9 @@ function onClick(e) {
   if (rippleTimeout) {
     clearTimeout(rippleTimeout);
   }
-  setTimeout(() => (ripple.value.state = false), 300);
+  setTimeout(() => (ripple.value.state = false), 300); // - TOFIX
 
-  emit("click");
+  emit("click", e);
 }
 </script>
 

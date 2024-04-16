@@ -6,11 +6,12 @@ const store = database.getStore("user");
 export default defineStore("settings", {
   state: () => {
     return {
-      defaultTokenFrom: "tether",
-      defaultTokenTo: "tether",
-      defaultCurrency: "€",
-      leftHanded: false,
-      hasRedWelcomeMessage: false,
+      defaultTokenFrom: null,
+      defaultTokenTo: null,
+      defaultCurrency: null,
+      leftHanded: null,
+      hasRedWelcomeMessage: null,
+      favoriteTokens: [],
     };
   },
   actions: {
@@ -23,7 +24,33 @@ export default defineStore("settings", {
       this.save();
     },
     save() {
-      store.save("settings", Object.assign({}, this.$state));
+      store.save(
+        "settings",
+        Object.assign({}, JSON.parse(JSON.stringify(this.$state)))
+      );
+    },
+    starToken(token, add = null) {
+      let foundIndex = this.favoriteTokens.findIndex(
+        (favoriteToken) => favoriteToken === token.value
+      );
+      if (add !== null) {
+        if (add) {
+          if (foundIndex === -1) {
+            this.favoriteTokens.push(token.value);
+          }
+        } else {
+          if (foundIndex > -1) {
+            this.favoriteTokens.splice(foundIndex, 1);
+          }
+        }
+      } else {
+        if (foundIndex > -1) {
+          this.favoriteTokens.splice(foundIndex, 1);
+        } else {
+          this.favoriteTokens.push(token.value);
+        }
+      }
+      this.save();
     },
     retrieve() {
       store.retrieve().then(() => {
@@ -31,9 +58,7 @@ export default defineStore("settings", {
         if (settings) {
           settings = settings.value;
           if (settings) {
-            console.log("setting sretrieved", settings);
             Object.keys(settings).forEach((settingKey) => {
-              console.log("foreach", settingKey);
               if (this[settingKey] !== undefined) {
                 this[settingKey] = settings[settingKey];
               }

@@ -1,6 +1,11 @@
 <template>
   <div ref="select" class="select" :class="{ mini }">
-    <Menu :modelValue="model" :options="options" @optionClicked="selectOption">
+    <Menu
+      :modelValue="model"
+      :options="options"
+      @optionClicked="selectOption"
+      :sortFunction="sortFunction"
+    >
       <template #activator="{ on }">
         <slot v-if="model" name="activator" v-bind="{ on, option: model }">
           <div class="select-activator" @click="on.onClick">
@@ -54,6 +59,10 @@ const props = defineProps({
   mini: {
     type: Boolean,
     default: false,
+  },
+  sortFunction: {
+    type: Function,
+    default: null,
   },
 });
 

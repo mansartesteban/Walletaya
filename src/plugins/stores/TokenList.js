@@ -1,6 +1,7 @@
 import cryptocurrencyList from "@/endpoints/cryptocurrency-list";
 import cryptocurrencyQuotesLatest from "@/endpoints/cryptocurrency-quotes-latest";
 import { coinmarketcapApi } from "@/plugins/axios";
+import useSettingsStore from "@/plugins/stores/Settings";
 
 import { defineStore } from "pinia";
 
@@ -8,35 +9,19 @@ export default defineStore("token", {
   state: () => {
     return {
       tokens: cryptocurrencyList,
-      favoriteTokens: [
-        "tether",
-        "ternoa",
-        "bitcoin",
-        "sleepless-ai",
-        "multiversx-egld",
-        "automata-network",
-        "lto-network",
-        "truefi-token",
-        "ethereum",
-        "orion-xyz",
-        "ava",
-        "civic",
-      ],
       marketValues: {},
     };
   },
   getters: {
     tokenList(state) {
-      return state.tokens
-        .filter((token) => this.favoriteTokens.includes(token.slug))
-        .map((token) => {
-          return {
-            id: token.id,
-            value: token.slug,
-            symbol: token.symbol,
-            label: token.name,
-          };
-        });
+      return state.tokens.map((token) => {
+        return {
+          id: token.id,
+          value: token.slug,
+          symbol: token.symbol,
+          label: token.name,
+        };
+      });
     },
     prices(state) {
       let prices = {};
@@ -44,7 +29,7 @@ export default defineStore("token", {
         prices[tokenValue.id] = tokenValue.quote.USD.price;
       });
       return prices;
-    }
+    },
   },
   actions: {
     getTokenPrice(token) {
@@ -58,7 +43,7 @@ export default defineStore("token", {
               "X-CMC_PRO_API_KEY": "524d4c13-97d5-41ea-bc66-5c861259bd92",
             },
             params: {
-              slug: this.favoriteTokens.join(","),
+              slug: useSettingsStore().favoriteTokens.join(","),
             },
           })
           .then((response) => {

@@ -3,11 +3,13 @@
     class="input input-text"
     :class="{
       focused: isFocused,
-      filled: model !== undefined && model !== null,
+      filled: model !== undefined && model !== null && model !== '',
     }"
+    @click="focus"
   >
     <label v-if="label" :for="id">{{ label }}</label>
     <input
+      ref="input"
       type="text"
       :id="id"
       v-model="model"
@@ -15,6 +17,7 @@
       @blur="isFocused = false"
       :placeholder="computedPlaceholder"
     />
+    <div v-if="append" class="append">{{ append }}</div>
   </div>
 </template>
 
@@ -34,12 +37,21 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
+  append: {
+    type: String,
+    default: undefined,
+  },
 });
 const model = defineModel();
 
 const isFocused = ref(false);
+const input = ref();
 
 const computedPlaceholder = computed(() =>
   isFocused.value && !model.value ? props.placeholder : ""
 );
+
+const focus = (e) => {
+  input.value.focus();
+};
 </script>
