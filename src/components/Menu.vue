@@ -2,30 +2,28 @@
   <div ref="menu" class="menu">
     <template v-if="!noActivator">
       <slot name="activator" v-bind="{ on: activatorEvents }">
-        <div class="menu-activator" v-on="activatorEvents">
-          <Icon>chevron-down</Icon>
-        </div>
+        <Btn
+          class="menu-activator"
+          icon="chevron-down"
+          @click="activatorEvents.onClick"></Btn>
       </slot>
     </template>
     <div ref="menuPanel" class="menu-panel" :class="{ opened }">
       <InputText
         v-model="searchText"
         label="Recherche un token"
-        class="search m-sm"
-      />
+        class="search m-sm" />
       <RecycleScroller
         :items="filteredOptions"
         :item-size="48"
         key-field="value"
         v-slot="{ item: option }"
-        class="blurry-container overflow-x-hidden"
-      >
+        class="blurry-container overflow-x-hidden">
         <slot name="option" v-bind="{ on: optionEvents, option: option }">
           <div
             @click="optionEvents.onClick(option)"
             class="option flex gap-md"
-            :class="{ selected: model && option.value === model.value }"
-          >
+            :class="{ selected: model && option.value === model.value }">
             <slot name="option-icon" v-bind="{ option: option }">
               <Icon :size="20">{{ option.icon }}</Icon>
             </slot>
@@ -43,6 +41,7 @@
 
 <script setup>
 import Icon from "@/components/Icon.vue";
+import Btn from "@/components/Btn.vue";
 import InputText from "@/components/forms/InputText.vue";
 import { onClickOutside } from "@vueuse/core";
 import { search } from "@/utils/String";
@@ -97,8 +96,9 @@ const filteredOptions = computed(() => {
 });
 
 function onActivatorClick(e) {
-  localPosition.value.x = e.target.offsetLeft;
-  localPosition.value.y = e.target.offsetTop + 48;
+  let box = menuPanel.value.getBoundingClientRect();
+  localPosition.value.x = box.left;
+  localPosition.value.y = box.top;
   toggle();
 }
 
@@ -116,11 +116,12 @@ function selectValue(option) {
 }
 
 function resize() {
-  let margin = 16;
-  let menuWidth = 240;
-  let menuHeight = 240;
+  nextTick(() => {
+    let box = menuPanel.value.getBoundingClientRect();
+    let margin = 16;
+    let menuWidth = box.width;
+    let menuHeight = box.height;
 
-  if (menuPanel.value) {
     let left = computedPosition.value.x;
     let top = computedPosition.value.y;
 
@@ -146,7 +147,7 @@ function resize() {
         "px",
       ].join("");
     }
-  }
+  });
 }
 
 function open() {

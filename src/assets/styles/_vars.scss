@@ -1,9 +1,10 @@
-$colorPrimary: rgba(#054f61, .5);
+// $colorPrimary: linear-gradient(90deg, #f8ff00 0%, #3ad59f 100%);
+$colorPrimary: rgba(#054f61, 1);
 $colorSuccess: #009b5f;
 $colorError: #c0243e;
 
-$appColor: none;
-$appColorNoise: none;
+$appColor: linear-gradient(90deg, #0f564c 0%, $colorPrimary 100%);
+// $appColor: linear-gradient(90deg, hsla(165, 89%, 11%, 1) 0%, hsla(161, 46%, 9%, 1) 100%);
 
 $borderRadius: 16px;
 $defaultfontSize: 16px;

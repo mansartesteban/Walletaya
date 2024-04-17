@@ -5,8 +5,7 @@
     label="Sélectionner une monnaie"
     mini
     :sortFunction="sortFunction"
-    @changed="emit('changed', $event)"
-  >
+    @changed="emit('changed', $event)">
     <template #selected-option-mini-icon="{ option }">
       <CIcon :token="option.id"></CIcon>
     </template>
@@ -32,8 +31,7 @@
               ? 'rgba(255, 255, 255, 1)'
               : 'rgba(255, 255, 255, .25)',
           }"
-          class="mr-n-md"
-        ></Btn>
+          class="mr-n-md"></Btn>
       </div>
       <!-- <div class="flex flex-1 justify-content-space-between">
         <div>{{ option.label }}</div>
@@ -59,7 +57,7 @@ const settings = useSettingsStore();
 
 const model = defineModel({
   get: (v) => getToken(v || settings.defaultTokenFrom),
-  set: (v) => v.value,
+  set: (v) => v?.value,
 });
 
 const emit = defineEmits(["changed"]);
@@ -69,8 +67,6 @@ const tokenStore = useTokenStore();
 const options = computed(() => tokenStore.tokenList);
 
 const starToken = (token) => {
-  console.log("starred", token);
-
   settings.starToken(token);
 };
 

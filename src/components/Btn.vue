@@ -2,8 +2,7 @@
   <div
     class="btn flex flex-1 align-items-center justify-content-center gap-sm"
     @click="onClick"
-    :class="[severity, { flat, disabled, fab, icon, glass: fab }]"
-  >
+    :class="[severity, { flat, disabled, fab, icon, glass: fab }]">
     <Icon v-if="icon">{{ icon }}</Icon>
     <div v-if="label || $slots.default" class="btn-label">
       <slot>{{ label }}</slot>

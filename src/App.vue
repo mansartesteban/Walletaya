@@ -12,8 +12,7 @@
       !settings.hasRedWelcomeMessage
     "
     title="Bienvenue !"
-    @click="onConfirm"
-  >
+    @click="onConfirm">
     <p>Bonjour à toi !</p>
     <p>
       Voici ton espace personnel pour connaître l'état de ton ou tes
@@ -60,6 +59,7 @@ onMounted(() => {
   padding-bottom: calc(var(--navbar-height));
   height: calc(100% - var(--header-height));
   scrollbar-width: none;
+  margin: 0 auto;
 }
 
 body {
@@ -111,9 +111,9 @@ body {
 - TODO Card/dialog d'accueil (avec steps ?)
 - TODO Page d'accueil
 - TODO Plusieurs portfolios
-- TODO Préférence d'affichage :
+- WIP Préférence d'affichage :
         - Séparateur de milliers et décimaux (point/virgule, virgule/point, espace/virgule, espace/point)
-- TODO Pouvoir mettre en favoris les tokens
+- OK Pouvoir mettre en favoris les tokens
 
 
 -->

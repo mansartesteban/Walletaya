@@ -1,4 +1,4 @@
-import VTouch from "./VTouch";
+import VTouch from "./vTouch";
 
 export default (app) => {
   VTouch(app);

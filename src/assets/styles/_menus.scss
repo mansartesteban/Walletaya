@@ -8,7 +8,7 @@
       width: 240px;
       transition: var(--transition-menus);
       padding: 0;
-      position: absolute;
+      position: fixed;
       z-index: 1;
       height: 0;
       border-radius: var(--border-radius);

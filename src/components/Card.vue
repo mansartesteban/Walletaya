@@ -2,7 +2,7 @@
   <div class="card">
     <div class="blurry-container">
       <div class="flex flex-column gap-md">
-        <div class="flex gap-md">
+        <div v-if="!noHeader" class="flex gap-md">
           <template v-if="$slots.header">
             <slot name="header"></slot>
           </template>
@@ -15,7 +15,7 @@
           <slot>CARD</slot>
         </div>
 
-        <div v-if="$slots.footer">
+        <div v-if="!noFooter && $slots.footer">
           <slot name="footer"></slot>
         </div>
       </div>
@@ -27,6 +27,14 @@
 const props = defineProps({
   title: {
     type: String,
+  },
+  noHeader: {
+    type: Boolean,
+    default: false,
+  },
+  noFooter: {
+    type: Boolean,
+    defautl: false,
   },
 });
 </script>

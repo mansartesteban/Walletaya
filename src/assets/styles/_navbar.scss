@@ -3,8 +3,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: $appColor;
-    background-image: $appColorNoise;
+    background: $appColor;  
     height: var(--navbar-height);
     z-index: 100000;
   
