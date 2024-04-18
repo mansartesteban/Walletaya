@@ -13,8 +13,8 @@
       type="text"
       :id="id"
       v-model="model"
-      @focus="isFocused = true"
-      @blur="isFocused = false"
+      @focus="onFocus"
+      @blur="onBlur"
       :placeholder="computedPlaceholder"
     />
     <div v-if="append" class="append">{{ append }}</div>
@@ -42,6 +42,8 @@ const props = defineProps({
     default: undefined,
   },
 });
+
+const emit = defineEmits(["focus", "blur"]);
 const model = defineModel();
 
 const isFocused = ref(false);
@@ -50,6 +52,15 @@ const input = ref();
 const computedPlaceholder = computed(() =>
   isFocused.value && !model.value ? props.placeholder : ""
 );
+
+const onFocus = (e) => {
+  isFocused.value = true;
+  emit("focus", e);
+};
+const onBlur = (e) => {
+  isFocused.value = false;
+  emit("blur", e);
+};
 
 const focus = (e) => {
   input.value.focus();

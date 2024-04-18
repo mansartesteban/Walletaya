@@ -8,16 +8,14 @@
         <div class="flex flex-column gap-xs">
           <div>{{ aggregate.token.label }}</div>
           <div class="sublabel">
-            {{
-              amount(tokenListStore.getTokenPrice(aggregate.token), false, 4)
-            }}
+            {{ tokenPrice(aggregate) }}
           </div>
         </div>
       </div>
       <div class="flex flex-column align-items-end gap-xs">
-        {{ WalletAggregator.amount(aggregate) }}
+        {{ amount(aggregate) }}
         <div class="sublabel">
-          {{ WalletAggregator.assets(aggregate) }}
+          {{ assets(aggregate) }}
         </div>
       </div>
     </div>
@@ -34,8 +32,7 @@ import WalletTokenDetail from "./WalletTokenDetail.vue";
 
 import useTokenListStore from "@/plugins/stores/TokenList";
 
-import WalletAggregator from "@/utils/WalletAggregator";
-import { amount } from "@/utils/Token";
+import { amount as calculateAmount } from "@/utils/Token";
 
 const props = defineProps({
   aggregate: {
@@ -47,4 +44,18 @@ const props = defineProps({
 const detailsOpened = ref(false);
 
 const tokenListStore = useTokenListStore();
+
+const assets = (agg) => {
+  return calculateAmount(
+    agg.cumulativeAmount * tokenListStore.getTokenPrice(agg.token)
+  );
+};
+
+const amount = (agg) => {
+  return calculateAmount(agg.cumulativeAmount, true);
+};
+
+const tokenPrice = (agg) => {
+  return calculateAmount(tokenListStore.getTokenPrice(agg.token), false, 4);
+};
 </script>

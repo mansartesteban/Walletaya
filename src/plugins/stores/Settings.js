@@ -3,11 +3,18 @@ import database from "@/plugins/database";
 
 const store = database.getStore("user");
 
+const defaultSettings = {
+  defaultToken: "tether",
+  defaultCurrency: "$",
+  leftHanded: false,
+  hasRedWelcomeMessage: false,
+  favoriteTokens: [],
+};
+
 export default defineStore("settings", {
   state: () => {
     return {
-      defaultTokenFrom: null,
-      defaultTokenTo: null,
+      defaultToken: null,
       defaultCurrency: null,
       leftHanded: null,
       hasRedWelcomeMessage: null,
@@ -52,20 +59,35 @@ export default defineStore("settings", {
       }
       this.save();
     },
+    setDefaultSettings(settingKey = null) {
+      if (settingKey) {
+        this.$state[settingKey] = defaultSettings[settingKey];
+      } else {
+        Object.keys(defaultSettings).forEach((settingKey) => {
+          this.$state[settingKey] = defaultSettings[settingKey];
+        });
+      }
+    },
     retrieve() {
-      store.retrieve().then(() => {
+      let promise = store.retrieve();
+
+      promise.then(() => {
         let settings = store.datas[0];
-        if (settings) {
+        if (settings && settings.value) {
           settings = settings.value;
-          if (settings) {
-            Object.keys(settings).forEach((settingKey) => {
-              if (this[settingKey] !== undefined) {
-                this[settingKey] = settings[settingKey];
-              }
-            });
-          }
+          Object.keys(settings).forEach((settingKey) => {
+            if (this[settingKey] !== undefined) {
+              this[settingKey] = settings[settingKey];
+            } else {
+              this.setDefaultSettings(settingKey);
+            }
+          });
+        } else {
+          this.setDefaultSettings();
         }
       });
+
+      return promise;
     },
   },
 });

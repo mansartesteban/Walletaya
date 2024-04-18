@@ -468,3 +468,27 @@
     margin-left: calc(var(--xl) * -1) !important;
     margin-right: calc(var(--xl) * -1) !important;
 }
+
+.m-auto {
+    margin: auto;
+}
+.ml-auto {
+    margin-left: auto;
+}
+.mr-auto {
+    margin-right: auto;
+}
+.mt-auto {
+    margin-top: auto;
+}
+.mb-auto {
+    margin-bottom: auto;
+}
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+.my-auto {
+    margin-top: auto;
+    margin-left: auto;
+}

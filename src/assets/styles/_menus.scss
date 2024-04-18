@@ -9,7 +9,7 @@
       transition: var(--transition-menus);
       padding: 0;
       position: fixed;
-      z-index: 1;
+      z-index: 1000;
       height: 0;
       border-radius: var(--border-radius);
       overflow: hidden;

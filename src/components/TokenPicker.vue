@@ -4,8 +4,10 @@
     :options="options"
     label="Sélectionner une monnaie"
     mini
+    search
     :sortFunction="sortFunction"
-    @changed="emit('changed', $event)">
+    @changed="emit('changed', $event)"
+  >
     <template #selected-option-mini-icon="{ option }">
       <CIcon :token="option.id"></CIcon>
     </template>
@@ -31,14 +33,9 @@
               ? 'rgba(255, 255, 255, 1)'
               : 'rgba(255, 255, 255, .25)',
           }"
-          class="mr-n-md"></Btn>
+          class="mr-n-md"
+        ></Btn>
       </div>
-      <!-- <div class="flex flex-1 justify-content-space-between">
-        <div>{{ option.label }}</div>
-        <div>
-          <span class="sublabel">{{ option.symbol }}</span>
-        </div>
-      </div> -->
     </template>
   </Select>
 </template>
@@ -56,7 +53,7 @@ import { normalizeString } from "@/utils/String";
 const settings = useSettingsStore();
 
 const model = defineModel({
-  get: (v) => getToken(v || settings.defaultTokenFrom),
+  get: (v) => getToken(v || settings.defaultToken),
   set: (v) => v?.value,
 });
 
@@ -100,6 +97,6 @@ const sortFunction = (previousToken, currentToken, filter) => {
 };
 
 onMounted(() => {
-  model.value = getToken(settings.defaultTokenFrom);
+  model.value = getToken(settings.defaultToken);
 });
 </script>

@@ -20,12 +20,6 @@ export const search = (searchText = "", items = []) => {
           } else if (Array.isArray(item)) {
             item = item.join("");
           }
-
-          //   console.log(
-          //     "normalizeString(item)",
-          //     normalizeString(item),
-          //     normalizeString(searchChunk)
-          //   );
           return normalizeString(item).includes(normalizeString(searchChunk));
         })
       );

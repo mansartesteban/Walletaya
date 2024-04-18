@@ -5,6 +5,7 @@
       :options="options"
       @optionClicked="selectOption"
       :sortFunction="sortFunction"
+      v-bind="$attrs"
     >
       <template #activator="{ on }">
         <slot v-if="model" name="activator" v-bind="{ on, option: model }">

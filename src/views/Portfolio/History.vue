@@ -3,29 +3,54 @@
     <Icon size="24">transaction-add</Icon>
   </Btn>
   <div class="flex flex-column">
-    <template v-for="transaction in history">
+    <template v-for="transaction in walletStore.history">
       <div
+        v-if="[0, 1].includes(transaction.transactionType)"
         class="transaction-line flex align-items-center justify-content-space-between gap-md p-md"
         @click="fillForm(transaction)"
       >
         <!-- v-touch -->
         <!-- @touch="onTouch($event, transaction)" -->
         <div class="flex align-items-center gap-md">
-          <CIcon :token="transaction.token.id"></CIcon>
+          <CIcon :token="transaction.creditToken.id"></CIcon>
           <div class="flex flex-column gap-xs">
-            <div>{{ transaction.token.label }}</div>
+            <div>{{ transaction.creditToken.label }}</div>
             <div class="sublabel">
-              {{ amount(transaction.toValue, false, 4) }}
+              {{ amount(transaction.creditValue, false, 4) }}
             </div>
           </div>
         </div>
         <div class="flex flex-column align-items-end gap-xs">
-          <div :class="transaction.positive ? 'positive' : 'negative'">
-            {{ transaction.positive ? "+" : "-" }}
-            {{ amount(transaction.toAmount, true) }}
+          <div class="positive">
+            + {{ amount(transaction.creditAmount, true) }}
           </div>
           <div class="sublabel">
-            {{ amount(transaction.toValue * transaction.toAmount) }}
+            {{ amount(transaction.creditValue * transaction.creditAmount) }}
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="[1, 2].includes(transaction.transactionType)"
+        class="transaction-line flex align-items-center justify-content-space-between gap-md p-md"
+        @click="fillForm(transaction)"
+      >
+        <!-- v-touch -->
+        <!-- @touch="onTouch($event, transaction)" -->
+        <div class="flex align-items-center gap-md">
+          <CIcon :token="transaction.debitToken.id"></CIcon>
+          <div class="flex flex-column gap-xs">
+            <div>{{ transaction.debitToken.label }}</div>
+            <div class="sublabel">
+              {{ amount(transaction.debitValue, false, 4) }}
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-column align-items-end gap-xs">
+          <div class="negativ">
+            - {{ amount(transaction.debitAmount, true) }}
+          </div>
+          <div class="sublabel">
+            {{ amount(transaction.debitValue * transaction.debitAmount) }}
           </div>
         </div>
       </div>
@@ -46,13 +71,11 @@ import Btn from "@/components/Btn.vue";
 import Icon from "@/components/Icon.vue";
 import TransitionForm from "./TransactionForm.vue";
 import Drawer from "@/components/Drawer.vue";
-import database from "@/plugins/database";
-import { getToken } from "@/utils/Token";
 import CIcon from "@/components/CIcon.vue";
 import { amount } from "@/utils/Token";
+import useWalletStore from "@/plugins/stores/Wallet";
 
-const store = database.getStore("transactions");
-const history = ref([]);
+const walletStore = useWalletStore();
 const drawerOpened = ref(false);
 const transactionForm = ref();
 
@@ -66,29 +89,32 @@ function showTransactionForm() {
   drawerOpened.value = true;
 }
 
-onMounted(() => {
-  history.value = store?.getAll().map((transaction) => ({
-    ...transaction.value,
-    token: getToken(transaction.value.token),
-    id: transaction.id,
-  }));
+// onMounted(() => {
+//   history.value = store?.getAll().map((transaction) => ({
+//     ...transaction.value,
+//     creditToken: getToken(transaction.value.creditToken),
+//     debitToken: getToken(transaction.value.debitToken),
+//     id: transaction.id,
+//   }));
 
-  store.onSave(() => {
-    history.value = store?.getAll().map((transaction) => ({
-      ...transaction.value,
-      token: getToken(transaction.value.token),
-      id: transaction.id,
-    }));
-  });
+//   store.onSave(() => {
+//     history.value = store?.getAll().map((transaction) => ({
+//       ...transaction.value,
+//       creditToken: getToken(transaction.value.creditToken),
+//       debitToken: getToken(transaction.value.debitToken),
+//       id: transaction.id,
+//     }));
+//   });
 
-  store.onDelete(() => {
-    history.value = store?.getAll().map((transaction) => ({
-      ...transaction.value,
-      token: getToken(transaction.value.token),
-      id: transaction.id,
-    }));
-  });
-});
+//   store.onDelete(() => {
+//     history.value = store?.getAll().map((transaction) => ({
+//       ...transaction.value,
+//       creditToken: getToken(transaction.value.creditToken),
+//       debitToken: getToken(transaction.value.debitToken),
+//       id: transaction.id,
+//     }));
+//   });
+// });
 </script>
 
 <style scoped lang="scss"></style>

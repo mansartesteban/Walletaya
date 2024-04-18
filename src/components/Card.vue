@@ -50,6 +50,7 @@ const props = defineProps({
   border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   padding: var(--lg);
+  overflow: hidden;
 
   &::before {
     content: "";
@@ -62,6 +63,7 @@ const props = defineProps({
     z-index: -1;
     backdrop-filter: blur(var(--sm));
     border-radius: var(--border-radius);
+    background: rgba(255, 255, 255, 0.02);
   }
 
   .blurry-container {

@@ -4,10 +4,12 @@
       <div class="form-group">
         <InputText
           label="Prénom"
-          :placeholder="`Ex: ${pickRandom(firstnames)}`"></InputText>
+          :placeholder="`Ex: ${pickRandom(firstnames)}`"
+        ></InputText>
         <InputText
           label="Nom"
-          :placeholder="`Ex: ${pickRandom(lastnames)}`"></InputText>
+          :placeholder="`Ex: ${pickRandom(lastnames)}`"
+        ></InputText>
       </div>
     </Card>
 
@@ -17,7 +19,8 @@
         <InputText
           v-model="defaultCurrencySymbol"
           label="Symbol"
-          :placeholder="`Ex: £`"></InputText>
+          :placeholder="`Ex: £`"
+        ></InputText>
       </div>
     </Card>
     <Card>
@@ -31,7 +34,7 @@
 import InputText from "@/components/forms/InputText.vue";
 import Btn from "@/components/Btn.vue";
 import Card from "@/components/Card.vue";
-import Toggle from "@/components/forms/Toggle.vue";
+import Toggle from "@/components/forms/ButtonGroup.vue";
 
 import { pickRandom } from "@/utils/Array";
 import firstnames from "@/faker/firstnames";

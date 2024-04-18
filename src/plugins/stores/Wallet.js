@@ -5,45 +5,87 @@ export default defineStore("wallet", {
   state: () => {
     return {
       history: [],
-    }
+    };
   },
   getters: {
     aggregatedTransactions(state) {
       let aggregations = state.history.reduce((aggregations, transaction) => {
-        if (!aggregations[transaction.token.id]) {
-          aggregations[transaction.token.id] = {
-            token: transaction.token,
+        if (!aggregations[transaction.creditToken.id]) {
+          aggregations[transaction.creditToken.id] = {
+            token: transaction.creditToken,
             amount: 0,
             value: 0,
-            bought: 0,
-            selled: 0,
-            buyCount: 0,
-            sellCount: 0,
+            credited: 0,
+            debited: 0,
+            creditCount: 0,
+            debitCount: 0,
             cumulativeAmount: 0,
-            cumulativeAmountBuy: 0,
-            cumulativeAmountSell: 0,
+            cumulativeAmountCredit: 0,
+            cumulativeAmountDebit: 0,
             transactionCount: 0,
             cumulativeValue: 0,
-            cumulativeValueBuy: 0,
-            cumulativeValueSell: 0,
+            cumulativeValueCredit: 0,
+            cumulativeValueDebit: 0,
             cumulativeAssets: 0,
-            cumulativeAssetsBuy: 0,
-            cumulativeAssetsSell: 0,
-          }
+            cumulativeAssetsCredit: 0,
+            cumulativeAssetsDebit: 0,
+          };
         }
-        return aggregations
-      }, {})
+        if (!aggregations[transaction.debitToken.id]) {
+          aggregations[transaction.debitToken.id] = {
+            token: transaction.debitToken,
+            amount: 0,
+            value: 0,
+            credited: 0,
+            debited: 0,
+            creditCount: 0,
+            debitCount: 0,
+            cumulativeAmount: 0,
+            cumulativeAmountCredit: 0,
+            cumulativeAmountDebit: 0,
+            transactionCount: 0,
+            cumulativeValue: 0,
+            cumulativeValueCredit: 0,
+            cumulativeValueDebit: 0,
+            cumulativeAssets: 0,
+            cumulativeAssetsCredit: 0,
+            cumulativeAssetsDebit: 0,
+          };
+        }
+        return aggregations;
+      }, {});
 
-      state.history.forEach(transaction => {
-        aggregations[transaction.token.id] = WalletAggregator.aggregate(aggregations[transaction.token.id], transaction)
-      })
+      state.history.forEach((transaction) => {
+        aggregations[transaction.creditToken.id] = WalletAggregator.aggregate(
+          aggregations[transaction.creditToken.id],
+          transaction.creditToken,
+          transaction
+        );
+        aggregations[transaction.debitToken.id] = WalletAggregator.aggregate(
+          aggregations[transaction.debitToken.id],
+          transaction.debitToken,
+          transaction
+        );
+      });
 
       return aggregations;
-    }
+    },
+    usedTokens(state) {
+      let usedTokens = [];
+      state.history.forEach((transaction) => {
+        if (!usedTokens.includes(transaction.creditToken.value)) {
+          usedTokens.push(transaction.creditToken.value);
+        }
+        if (!usedTokens.includes(transaction.debitToken.value)) {
+          usedTokens.push(transaction.debitToken.value);
+        }
+      });
+      return usedTokens;
+    },
   },
   actions: {
     setHistory(history) {
       this.history = history;
     },
-  }
+  },
 });

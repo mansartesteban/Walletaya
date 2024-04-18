@@ -52,6 +52,8 @@ onMounted(() => {
 
     &.active {
       color: rgba(255, 255, 255, 1);
+      background: var(--color-primary);
+      border-color: var(--color-primary);
     }
 
     &:first-child {
@@ -59,11 +61,6 @@ onMounted(() => {
       border-style: solid;
       border-color: var(--color-primary);
       border-radius: var(--border-radius) 0 0 var(--border-radius);
-
-      &.active {
-        background: var(--color-success);
-        border-color: var(--color-success);
-      }
     }
 
     &:last-child {
@@ -71,11 +68,12 @@ onMounted(() => {
       border-style: solid;
       border-color: var(--color-primary);
       border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
 
-      &.active {
-        border-color: var(--color-error);
-        background: var(--color-error);
-      }
+    &:not(:first-child):not(:last-child) {
+      border-width: 1px 0 1px 0;
+      border-style: solid;
+      border-color: var(--color-primary);
     }
   }
 }

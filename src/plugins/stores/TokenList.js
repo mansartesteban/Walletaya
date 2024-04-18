@@ -1,9 +1,7 @@
+import { defineStore } from "pinia";
+import { coinmarketcapApi } from "@/plugins/axios";
 import cryptocurrencyList from "@/endpoints/cryptocurrency-list";
 import cryptocurrencyQuotesLatest from "@/endpoints/cryptocurrency-quotes-latest";
-import { coinmarketcapApi } from "@/plugins/axios";
-import useSettingsStore from "@/plugins/stores/Settings";
-
-import { defineStore } from "pinia";
 
 export default defineStore("token", {
   state: () => {
@@ -35,19 +33,22 @@ export default defineStore("token", {
     getTokenPrice(token) {
       return this.prices[token.id] || 0;
     },
-    refresh(fetchApi = false) {
-      if (fetchApi) {
+    refreshTokens(fetchApi = false, tokens = []) {
+      if (fetchApi && tokens.length > 0) {
         coinmarketcapApi
           .get("/v2/cryptocurrency/quotes/latest", {
             headers: {
               "X-CMC_PRO_API_KEY": "524d4c13-97d5-41ea-bc66-5c861259bd92",
             },
             params: {
-              slug: useSettingsStore().favoriteTokens.join(","),
+              slug: tokens.join(","),
             },
           })
           .then((response) => {
-            this.marketValues = { ...this.marketValues, ...response.data.data };
+            this.marketValues = {
+              ...this.marketValues,
+              ...response.data.data,
+            };
           });
       } else {
         this.marketValues = cryptocurrencyQuotesLatest;

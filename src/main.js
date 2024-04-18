@@ -10,9 +10,8 @@ import directives from "./directives";
 // import database from "@/plugins/database";
 
 const app = createApp(App);
-
-stores(app);
 router(app);
 directives(app);
+stores(app);
 
 app.mount("#app");

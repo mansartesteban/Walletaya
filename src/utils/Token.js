@@ -1,5 +1,3 @@
-// import tokens from "@/endpoints/cryptocurrency-list";
-// import listingLatest from "@/endpoints/cryptocurrency-listing-latest";
 import useTokenStore from "@/plugins/stores/TokenList";
 import useSettingsStore from "@/plugins/stores/Settings";
 

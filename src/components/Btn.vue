@@ -2,7 +2,21 @@
   <div
     class="btn flex flex-1 align-items-center justify-content-center gap-sm"
     @click="onClick"
-    :class="[severity, { flat, disabled, fab, icon, glass: fab }]">
+    :class="[
+      severity,
+      {
+        flat,
+        disabled,
+        elevated,
+        fab,
+        icon,
+        rounded,
+        glass: fab,
+        'icon-only': icon && !label && !$slots.default,
+      },
+      size ? `size-${size}` : '',
+    ]"
+  >
     <Icon v-if="icon">{{ icon }}</Icon>
     <div v-if="label || $slots.default" class="btn-label">
       <slot>{{ label }}</slot>
@@ -31,9 +45,22 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  elevated: {
+    type: Boolean,
+    default: false,
+  },
   fab: {
     type: Boolean,
     default: false,
+  },
+  rounded: {
+    type: Boolean,
+    default: false,
+  },
+  size: {
+    type: String,
+    default: null,
+    validator: (v) => ["xs", "sm", "md", "lg", "xl"].includes(v),
   },
   severity: {
     type: String,
@@ -67,5 +94,3 @@ function onClick(e) {
   emit("click", e);
 }
 </script>
-
-<style scoped lang="scss"></style>

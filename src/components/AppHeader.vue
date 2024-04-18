@@ -22,13 +22,15 @@
 import Avatar from "@/components/Avatar.vue";
 import { useRoute } from "vue-router";
 import Btn from "@/components/Btn.vue";
-import useTokenStore from "@/plugins/stores/TokenList";
+import useAppStore from "@/plugins/stores/App";
+import useTokenListStore from "@/plugins/stores/TokenList";
 
 const route = useRoute();
 
-const tokenStore = useTokenStore();
+const appStore = useAppStore();
+const tokenListStore = useTokenListStore();
 
 const refresh = () => {
-  tokenStore.refresh(true);
+  tokenListStore.refreshTokens(true, appStore.usedTokens);
 };
 </script>

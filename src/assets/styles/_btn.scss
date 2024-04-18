@@ -30,12 +30,40 @@
       background: var(--color-info);
     }
 
-    &.icon {
+    &.flat {
+      background: none;
+    }
+     &.rounded {
+      border-radius: 999px;
+     }
+
+    &.icon-only {
       flex: unset !important;
     }
 
-    &.flat {
-      background: none;
+    &.elevated {
+      box-shadow: var(--shadow);
+    }
+
+    &.size-xs {
+      width: calc(var(--xs) * 2);
+      height: calc(var(--xs) * 2);
+    }
+    &.size-sm {
+      width: calc(var(--sm) * 2);
+      height: calc(var(--sm) * 2);
+    }
+    &.size-md {
+      width: calc(var(--md) * 2);
+      height: calc(var(--md) * 2);
+    }
+    &.size-lg {
+      width: calc(var(--lg) * 2);
+      height: calc(var(--lg) * 2);
+    }
+    &.size-xl {
+      width: calc(var(--xl) * 2);
+      height: calc(var(--xl) * 2);
     }
 
     &.fab {

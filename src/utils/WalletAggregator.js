@@ -1,119 +1,133 @@
-import { amount } from "@/utils/Token";
-import useTokenListStore from "@/plugins/stores/TokenList";
-
-const tokenListStore = useTokenListStore();
-
 const aggTransactionCount = () => {
   return 1;
 };
-const aggBuyCount = (transaction) => {
-  return transaction.positive ? 1 : 0;
+const aggCreditCount = (transaction, token) => {
+  if (transaction.creditToken.id === token.id) {
+    return transaction.creditAmount ? 1 : 0;
+  }
+  return 0;
 };
-const aggSellCount = (transaction) => {
-  return transaction.positive ? 0 : 1;
+
+const aggDebitCount = (transaction, token) => {
+  if (transaction.debitToken.id === token.id) {
+    return transaction.debitAmount ? 1 : 0;
+  }
+  return 0;
 };
-const aggBought = (transaction) => {
-  return (
-    (transaction.positive ? +transaction.toAmount : 0) * transaction.toValue
-  );
+
+const aggCredited = (transaction, token) => {
+  if (transaction.creditToken.id === token.id) {
+    return transaction.creditAmount * transaction.creditValue;
+  }
+  return 0;
 };
-const aggSelled = (transaction) => {
-  return (
-    (transaction.positive ? 0 : transaction.toAmount) * transaction.toValue
-  );
+const aggDebited = (transaction, token) => {
+  if (transaction.debitToken.id === token.id) {
+    return transaction.debitAmount * transaction.debitValue;
+  }
+  return 0;
 };
-const aggCumulativeAmount = (transaction) => {
-  return transaction.positive ? +transaction.toAmount : -transaction.toAmount;
+const aggCumulativeAmount = (transaction, token) => {
+  let result = 0;
+  if (transaction.creditToken.id === token.id) {
+    result += transaction.creditAmount;
+  }
+  if (transaction.debitToken.id === token.id) {
+    result -= transaction.debitAmount;
+  }
+  return result;
 };
-const aggCumulativeAmountBuy = (transaction) => {
-  return transaction.positive ? +transaction.toAmount : 0;
+const aggCumulativeAmountCredit = (transaction, token) => {
+  if (transaction.creditToken.id === token.id) {
+    return transaction.creditAmount;
+  }
+  return 0;
 };
-const aggCumulativeAmountSell = (transaction) => {
-  return transaction.positive ? 0 : transaction.toAmount;
+const aggCumulativeAmountDebit = (transaction, token) => {
+  if (transaction.debitToken.id === token.id) {
+    return transaction.debitAmount;
+  }
+  return 0;
 };
-const aggCumulativeValue = (transaction) => {
-  return transaction.positive ? +transaction.toValue : -transaction.toValue;
+const aggCumulativeValue = (transaction, token) => {
+  let result = 0;
+  if (transaction.creditToken.id === token.id) {
+    result += transaction.creditValue;
+  }
+  if (transaction.debitToken.id === token.id) {
+    result -= transaction.debitValue;
+  }
+  return result;
 };
-const aggCumulativeValueBuy = (transaction) => {
-  return transaction.positive ? +transaction.toValue : 0;
+const aggCumulativeValueCredit = (transaction, token) => {
+  if (transaction.creditToken.id === token.id) {
+    return transaction.creditValue;
+  }
+  return 0;
 };
-const aggCumulativeValueSell = (transaction) => {
-  return transaction.positive ? 0 : +transaction.toValue;
+const aggCumulativeValueDebit = (transaction, token) => {
+  if (transaction.debitToken.id === token.id) {
+    return transaction.debitValue;
+  }
+  return 0;
 };
-const aggCumulativeAssets = (transaction) => {
-  return (
-    transaction.toAmount * transaction.toValue * (transaction.positive ? 1 : -1)
-  );
+const aggCumulativeAssets = (transaction, token) => {
+  let result = 0;
+  if (transaction.creditToken.id === token.id) {
+    result += transaction.creditAmount * transaction.creditValue;
+  }
+  if (transaction.debitToken.id === token.id) {
+    result -= transaction.debitAmount * transaction.debitValue;
+  }
+  return result;
 };
-const aggCumulativeAssetsBuy = (transaction) => {
-  return (
-    transaction.toAmount * transaction.toValue * (transaction.positive ? 1 : 0)
-  );
+const aggCumulativeAssetsCredit = (transaction, token) => {
+  if (transaction.creditToken.id === token.id) {
+    return transaction.creditAmount * transaction.creditValue;
+  }
+  return 0;
 };
-const aggCumulativeAssetsSell = (transaction) => {
-  return (
-    transaction.toAmount * transaction.toValue * (transaction.positive ? 0 : 1)
-  );
+const aggCumulativeAssetsDebit = (transaction, token) => {
+  if (transaction.debitToken.id === token.id) {
+    return transaction.debitAmount * transaction.debitValue;
+  }
+  return 0;
 };
 
 export default {
-  aggregate(aggregation, transaction) {
-    aggregation.bought += aggBought(transaction);
-    aggregation.selled += aggSelled(transaction);
-    aggregation.buyCount += aggBuyCount(transaction);
-    aggregation.sellCount += aggSellCount(transaction);
-    aggregation.transactionCount += aggTransactionCount(transaction);
-    aggregation.cumulativeAmount += aggCumulativeAmount(transaction);
-    aggregation.cumulativeAmountBuy += aggCumulativeAmountBuy(transaction);
-    aggregation.cumulativeAmountSell += aggCumulativeAmountSell(transaction);
-    aggregation.cumulativeValue += aggCumulativeValue(transaction);
-    aggregation.cumulativeValueBuy += aggCumulativeValueBuy(transaction);
-    aggregation.cumulativeValueSell += aggCumulativeValueSell(transaction);
-    aggregation.cumulativeAssets += aggCumulativeAssets(transaction);
-    aggregation.cumulativeAssetsBuy += aggCumulativeAssetsBuy(transaction);
-    aggregation.cumulativeAssetsSell += aggCumulativeAssetsSell(transaction);
+  aggregate(aggregation, token, transaction) {
+    aggregation.credited += aggCredited(transaction, token);
+    aggregation.debited += aggDebited(transaction, token);
+    aggregation.creditCount += aggCreditCount(transaction, token);
+    aggregation.debitCount += aggDebitCount(transaction, token);
+    aggregation.transactionCount += aggTransactionCount(transaction, token);
+    aggregation.cumulativeAmount += aggCumulativeAmount(transaction, token);
+    aggregation.cumulativeAmountCredit += aggCumulativeAmountCredit(
+      transaction,
+      token
+    );
+    aggregation.cumulativeAmountDebit += aggCumulativeAmountDebit(
+      transaction,
+      token
+    );
+    aggregation.cumulativeValue += aggCumulativeValue(transaction, token);
+    aggregation.cumulativeValueCredit += aggCumulativeValueCredit(
+      transaction,
+      token
+    );
+    aggregation.cumulativeValueDebit += aggCumulativeValueDebit(
+      transaction,
+      token
+    );
+    aggregation.cumulativeAssets += aggCumulativeAssets(transaction, token);
+    aggregation.cumulativeAssetsCredit += aggCumulativeAssetsCredit(
+      transaction,
+      token
+    );
+    aggregation.cumulativeAssetsDebit += aggCumulativeAssetsDebit(
+      transaction,
+      token
+    );
     return aggregation;
-  },
-
-  assets(agg) {
-    return amount(
-      agg.cumulativeAmount * tokenListStore.getTokenPrice(agg.token)
-    );
-  },
-
-  amount(agg) {
-    return amount(agg.cumulativeAmount, true);
-  },
-
-  smoothedPrice(agg) {
-    return amount(agg.cumulativeAssets / agg.cumulativeAmount);
-  },
-
-  averageBuyPrice(agg) {
-    return amount(agg.cumulativeAssetsBuy / agg.cumulativeAmountBuy);
-  },
-
-  bought(agg) {
-    return amount(agg.bought);
-  },
-
-  selled(agg) {
-    return amount(agg.selled);
-  },
-
-  priceVariation(agg) {
-    return (
-      ((agg.cumulativeAmount * tokenListStore.getTokenPrice(agg.token) -
-        agg.cumulativeAssets) /
-        agg.cumulativeAssets) *
-      100
-    ).toFixed(2);
-  },
-
-  profit(agg) {
-    return (
-      agg.cumulativeAmount * tokenListStore.getTokenPrice(agg.token) -
-      agg.bought
-    );
   },
 };
