@@ -10,7 +10,10 @@ export default defineStore("wallet", {
   getters: {
     aggregatedTransactions(state) {
       let aggregations = state.history.reduce((aggregations, transaction) => {
-        if (!aggregations[transaction.creditToken.value]) {
+        if (
+          transaction.creditToken &&
+          !aggregations[transaction.creditToken.value]
+        ) {
           aggregations[transaction.creditToken.value] = {
             token: transaction.creditToken,
             amount: 0,
@@ -31,7 +34,10 @@ export default defineStore("wallet", {
             cumulativeAssetsDebit: 0,
           };
         }
-        if (!aggregations[transaction.debitToken.value]) {
+        if (
+          transaction.debitToken &&
+          !aggregations[transaction.debitToken.value]
+        ) {
           aggregations[transaction.debitToken.value] = {
             token: transaction.debitToken,
             amount: 0,
@@ -56,17 +62,22 @@ export default defineStore("wallet", {
       }, {});
 
       state.history.forEach((transaction) => {
-        aggregations[transaction.creditToken.value] =
-          WalletAggregator.aggregate(
-            aggregations[transaction.creditToken.value],
-            transaction.creditToken,
-            transaction
-          );
-        aggregations[transaction.debitToken.value] = WalletAggregator.aggregate(
-          aggregations[transaction.debitToken.value],
-          transaction.debitToken,
-          transaction
-        );
+        if (transaction.creditToken) {
+          aggregations[transaction.creditToken.value] =
+            WalletAggregator.aggregate(
+              aggregations[transaction.creditToken.value],
+              transaction.creditToken,
+              transaction
+            );
+        }
+        if (transaction.debitToken) {
+          aggregations[transaction.debitToken.value] =
+            WalletAggregator.aggregate(
+              aggregations[transaction.debitToken.value],
+              transaction.debitToken,
+              transaction
+            );
+        }
       });
 
       return aggregations;

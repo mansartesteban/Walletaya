@@ -16,7 +16,7 @@
           <InputNumber
             v-model="debitAmount"
             label="Montant"
-            :append="debitSelectedToken?.symbol"
+            :append="debitToken?.symbol"
           >
           </InputNumber>
           <Btn
@@ -25,7 +25,7 @@
             @click="debitAutoCalculate"
           ></Btn>
           <TokenPicker
-            v-model="debitSelectedToken"
+            v-model="debitToken"
             @changed="debitChangedToken"
           ></TokenPicker>
         </div>
@@ -63,7 +63,7 @@
           <InputNumber
             v-model="creditAmount"
             label="Montant"
-            :append="creditSelectedToken?.symbol"
+            :append="creditToken?.symbol"
           >
           </InputNumber>
           <Btn
@@ -72,7 +72,7 @@
             @click="creditAutoCalculate"
           ></Btn>
           <TokenPicker
-            v-model="creditSelectedToken"
+            v-model="creditToken"
             @changed="creditChangedToken"
           ></TokenPicker>
         </div>
@@ -127,10 +127,10 @@ const settings = useSettingsStore();
 
 const creditAmount = ref();
 const creditValue = ref(1);
-const creditSelectedToken = ref(null);
+const creditToken = ref(null);
 const debitAmount = ref();
 const debitValue = ref(1);
-const debitSelectedToken = ref(null);
+const debitToken = ref(null);
 
 const transactionId = ref(null);
 const tokenListStore = useTokenListStore();
@@ -182,15 +182,15 @@ const calculateAmount = (amount, value) => {
 const swap = () => {
   let tmpCreditAmount = creditAmount.value;
   let tmpCreditValue = creditValue.value;
-  let tmpCreditSelectedToken = creditSelectedToken.value;
+  let tmpCreditToken = creditToken.value;
 
   creditAmount.value = debitAmount.value;
   creditValue.value = debitValue.value;
-  creditSelectedToken.value = debitSelectedToken.value;
+  creditToken.value = debitToken.value;
 
   debitAmount.value = tmpCreditAmount;
   debitValue.value = tmpCreditValue;
-  debitSelectedToken.value = tmpCreditSelectedToken;
+  debitToken.value = tmpCreditToken;
 };
 
 const reset = (resetToken = true) => {
@@ -199,22 +199,28 @@ const reset = (resetToken = true) => {
   transactionType.value = 0;
   transactionId.value = null;
   if (resetToken) {
-    creditSelectedToken.value = settings.defaultToken.value;
-    debitSelectedToken.value = settings.defaultToken.value;
+    creditToken.value = settings.defaultToken.value;
+    debitToken.value = settings.defaultToken.value;
     creditValue.value = tokenListStore.prices[settings.defaultToken.id];
     debitValue.value = tokenListStore.prices[settings.defaultToken.id];
   }
 };
 
 const fillForm = (data) => {
-  creditAmount.value = data.creditAmount;
-  creditSelectedToken.value = data.creditToken.value;
-  creditValue.value = data.creditValue;
-  debitAmount.value = data.debitAmount;
-  debitSelectedToken.value = data.debitToken.value;
-  debitValue.value = data.debitValue;
+  reset();
+  if ([0, 1].includes(data.transactionType)) {
+    creditAmount.value = data.creditAmount;
+    creditToken.value = data.creditToken.value;
+    creditValue.value = data.creditValue;
+  }
+
+  if ([1, 2].includes(data.transactionType)) {
+    debitAmount.value = data.debitAmount;
+    debitToken.value = data.debitToken.value;
+    debitValue.value = data.debitValue;
+  }
   transactionType.value = data.transactionType;
-  transactionId.value = data.value;
+  transactionId.value = data.id;
 };
 
 const saveTransaction = (id) => {
@@ -222,20 +228,31 @@ const saveTransaction = (id) => {
     id = uuid();
   }
   emit("saving");
-  store
-    .save(id, {
-      creditAmount: creditAmount.value,
-      creditValue: creditValue.value,
-      creditToken: creditSelectedToken.value,
-      debitAmount: debitAmount.value,
-      debitValue: debitValue.value,
-      debitToken: debitSelectedToken.value,
-      transactionType: transactionType.value,
-    })
-    .then(() => {
-      emit("saved");
-      reset(false);
-    });
+
+  let toSave = {
+    creditAmount: creditAmount.value,
+    creditValue: creditValue.value,
+    creditToken: creditToken.value,
+    debitAmount: debitAmount.value,
+    debitValue: debitValue.value,
+    debitToken: debitToken.value,
+    transactionType: transactionType.value,
+  };
+
+  if (transactionType.value === 0) {
+    toSave.debitToken = null;
+    toSave.debitValue = null;
+    toSave.debitAmount = null;
+  }
+  if (transactionType.value === 2) {
+    toSave.creditToken = null;
+    toSave.creditValue = null;
+    toSave.creditAmount = null;
+  }
+  store.save(id, toSave).then(() => {
+    emit("saved");
+    reset(false);
+  });
 };
 
 const deleteTransaction = (id) => {

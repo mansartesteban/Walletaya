@@ -47,7 +47,7 @@ const tokenListStore = useTokenListStore();
 
 const assets = (agg) => {
   return calculateAmount(
-    agg.cumulativeAmount * tokenListStore.getTokenPrice(agg.token)
+    agg.cumulativeAmount * tokenListStore.prices[agg.token.id]
   );
 };
 
@@ -56,6 +56,6 @@ const amount = (agg) => {
 };
 
 const tokenPrice = (agg) => {
-  return calculateAmount(tokenListStore.getTokenPrice(agg.token), false, 4);
+  return calculateAmount(tokenListStore.prices[agg.token.id], false, 4);
 };
 </script>
