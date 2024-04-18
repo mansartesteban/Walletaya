@@ -6,33 +6,38 @@
         :items="transactionTypes"
       ></ButtonGroup>
     </div>
-    <Card noHeader v-if="[0, 1].includes(transactionType)">
+    <Card noHeader v-if="[1, 2].includes(transactionType)">
       <div class="flex flex-column gap-md">
-        Crédit
+        Débit
         <div
           class="form-line flex gap-md"
           :class="{ 'flex-reverse': settings.leftHanded }"
         >
           <InputNumber
-            v-model="creditAmount"
+            v-model="debitAmount"
             label="Montant"
-            :append="creditSelectedToken?.symbol"
+            :append="debitSelectedToken?.symbol"
           >
           </InputNumber>
+          <Btn
+            v-if="transactionType === 1"
+            icon="magic"
+            @click="debitAutoCalculate"
+          ></Btn>
           <TokenPicker
-            v-model="creditSelectedToken"
-            @changed="creditChangedToken"
+            v-model="debitSelectedToken"
+            @changed="debitChangedToken"
           ></TokenPicker>
         </div>
         <div class="form-line flex gap-md">
           <InputNumber
-            v-model="creditValue"
+            v-model="debitValue"
             label="Valeur"
             append="USDT"
           ></InputNumber>
         </div>
-        <div class="amount-display flex align-items-center gap-xs positive">
-          <div>+ {{ creditComputedAmount }}</div>
+        <div class="amount-display flex align-items-center gap-xs negative">
+          <div>- {{ debitComputedAmount }}</div>
           <div>USTD</div>
         </div>
       </div>
@@ -48,33 +53,38 @@
       @click="swap"
     ></Btn>
 
-    <Card noHeader v-if="[1, 2].includes(transactionType)">
+    <Card noHeader v-if="[0, 1].includes(transactionType)">
       <div class="flex flex-column gap-md">
-        Débit
+        Crédit
         <div
           class="form-line flex gap-md"
           :class="{ 'flex-reverse': settings.leftHanded }"
         >
           <InputNumber
-            v-model="debitAmount"
+            v-model="creditAmount"
             label="Montant"
-            :append="debitSelectedToken?.symbol"
+            :append="creditSelectedToken?.symbol"
           >
           </InputNumber>
+          <Btn
+            v-if="transactionType === 1"
+            icon="magic"
+            @click="creditAutoCalculate"
+          ></Btn>
           <TokenPicker
-            v-model="debitSelectedToken"
-            @changed="debitChangedToken"
+            v-model="creditSelectedToken"
+            @changed="creditChangedToken"
           ></TokenPicker>
         </div>
         <div class="form-line flex gap-md">
           <InputNumber
-            v-model="debitValue"
+            v-model="creditValue"
             label="Valeur"
             append="USDT"
           ></InputNumber>
         </div>
-        <div class="amount-display flex align-items-center gap-xs negative">
-          <div>- {{ debitComputedAmount }}</div>
+        <div class="amount-display flex align-items-center gap-xs positive">
+          <div>+ {{ creditComputedAmount }}</div>
           <div>USTD</div>
         </div>
       </div>
@@ -108,7 +118,7 @@ import ButtonGroup from "@/components/forms/ButtonGroup.vue";
 import Icon from "@/components/Icon.vue";
 import { v4 as uuid } from "uuid";
 import database from "@/plugins/database";
-import useTokenStore from "@/plugins/stores/TokenList";
+import useTokenListStore from "@/plugins/stores/TokenList";
 import useSettingsStore from "@/plugins/stores/Settings";
 
 const emit = defineEmits(["saving", "saved", "deleting", "deleted"]);
@@ -123,7 +133,7 @@ const debitValue = ref(1);
 const debitSelectedToken = ref(null);
 
 const transactionId = ref(null);
-const tokenStore = useTokenStore();
+const tokenListStore = useTokenListStore();
 
 const transactionType = ref(true);
 const transactionTypes = [
@@ -141,10 +151,18 @@ const debitComputedAmount = computed(() =>
   calculateAmount(debitAmount.value, debitValue.value)
 );
 const creditChangedToken = (v) => {
-  creditValue.value = tokenStore.prices[v.id];
+  creditValue.value = tokenListStore.prices[v.id];
 };
 const debitChangedToken = (v) => {
-  debitValue.value = tokenStore.prices[v.id];
+  debitValue.value = tokenListStore.prices[v.id];
+};
+const creditAutoCalculate = () => {
+  creditAmount.value =
+    (debitAmount.value * debitValue.value) / creditValue.value;
+};
+const debitAutoCalculate = () => {
+  debitAmount.value =
+    (creditAmount.value * creditValue.value) / debitValue.value;
 };
 
 const calculateAmount = (amount, value) => {
@@ -181,8 +199,10 @@ const reset = (resetToken = true) => {
   transactionType.value = 0;
   transactionId.value = null;
   if (resetToken) {
-    creditSelectedToken.value = settings.defaultToken;
-    debitSelectedToken.value = settings.defaultToken;
+    creditSelectedToken.value = settings.defaultToken.value;
+    debitSelectedToken.value = settings.defaultToken.value;
+    creditValue.value = tokenListStore.prices[settings.defaultToken.id];
+    debitValue.value = tokenListStore.prices[settings.defaultToken.id];
   }
 };
 
@@ -194,7 +214,7 @@ const fillForm = (data) => {
   debitSelectedToken.value = data.debitToken.value;
   debitValue.value = data.debitValue;
   transactionType.value = data.transactionType;
-  transactionId.value = data.id;
+  transactionId.value = data.value;
 };
 
 const saveTransaction = (id) => {

@@ -4,7 +4,7 @@
       class="flex align-items-center justify-content-space-between gap-md p-md"
     >
       <div class="flex align-items-center gap-md">
-        <CIcon :token="aggregate.token.id"></CIcon>
+        <CIcon :token="aggregate.token"></CIcon>
         <div class="flex flex-column gap-xs">
           <div>{{ aggregate.token.label }}</div>
           <div class="sublabel">

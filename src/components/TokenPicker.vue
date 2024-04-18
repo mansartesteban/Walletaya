@@ -9,11 +9,11 @@
     @changed="emit('changed', $event)"
   >
     <template #selected-option-mini-icon="{ option }">
-      <CIcon :token="option.id"></CIcon>
+      <CIcon :token="option"></CIcon>
     </template>
 
     <template #option-icon="{ option }">
-      <CIcon :token="option?.id"></CIcon>
+      <CIcon :token="option"></CIcon>
     </template>
 
     <template #option-label="{ option }">
@@ -23,7 +23,7 @@
           <span class="sublabel">{{ option.symbol }}</span>
         </div>
         <Btn
-          @click.stop="starToken(option)"
+          @click.stop="starToken($event, option)"
           :icon="
             settings.favoriteTokens.includes(option.value) ? 'star' : 'star-off'
           "
@@ -53,7 +53,7 @@ import { normalizeString } from "@/utils/String";
 const settings = useSettingsStore();
 
 const model = defineModel({
-  get: (v) => getToken(v || settings.defaultToken),
+  get: (v) => getToken(v || settings.defaultToken.value),
   set: (v) => v?.value,
 });
 
@@ -63,7 +63,8 @@ const tokenStore = useTokenStore();
 
 const options = computed(() => tokenStore.tokenList);
 
-const starToken = (token) => {
+const starToken = (e, token) => {
+  e.stopPropagation();
   settings.starToken(token);
 };
 
@@ -97,6 +98,6 @@ const sortFunction = (previousToken, currentToken, filter) => {
 };
 
 onMounted(() => {
-  model.value = getToken(settings.defaultToken);
+  model.value = getToken(settings.defaultToken.value);
 });
 </script>

@@ -49,7 +49,7 @@ const props = defineProps({
   border-radius: var(--border-radius);
   border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
-  padding: var(--lg);
+  padding: var(--md);
   overflow: hidden;
 
   &::before {
