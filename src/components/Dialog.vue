@@ -31,7 +31,7 @@ const props = defineProps({
 
 const emit = defineEmits(["closed", "opened", "cancel", "confirm"]);
 
-const dialogPanel = ref();
+const dialogPanel = ref(null);
 const opened = defineModel("opened", { default: false });
 
 function open() {
