@@ -5,14 +5,12 @@
   <div class="flex flex-column">
     <template v-for="transaction in walletStore.history">
       <div
-        v-if="[0, 1].includes(transaction.transactionType)"
+        v-if="transaction.transactionType === 0"
         class="transaction-line flex align-items-center justify-content-space-between gap-md p-md"
         @click="fillForm(transaction)"
       >
-        <!-- v-touch -->
-        <!-- @touch="onTouch($event, transaction)" -->
         <div class="flex align-items-center gap-md">
-          <CIcon :token="transaction.creditToken.id"></CIcon>
+          <CIcon :token="transaction.creditToken"></CIcon>
           <div class="flex flex-column gap-xs">
             <div>{{ transaction.creditToken.label }}</div>
             <div class="sublabel">
@@ -30,14 +28,12 @@
         </div>
       </div>
       <div
-        v-if="[1, 2].includes(transaction.transactionType)"
+        v-if="transaction.transactionType === 2"
         class="transaction-line flex align-items-center justify-content-space-between gap-md p-md"
         @click="fillForm(transaction)"
       >
-        <!-- v-touch -->
-        <!-- @touch="onTouch($event, transaction)" -->
         <div class="flex align-items-center gap-md">
-          <CIcon :token="transaction.debitToken.id"></CIcon>
+          <CIcon :token="transaction.debitToken"></CIcon>
           <div class="flex flex-column gap-xs">
             <div>{{ transaction.debitToken.label }}</div>
             <div class="sublabel">
@@ -46,11 +42,60 @@
           </div>
         </div>
         <div class="flex flex-column align-items-end gap-xs">
-          <div class="negativ">
+          <div class="negative">
             - {{ amount(transaction.debitAmount, true) }}
           </div>
           <div class="sublabel">
             {{ amount(transaction.debitValue * transaction.debitAmount) }}
+          </div>
+        </div>
+      </div>
+
+      <div
+        v-if="transaction.transactionType === 1"
+        class="transaction-line flex flex-column"
+        @click="fillForm(transaction)"
+      >
+        <div
+          class="flex align-items-center justify-content-space-between gap-md p-md"
+        >
+          <div class="flex align-items-center gap-md">
+            <CIcon :token="transaction.creditToken"></CIcon>
+            <div class="flex flex-column gap-xs">
+              <div>{{ transaction.creditToken.label }}</div>
+              <div class="sublabel">
+                {{ amount(transaction.creditValue, false, 4) }}
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-column align-items-end gap-xs">
+            <div class="positive">
+              + {{ amount(transaction.creditAmount, true) }}
+            </div>
+            <div class="sublabel">
+              {{ amount(transaction.creditValue * transaction.creditAmount) }}
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex align-items-center justify-content-space-between gap-md p-md"
+        >
+          <div class="flex align-items-center gap-md">
+            <CIcon :token="transaction.debitToken"></CIcon>
+            <div class="flex flex-column gap-xs">
+              <div>{{ transaction.debitToken.label }}</div>
+              <div class="sublabel">
+                {{ amount(transaction.debitValue, false, 4) }}
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-column align-items-end gap-xs">
+            <div class="negative">
+              - {{ amount(transaction.debitAmount, true) }}
+            </div>
+            <div class="sublabel">
+              {{ amount(transaction.debitValue * transaction.debitAmount) }}
+            </div>
           </div>
         </div>
       </div>
@@ -88,33 +133,6 @@ function showTransactionForm() {
   transactionForm.value.reset();
   drawerOpened.value = true;
 }
-
-// onMounted(() => {
-//   history.value = store?.getAll().map((transaction) => ({
-//     ...transaction.value,
-//     creditToken: getToken(transaction.value.creditToken),
-//     debitToken: getToken(transaction.value.debitToken),
-//     id: transaction.id,
-//   }));
-
-//   store.onSave(() => {
-//     history.value = store?.getAll().map((transaction) => ({
-//       ...transaction.value,
-//       creditToken: getToken(transaction.value.creditToken),
-//       debitToken: getToken(transaction.value.debitToken),
-//       id: transaction.id,
-//     }));
-//   });
-
-//   store.onDelete(() => {
-//     history.value = store?.getAll().map((transaction) => ({
-//       ...transaction.value,
-//       creditToken: getToken(transaction.value.creditToken),
-//       debitToken: getToken(transaction.value.debitToken),
-//       id: transaction.id,
-//     }));
-//   });
-// });
 </script>
 
 <style scoped lang="scss"></style>

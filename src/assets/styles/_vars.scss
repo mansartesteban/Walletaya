@@ -6,8 +6,8 @@ $colorInfo: #604b99;
 
 $appColor: linear-gradient(90deg, #0f564c 0%, $colorPrimary 100%);
 
-$borderRadius: 12px;
 $defaultfontSize: 16px;
+$borderRadius: var(--md);
 
 :root {
   --color-primary: #{$colorPrimary};

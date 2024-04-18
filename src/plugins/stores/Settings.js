@@ -4,7 +4,7 @@ import database from "@/plugins/database";
 const store = database.getStore("user");
 
 const defaultSettings = {
-  defaultToken: "tether",
+  defaultToken: { value: "tether", id: 825 },
   defaultCurrency: "$",
   leftHanded: false,
   hasRedWelcomeMessage: false,

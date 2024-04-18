@@ -10,8 +10,8 @@ export default defineStore("wallet", {
   getters: {
     aggregatedTransactions(state) {
       let aggregations = state.history.reduce((aggregations, transaction) => {
-        if (!aggregations[transaction.creditToken.id]) {
-          aggregations[transaction.creditToken.id] = {
+        if (!aggregations[transaction.creditToken.value]) {
+          aggregations[transaction.creditToken.value] = {
             token: transaction.creditToken,
             amount: 0,
             value: 0,
@@ -31,8 +31,8 @@ export default defineStore("wallet", {
             cumulativeAssetsDebit: 0,
           };
         }
-        if (!aggregations[transaction.debitToken.id]) {
-          aggregations[transaction.debitToken.id] = {
+        if (!aggregations[transaction.debitToken.value]) {
+          aggregations[transaction.debitToken.value] = {
             token: transaction.debitToken,
             amount: 0,
             value: 0,
@@ -56,13 +56,14 @@ export default defineStore("wallet", {
       }, {});
 
       state.history.forEach((transaction) => {
-        aggregations[transaction.creditToken.id] = WalletAggregator.aggregate(
-          aggregations[transaction.creditToken.id],
-          transaction.creditToken,
-          transaction
-        );
-        aggregations[transaction.debitToken.id] = WalletAggregator.aggregate(
-          aggregations[transaction.debitToken.id],
+        aggregations[transaction.creditToken.value] =
+          WalletAggregator.aggregate(
+            aggregations[transaction.creditToken.value],
+            transaction.creditToken,
+            transaction
+          );
+        aggregations[transaction.debitToken.value] = WalletAggregator.aggregate(
+          aggregations[transaction.debitToken.value],
           transaction.debitToken,
           transaction
         );

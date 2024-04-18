@@ -179,6 +179,7 @@ function open() {
 }
 
 function close() {
+  searchText.value = "";
   opened.value = false;
 }
 
