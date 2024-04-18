@@ -14,19 +14,22 @@
       </router-link>
     </template>
     <div
+      ref="tooldockButton"
       class="navbar-button flex flex-column align-items-center justify-content-center gap-xs"
+      @click="toggleDock"
     >
-      <div class="navbar-button-icon" @click="toolDockOpened = !toolDockOpened">
+      <div class="navbar-button-icon">
         <Icon>tools</Icon>
       </div>
       <div class="navbar-button-label">Outils</div>
       <div
+        ref="tooldock"
         class="tool-dock flex flex-column gap-md mb-md"
         :class="{ 'tool-dock-opened': toolDockOpened }"
       >
         <div
-          class="tool-dock-app flex glass align-items-center gap-sm p-sm py-xs"
-          @click="toggleApp"
+          class="tool-dock-app flex glass align-items-center gap-sm p-sm py-xs rounded-md"
+          @click.stop="toggleApp"
         >
           <div class="tool-dock-button-label">Calculatrice</div>
           <Btn icon="calculator" class="p-sm rounded-md"></Btn>
@@ -46,9 +49,10 @@ import NavbarIndicator from "@/components/NavBarIndicator.vue";
 import Icon from "@/components/Icon.vue";
 import Btn from "@/components/Btn.vue";
 
-import { onMounted, ref, watch } from "vue";
+import { nextTick, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { animate, easingFunctions } from "@/utils/Animate";
+import { onClickOutside } from "@vueuse/core";
 
 import WidgetService from "@/Services/WidgetService";
 
@@ -56,6 +60,8 @@ const calculator = WidgetService.Calculator;
 const route = useRoute();
 const toolDockOpened = ref(false);
 const direction = ref(0);
+const tooldock = ref(null);
+const tooldockButton = ref(null);
 
 const menus = ref([
   {
@@ -92,10 +98,27 @@ const indicatorStyle = computed(() => ({
   transform: "translateX(-50%);",
 }));
 
-function toggleApp(app = "") {
+const toggleDock = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  toolDockOpened.value = !toolDockOpened.value;
+};
+
+function toggleApp() {
   calculator.toggle();
   toolDockOpened.value = false;
 }
+
+onClickOutside(tooldock, (e) => {
+  if (toolDockOpened.value) {
+    if (
+      e.target !== tooldockButton.value &&
+      !e.target.closest(".navbar-button")
+    ) {
+      toolDockOpened.value = false;
+    }
+  }
+});
 
 watch(
   () => routeMenuIndex.value,
@@ -127,7 +150,7 @@ onMounted(() => {
 .tool-dock {
   position: absolute;
   bottom: 100%;
-  right: 0;
+  right: var(--md);
   height: fit-content;
   overflow-y: hidden;
   display: none;
