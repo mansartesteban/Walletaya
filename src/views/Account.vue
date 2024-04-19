@@ -1,15 +1,13 @@
 <template>
-  <div class="page flex flex-column gap-md">
+  <div class="page flex flex-column gap-md p-md">
     <Card noHeader noFooter>
       <div class="form-group">
         <InputText
           label="Prénom"
-          :placeholder="`Ex: ${pickRandom(firstnames)}`"
-        ></InputText>
+          :placeholder="`Ex: ${pickRandom(firstnames)}`"></InputText>
         <InputText
           label="Nom"
-          :placeholder="`Ex: ${pickRandom(lastnames)}`"
-        ></InputText>
+          :placeholder="`Ex: ${pickRandom(lastnames)}`"></InputText>
       </div>
     </Card>
 
@@ -19,8 +17,7 @@
         <InputText
           v-model="defaultCurrencySymbol"
           label="Symbol"
-          :placeholder="`Ex: £`"
-        ></InputText>
+          :placeholder="`Ex: £`"></InputText>
       </div>
     </Card>
     <Card>

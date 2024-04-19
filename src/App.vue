@@ -9,8 +9,7 @@
   <Dialog
     :opened="settingsStore.hasRedWelcomeMessage === false"
     title="Bienvenue !"
-    @click="onConfirm"
-  >
+    @click="onConfirm">
     <p>Bonjour à toi !</p>
     <p>
       Voici ton espace personnel pour connaître l'état de ton ou tes
@@ -61,6 +60,7 @@ onMounted(() => {
   height: calc(100% - var(--header-height));
   scrollbar-width: none;
   margin: 0 auto;
+  overflow-y: auto;
 }
 
 body {
