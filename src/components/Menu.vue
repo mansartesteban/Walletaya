@@ -5,8 +5,7 @@
         <Btn
           class="menu-activator"
           icon="chevron-down"
-          @click="activatorEvents.onClick"
-        ></Btn>
+          @click="activatorEvents.onClick"></Btn>
       </slot>
     </template>
     <div
@@ -14,32 +13,28 @@
       class="menu-panel"
       :class="{ opened }"
       :style="
-        focused
+        fullWidth
           ? 'z-index: 1000; bottom: 0; left: 0; right: 0; width: unset'
           : ''
-      "
-    >
+      ">
       <InputText
         v-if="search"
         v-model="searchText"
-        @focus="focused = true"
-        @blur="focused = false"
+        @focus="focus"
+        @blur="unfocus"
         label="Recherche un token"
-        class="search m-sm"
-      />
+        class="search m-sm" />
       <RecycleScroller
         :items="filteredOptions"
         :item-size="48"
         key-field="value"
         v-slot="{ item: option }"
-        class="blurry-container overflow-x-hidden"
-      >
+        class="blurry-container overflow-x-hidden">
         <slot name="option" v-bind="{ on: optionEvents, option: option }">
           <div
             @click="optionEvents.onClick(option)"
             class="option flex gap-md"
-            :class="{ selected: model && option.value === model.value }"
-          >
+            :class="{ selected: model && option.value === model.value }">
             <slot name="option-icon" v-bind="{ option: option }">
               <Icon :size="20">{{ option.icon }}</Icon>
             </slot>
@@ -95,9 +90,9 @@ const emit = defineEmits(["option-clicked"]);
 const model = defineModel();
 const searchText = ref("");
 const opened = ref(false);
+const fullWidth = ref(false);
 const localPosition = ref({ x: 0, y: 0 });
 const computedPosition = computed(() => props.position || localPosition.value);
-const focused = ref(false);
 
 const activatorEvents = ref({
   onClick: onActivatorClick,
@@ -138,11 +133,10 @@ function selectValue(option) {
 
 function resize() {
   nextTick(() => {
-    if (!focused.value) {
-      let box = menuPanel.value.getBoundingClientRect();
+    if (fullWidth) {
       let margin = 16;
-      let menuWidth = box.width;
-      let menuHeight = box.height;
+      let menuWidth = 240;
+      let menuHeight = 240;
 
       let left = computedPosition.value.x;
       let top = computedPosition.value.y;
@@ -173,21 +167,28 @@ function resize() {
   });
 }
 
-function open() {
+const focus = (e) => {
+  fullWidth.value = true;
+};
+
+const unfocus = (e) => {};
+
+const open = () => {
   opened.value = true;
   resize();
-}
+};
 
-function close() {
+const close = () => {
   searchText.value = "";
   opened.value = false;
-}
+  fullWidth.value = false;
+};
 
-function toggle() {
+const toggle = () => {
   opened.value ? close() : open();
-}
+};
 
-onClickOutside(menuPanel, (e) => close());
+onClickOutside(menuPanel, close);
 
 onMounted(() => {});
 

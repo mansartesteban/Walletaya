@@ -6,8 +6,7 @@
     mini
     search
     :sortFunction="sortFunction"
-    @changed="emit('changed', $event)"
-  >
+    @changed="emit('changed', $event)">
     <template #selected-option-mini-icon="{ option }">
       <CIcon :token="option"></CIcon>
     </template>
@@ -33,8 +32,7 @@
               ? 'rgba(255, 255, 255, 1)'
               : 'rgba(255, 255, 255, .25)',
           }"
-          class="mr-n-md"
-        ></Btn>
+          class="mr-n-md"></Btn>
       </div>
     </template>
   </Select>
@@ -65,6 +63,7 @@ const options = computed(() => tokenStore.tokenList);
 
 const starToken = (e, token) => {
   e.stopPropagation();
+  e.preventDefault();
   settings.starToken(token);
 };
 
@@ -77,18 +76,14 @@ const sortFunction = (previousToken, currentToken, filter) => {
   let currentTokenSymbol = normalizeString(currentToken.symbol);
   let currentTokenLabel = normalizeString(currentToken.label);
 
-  if (settings.favoriteTokens.includes(currentTokenValue)) {
-    return 1;
-  }
-  if (settings.favoriteTokens.includes(previousTokenValue)) {
-    return -1;
-  }
   if (
+    settings.favoriteTokens.includes(currentTokenValue) ||
     [currentTokenLabel, currentTokenValue, currentTokenSymbol].includes(filter)
   ) {
     return 1;
   }
   if (
+    settings.favoriteTokens.includes(previousTokenValue) ||
     [previousTokenLabel, previousTokenValue, previousTokenSymbol].includes(
       filter
     )
