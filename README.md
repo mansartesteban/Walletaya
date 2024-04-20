@@ -1,7 +1,9 @@
-# Vue 3 + Vite
+# NotDarkPaper
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Hi, thank you to Readme !
 
-## Recommended IDE Setup
+Walletaya is yet another portfolio app, and yes, I created this project because other portfolio applications doesn't fit my needs, and YES I have the pretention to say : "My app is better" 😜
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+What is important to understand is that my goal with this app is not to compete with existing apps (but if it does, so much better !)
+
+(WRITING IN PROGRESS)
