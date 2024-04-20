@@ -113,3 +113,5 @@ p {
 .overflow-auto {
     overflow: auto;
 }
+
+input[disabled] {pointer-events:none}

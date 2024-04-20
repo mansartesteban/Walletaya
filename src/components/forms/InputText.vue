@@ -16,6 +16,7 @@
       @focus="onFocus"
       @blur="onBlur"
       :placeholder="computedPlaceholder"
+      :disabled="readOnly"
     />
     <div v-if="append" class="append">{{ append }}</div>
   </div>
@@ -40,6 +41,10 @@ const props = defineProps({
   append: {
     type: String,
     default: undefined,
+  },
+  readOnly: {
+    type: Boolean,
+    default: false,
   },
 });
 

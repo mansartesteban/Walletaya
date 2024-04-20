@@ -1,6 +1,6 @@
 <template>
   <div class="m-xl">
-    <DatePicker v-model="date"></DatePicker>
+    <DatePicker v-model="date" timePicker></DatePicker>
   </div>
 </template>
 

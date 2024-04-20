@@ -1,14 +1,17 @@
 <template>
   <div
-    class="wheel-picker wheel-selector-wrapper input flex flex-1 flex-column align-items-center scroll-snap-y">
+    class="wheel-picker wheel-selector-wrapper input flex flex-1 flex-column align-items-center scroll-snap-y p-0"
+  >
     <div
       ref="scroller"
-      class="wheel-selector-scroller flex flex-column align-items-center scroll-snap-y">
+      class="wheel-selector-scroller flex flex-column align-items-center scroll-snap-y"
+    >
       <div class="wheel-selector-item"></div>
       <div
         class="wheel-selector-item"
         :class="{ selected: index === model }"
-        v-for="(item, index) in computedItems">
+        v-for="(item, index) in computedItems"
+      >
         {{ item.label }}
       </div>
       <div class="wheel-selector-item"></div>
@@ -31,13 +34,15 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["change"]);
+
 const computedItems = computed(() => {
   return props.items.map((item) => {
     if (["string", "number"].includes(typeof item)) {
-      return (item = {
+      return {
         label: item,
         value: item,
-      });
+      };
     }
     return item;
   });
@@ -79,6 +84,7 @@ onMounted(() => {
         index = props.items.length - 1;
       }
       model.value = index;
+      emit("change", index);
       unfreezeModelUpdate();
     }
   });
@@ -110,7 +116,7 @@ onMounted(() => {
 
   .wheel-selector-scroller {
     overflow-y: scroll;
-    height: calc(var(--item-height) * 3);
+    height: calc(var(--item-height) * 3 + var(--md) * 2);
     width: 100%;
 
     .wheel-selector-item {
