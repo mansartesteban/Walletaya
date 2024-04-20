@@ -1,5 +1,6 @@
 import useTokenStore from "@/plugins/stores/TokenList";
 import useSettingsStore from "@/plugins/stores/Settings";
+import { formatNumber } from "@/utils/String";
 
 const settings = useSettingsStore();
 const tokenStore = useTokenStore();
@@ -14,12 +15,8 @@ export const getToken = (tokenToFind = 0) => {
 };
 
 export const amount = (value, noSymbol = false, fractionDigit = 2) => {
-  return value
-    ?.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: noSymbol ? 8 : fractionDigit,
-      minimumFractionDigits: fractionDigit,
-    })
-    .replace("$", noSymbol ? "" : `${settings.defaultCurrency || "$"} `);
+  return (
+    formatNumber(value, settings.currencyFormat) +
+    (noSymbol ? "" : ` ${settings.defaultCurrency || " $"}`)
+  );
 };

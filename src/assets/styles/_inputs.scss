@@ -44,8 +44,13 @@
     }
   }
 
-  input {
+  &:not(.no-label) {
+    input {
     margin-top: var(--float-label-size);
+    }
+  }
+
+  input {
     background: transparent;
     outline: none;
     color: white;

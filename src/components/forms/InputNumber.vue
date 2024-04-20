@@ -4,6 +4,7 @@
     :class="{
       focused: isFocused,
       filled: model !== undefined && model !== null && model !== '',
+      'no-label': !label,
     }"
     @click="focus"
   >
@@ -17,6 +18,7 @@
       @focus="isFocused = true"
       @blur="isFocused = false"
       :placeholder="computedPlaceholder"
+      :disabled="readOnly"
     />
     <div v-if="append" class="append">{{ append }}</div>
   </div>
@@ -41,6 +43,10 @@ const props = defineProps({
   append: {
     type: String,
     default: undefined,
+  },
+  readOnly: {
+    type: Boolean,
+    default: false,
   },
 });
 const model = defineModel();

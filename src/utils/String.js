@@ -24,3 +24,23 @@ export const search = (searchText = "", items = []) => {
         })
       );
 };
+
+export const formatNumber = (n, format = "space-coma", decimalCount = 4) => {
+  let [integer, floating] = n.toString().split(".");
+  integer = integer
+    .split("")
+    .reverse()
+    .join("")
+    .match(/.{1,3}/g)
+    .reverse();
+  let formats = {
+    "space-coma": [" ", ","],
+    "space-dot": [" ", "."],
+    "dot-coma": [".", ","],
+    "coma-dot": [",", "."],
+  };
+  const [thousandSeparator, decimalSeparator] = formats[format || "space-coma"];
+  return [integer.join(thousandSeparator), floating?.substr(0, decimalCount)]
+    .filter(Boolean)
+    .join(decimalSeparator);
+};

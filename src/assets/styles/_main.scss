@@ -115,3 +115,11 @@ p {
 }
 
 input[disabled] {pointer-events:none}
+
+.vue-recycle-scroller {
+    scrollbar-width: none;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
