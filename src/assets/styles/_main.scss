@@ -72,7 +72,7 @@ h6 {
     height: 100%;
 }
 
-::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar {
     border-radius: var(--border-radius);
 }
 
@@ -113,3 +113,5 @@ p {
 .overflow-auto {
     overflow: auto;
 }
+
+input[disabled] {pointer-events:none}

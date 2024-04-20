@@ -21,11 +21,10 @@
 .scroll-snap-x {
     overflow: auto hidden;
     scroll-snap-type: x mandatory;
-
     scroll-behavior: smooth;
+    scrollbar-width: none;
 
     @media (hover: none) {
-        scrollbar-width: none;
 
         &::-webkit-scrollbar {
             width: 0;
@@ -37,11 +36,10 @@
 .scroll-snap-y {
     overflow: hidden auto;
     scroll-snap-type: y mandatory;
-
     scroll-behavior: smooth;
+    scrollbar-width: none;
 
     @media (hover: none) {
-        scrollbar-width: none;
 
         &::-webkit-scrollbar {
             width: 0;

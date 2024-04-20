@@ -18,6 +18,10 @@
     gap: var(--xl) !important;
 }
 
+.gap-0 {
+    gap: 0 !important;
+}
+ 
 .p-xs {
     padding: var(--xs) !important;
 }
@@ -36,6 +40,10 @@
 
 .p-xl {
     padding: var(--xl) !important;
+}
+
+.p-0 {
+    padding: 0 !important;
 }
 
 .pl-xs {
@@ -58,6 +66,10 @@
     padding-left: var(--xl) !important;
 }
 
+.pl-0 {
+    padding-left: 0 !important;
+}
+
 .pr-xs {
     padding-right: var(--xs) !important;
 }
@@ -76,6 +88,10 @@
 
 .pr-xl {
     padding-right: var(--xl) !important;
+}
+
+.pr-0 {
+    padding-right: 0 !important;
 }
 
 .pt-xs {
@@ -98,6 +114,10 @@
     padding-top: var(--xl) !important;
 }
 
+.pt-0 {
+    padding-top: 0 !important;
+}
+
 .pb-xs {
     padding-bottom: var(--xs) !important;
 }
@@ -116,6 +136,10 @@
 
 .pb-xl {
     padding-bottom: var(--xl) !important;
+}
+
+.pb-0 {
+    padding-bottom: 0 !important;
 }
 
 .py-xs {
@@ -143,6 +167,11 @@
     padding-bottom: var(--xl) !important;
 }
 
+.py-0 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
 .px-xs {
     padding-left: var(--xs) !important;
     padding-right: var(--xs) !important;
@@ -168,6 +197,10 @@
     padding-right: var(--xl) !important;
 }
 
+.px-0 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
 
 .m-xs {
     margin: var(--xs) !important;
@@ -187,6 +220,10 @@
 
 .m-xl {
     margin: var(--xl) !important;
+}
+
+.m-0 {
+    margin: 0 !important;
 }
 
 .ml-xs {
@@ -209,6 +246,10 @@
     margin-left: var(--xl) !important;
 }
 
+.ml-0 {
+    margin-left: 0 !important;
+}
+
 .mr-xs {
     margin-right: var(--xs) !important;
 }
@@ -227,6 +268,10 @@
 
 .mr-xl {
     margin-right: var(--xl) !important;
+}
+
+.mr-0 {
+    margin-right: 0 !important;
 }
 
 .mt-xs {
@@ -249,6 +294,10 @@
     margin-top: var(--xl) !important;
 }
 
+.mt-0 {
+    margin-top: 0 !important;
+}
+
 .mb-xs {
     margin-bottom: var(--xs) !important;
 }
@@ -267,6 +316,10 @@
 
 .mb-xl {
     margin-bottom: var(--xl) !important;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
 }
 
 .my-xs {
@@ -294,6 +347,11 @@
     margin-bottom: var(--xl) !important;
 }
 
+.my-0 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
 .mx-xs {
     margin-left: var(--xs) !important;
     margin-right: var(--xs) !important;
@@ -317,6 +375,11 @@
 .mx-xl {
     margin-left: var(--xl) !important;
     margin-right: var(--xl) !important;
+}
+
+.mx-0 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
 .m-n-xs {

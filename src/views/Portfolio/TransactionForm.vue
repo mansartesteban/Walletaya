@@ -6,6 +6,7 @@
         :items="transactionTypes"
       ></ButtonGroup>
     </div>
+    <DatePicker v-model="transactionDate" timePicker></DatePicker>
     <Card noHeader v-if="[1, 2].includes(transactionType)">
       <div class="flex flex-column gap-md">
         Débit
@@ -91,7 +92,6 @@
     </Card>
 
     <div class="flex gap-md" :class="{ 'flex-reverse': settings.leftHanded }">
-      <!-- v-if="transactionId" -->
       <Btn
         v-if="transactionId"
         @click="deleteTransaction(transactionId)"
@@ -113,6 +113,7 @@
 import Btn from "@/components/Btn.vue";
 import Card from "@/components/Card.vue";
 import InputNumber from "@/components/forms/InputNumber.vue";
+import DatePicker from "@/components/forms/DatePicker.vue";
 import TokenPicker from "@/components/TokenPicker.vue";
 import ButtonGroup from "@/components/forms/ButtonGroup.vue";
 import Icon from "@/components/Icon.vue";
@@ -131,6 +132,7 @@ const creditToken = ref(null);
 const debitAmount = ref();
 const debitValue = ref(1);
 const debitToken = ref(null);
+const transactionDate = ref(new Date());
 
 const transactionId = ref(null);
 const tokenListStore = useTokenListStore();
@@ -198,6 +200,7 @@ const reset = (resetToken = true) => {
   debitAmount.value = "";
   transactionType.value = 0;
   transactionId.value = null;
+  transactionDate.value = new Date();
   if (resetToken) {
     creditToken.value = settings.defaultToken.value;
     debitToken.value = settings.defaultToken.value;
@@ -219,6 +222,7 @@ const fillForm = (data) => {
     debitToken.value = data.debitToken.value;
     debitValue.value = data.debitValue;
   }
+  transactionDate.value = data.date;
   transactionType.value = data.transactionType;
   transactionId.value = data.id;
 };
@@ -237,6 +241,7 @@ const saveTransaction = (id) => {
     debitValue: debitValue.value,
     debitToken: debitToken.value,
     transactionType: transactionType.value,
+    date: transactionDate.value,
   };
 
   if (transactionType.value === 0) {
