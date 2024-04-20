@@ -3,6 +3,7 @@
     <Menu
       :modelValue="model"
       :options="options"
+      :return-value="returnValue"
       @optionClicked="selectOption"
       :sortFunction="sortFunction"
       v-bind="$attrs"
@@ -65,6 +66,10 @@ const props = defineProps({
     type: Function,
     default: null,
   },
+  returnValue: {
+    type: String,
+    default: null,
+  },
 });
 
 const emit = defineEmits(["changed"]);
@@ -74,7 +79,7 @@ const select = ref();
 const model = defineModel();
 
 function selectOption(option) {
-  model.value = option;
+  model.value = props.returnValue ? option[props.returnValue] : option;
   emit("changed", option);
 }
 </script>

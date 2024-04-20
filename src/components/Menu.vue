@@ -5,7 +5,8 @@
         <Btn
           class="menu-activator"
           icon="chevron-down"
-          @click="activatorEvents.onClick"></Btn>
+          @click="activatorEvents.onClick"
+        ></Btn>
       </slot>
     </template>
     <div
@@ -16,25 +17,29 @@
         fullWidth
           ? 'z-index: 1000; bottom: 0; left: 0; right: 0; width: unset'
           : ''
-      ">
+      "
+    >
       <InputText
         v-if="search"
         v-model="searchText"
         @focus="focus"
         @blur="unfocus"
         label="Recherche un token"
-        class="search m-sm" />
+        class="search m-sm"
+      />
       <RecycleScroller
         :items="filteredOptions"
         :item-size="48"
         key-field="value"
         v-slot="{ item: option }"
-        class="blurry-container overflow-x-hidden">
+        class="blurry-container overflow-x-hidden"
+      >
         <slot name="option" v-bind="{ on: optionEvents, option: option }">
           <div
             @click="optionEvents.onClick(option)"
             class="option flex gap-md"
-            :class="{ selected: model && option.value === model.value }">
+            :class="{ selected: model && option.value === model.value }"
+          >
             <slot name="option-icon" v-bind="{ option: option }">
               <Icon :size="20">{{ option.icon }}</Icon>
             </slot>
@@ -83,11 +88,21 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  returnValue: {
+    type: String,
+    default: null,
+  },
 });
 
 const emit = defineEmits(["option-clicked"]);
 
-const model = defineModel();
+const model = defineModel({
+  get: (v) =>
+    props.returnValue
+      ? props.options.find((option) => option[props.returnValue] === v)
+      : v,
+  set: (v) => (props.returnValue ? v[props.returnValue] : v),
+});
 const searchText = ref("");
 const opened = ref(false);
 const fullWidth = ref(false);

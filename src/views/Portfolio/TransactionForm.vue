@@ -121,6 +121,7 @@ import { v4 as uuid } from "uuid";
 import database from "@/plugins/database";
 import useTokenListStore from "@/plugins/stores/TokenList";
 import useSettingsStore from "@/plugins/stores/Settings";
+import { formatNumber } from "@/utils/String";
 
 const emit = defineEmits(["saving", "saved", "deleting", "deleted"]);
 
@@ -173,12 +174,7 @@ const calculateAmount = (amount, value) => {
     sum = amount * value;
   }
 
-  return sum
-    .toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    })
-    .replace("$", "");
+  return formatNumber(sum, settings.currencyFormat);
 };
 
 const swap = () => {

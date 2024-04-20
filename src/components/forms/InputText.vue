@@ -4,6 +4,7 @@
     :class="{
       focused: isFocused,
       filled: model !== undefined && model !== null && model !== '',
+      'no-label': !label,
     }"
     @click="focus"
   >

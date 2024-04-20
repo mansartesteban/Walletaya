@@ -8,6 +8,7 @@ const defaultSettings = {
   defaultCurrency: "$",
   leftHanded: false,
   hasRedWelcomeMessage: false,
+  currencyFormat: "space-coma",
   favoriteTokens: [],
 };
 
@@ -18,6 +19,7 @@ export default defineStore("settings", {
       defaultCurrency: null,
       leftHanded: null,
       hasRedWelcomeMessage: null,
+      currencyFormat: null,
       favoriteTokens: [],
     };
   },

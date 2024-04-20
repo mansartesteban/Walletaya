@@ -13,16 +13,16 @@
           <CIcon :token="transaction.creditToken"></CIcon>
           <div class="flex flex-column gap-xs">
             <div>{{ transaction.creditToken.label }}</div>
-            <div class="sublabel">
+            <div class="sublabel nowrap">
               {{ amount(transaction.creditValue, false, 4) }}
             </div>
           </div>
         </div>
         <div class="flex flex-column align-items-end gap-xs">
-          <div class="positive">
+          <div class="positive nowrap">
             + {{ amount(transaction.creditAmount, true) }}
           </div>
-          <div class="sublabel">
+          <div class="sublabel nowrap">
             {{ amount(transaction.creditValue * transaction.creditAmount) }}
           </div>
         </div>
@@ -36,16 +36,16 @@
           <CIcon :token="transaction.debitToken"></CIcon>
           <div class="flex flex-column gap-xs">
             <div>{{ transaction.debitToken.label }}</div>
-            <div class="sublabel">
+            <div class="sublabel nowrap">
               {{ amount(transaction.debitValue, false, 4) }}
             </div>
           </div>
         </div>
         <div class="flex flex-column align-items-end gap-xs">
-          <div class="negative">
+          <div class="negative nowrap">
             - {{ amount(transaction.debitAmount, true) }}
           </div>
-          <div class="sublabel">
+          <div class="sublabel nowrap">
             {{ amount(transaction.debitValue * transaction.debitAmount) }}
           </div>
         </div>
@@ -69,10 +69,10 @@
             </div>
           </div>
           <div class="flex flex-column align-items-end gap-xs">
-            <div class="positive">
+            <div class="positive nowrap">
               + {{ amount(transaction.creditAmount, true) }}
             </div>
-            <div class="sublabel">
+            <div class="sublabel nowrap">
               {{ amount(transaction.creditValue * transaction.creditAmount) }}
             </div>
           </div>
@@ -90,10 +90,10 @@
             </div>
           </div>
           <div class="flex flex-column align-items-end gap-xs">
-            <div class="negative">
+            <div class="negative nowrap">
               - {{ amount(transaction.debitAmount, true) }}
             </div>
-            <div class="sublabel">
+            <div class="sublabel nowrap">
               {{ amount(transaction.debitValue * transaction.debitAmount) }}
             </div>
           </div>
