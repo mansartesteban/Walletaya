@@ -2,12 +2,12 @@
   <div class="card">
     <div class="blurry-container">
       <div class="flex flex-column gap-md">
-        <div v-if="!noHeader" class="flex gap-md">
+        <div v-if="!noHeader && ($slots.header || title)" class="flex gap-md">
           <template v-if="$slots.header">
             <slot name="header"></slot>
           </template>
           <template v-else>
-            <h1>{{ title }}</h1>
+            <div class="card-title">{{ title }}</div>
           </template>
         </div>
 
@@ -27,6 +27,7 @@
 const props = defineProps({
   title: {
     type: String,
+    default: null,
   },
   noHeader: {
     type: Boolean,
@@ -51,6 +52,11 @@ const props = defineProps({
   position: relative;
   padding: var(--md);
   overflow: hidden;
+
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
 
   &::before {
     content: "";

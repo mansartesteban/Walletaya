@@ -7,8 +7,8 @@
         </template>
         <template #footer>
           <slot name="footer">
-            <Btn severity="none" @click="emit('cancel')">Annuler</Btn>
-            <Btn severity="primary" @click="emit('confirm')">J'ai compris</Btn>
+            <Btn severity="none" @click="onCancel">{{ cancelLabel }}</Btn>
+            <Btn severity="primary" @click="onConfirm">{{ confirmLabel }}</Btn>
           </slot>
         </template>
         <slot></slot>
@@ -27,6 +27,14 @@ const props = defineProps({
   title: {
     type: String,
   },
+  cancelLabel: {
+    type: String,
+    default: "Annuler",
+  },
+  confirmLabel: {
+    type: String,
+    default: "Valider",
+  },
 });
 
 const emit = defineEmits(["closed", "opened", "cancel", "confirm"]);
@@ -34,19 +42,28 @@ const emit = defineEmits(["closed", "opened", "cancel", "confirm"]);
 const dialogPanel = ref(null);
 const opened = defineModel("opened", { default: false });
 
-function open() {
+const onCancel = () => {
+  close();
+  emit("cancel");
+};
+
+const onConfirm = () => {
+  emit("confirm");
+};
+
+const open = () => {
   opened.value = true;
   emit("opened");
-}
+};
 
-function close() {
+const close = () => {
   opened.value = false;
   emit("closed");
-}
+};
 
-function toggle() {
+const toggle = () => {
   opened.value ? close() : open();
-}
+};
 
 onClickOutside(dialogPanel, (e) => {
   close();

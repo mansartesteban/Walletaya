@@ -1,18 +1,5 @@
 <template>
-  <div class="page flex flex-column gap-md p-md">
-    <Card noHeader noFooter>
-      <div class="form-group">
-        <InputText
-          label="Prénom"
-          :placeholder="`Ex: ${pickRandom(firstnames)}`"
-        ></InputText>
-        <InputText
-          label="Nom"
-          :placeholder="`Ex: ${pickRandom(lastnames)}`"
-        ></InputText>
-      </div>
-    </Card>
-
+  <div class="flex flex-column gap-md">
     <Card noHeader noFooter>
       <div class="flex flex-column gap-md">
         Monnaie par défaut
@@ -50,12 +37,7 @@ import Card from "@/components/Card.vue";
 import Toggle from "@/components/forms/ButtonGroup.vue";
 import Select from "@/components/forms/Select.vue";
 
-import { pickRandom } from "@/utils/Array";
-import firstnames from "@/faker/firstnames";
-import lastnames from "@/faker/lastnames";
-
 import useSettingsStore from "@/plugins/stores/Settings";
-import { computed } from "vue";
 
 const settings = useSettingsStore();
 

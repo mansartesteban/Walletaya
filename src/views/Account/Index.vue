@@ -1,0 +1,19 @@
+<template>
+  <Tabs>
+    <Tab title="Préférences" anchor="preferences">
+      <Preferences></Preferences>
+    </Tab>
+    <Tab title="Securité" anchor="secutiry">
+      <Security></Security>
+    </Tab>
+  </Tabs>
+  <div class="page flex flex-column gap-md p-md"></div>
+</template>
+
+<script setup>
+import Tabs from "@/components/Tabs.vue";
+import Tab from "@/components/Tab.vue";
+
+import Preferences from "./Preferences.vue";
+import Security from "./Security.vue";
+</script>

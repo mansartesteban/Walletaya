@@ -20,6 +20,11 @@ export default defineStore("settings", {
       leftHanded: null,
       hasRedWelcomeMessage: null,
       currencyFormat: null,
+      userInformations: {
+        firstname: "",
+        lastname: "",
+        mail: "",
+      },
       favoriteTokens: [],
     };
   },
@@ -32,6 +37,7 @@ export default defineStore("settings", {
       }
       this.save();
     },
+
     save() {
       store.save(
         "settings",

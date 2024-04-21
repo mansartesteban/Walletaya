@@ -9,7 +9,9 @@
   <Dialog
     :opened="settingsStore.hasRedWelcomeMessage === false"
     title="Bienvenue !"
-    @click="onConfirm">
+    confirmLabel="J'ai compris"
+    @click="onConfirm"
+  >
     <p>Bonjour à toi !</p>
     <p>
       Voici ton espace personnel pour connaître l'état de ton ou tes
@@ -32,6 +34,7 @@ import ContextMenu from "@/components/ContextMenu.vue";
 import useAppStore from "@/plugins/stores/App";
 import useTokenListStore from "@/plugins/stores/TokenList";
 import useSettingsStore from "@/plugins/stores/Settings";
+import { generateRandomChallenge } from "@/utils/Security";
 
 const tokenListStore = useTokenListStore();
 const settingsStore = useSettingsStore();
@@ -41,9 +44,31 @@ const onConfirm = () => {
   settingsStore.setSetting("hasRedWelcomeMessage", true);
 };
 
-onMounted(() => {
+onBeforeMount(() => {
   settingsStore.retrieve().then(() => {
     tokenListStore.refreshTokens(false, appStore.usedTokens);
+  });
+  appStore.retrieve().then(async () => {
+    if (appStore.userCredentials) {
+      try {
+        //to verify a user's credentials, we simply pass the
+        //unique ID of the passkey we saved against the user profile
+        //in this demo, we just saved it in a global variable
+        let credentials = await navigator.credentials.get({
+          publicKey: {
+            challenge: generateRandomChallenge(),
+            allowCredentials: [
+              { type: "public-key", id: appStore.userCredentials.rawId },
+            ],
+          },
+        });
+        appStore.setAuthentication(
+          credentials.id === appStore.userCredentials.id
+        );
+      } catch (err) {
+        alert(err);
+      }
+    }
   });
 });
 </script>
@@ -66,7 +91,7 @@ onMounted(() => {
 body {
   background: linear-gradient(-10deg, rgb(6, 9, 9) 0%, rgb(9, 26, 26) 100%);
   background-attachment: fixed;
-  font-weight: 500;
+  font-weight: 400;
   color: white;
 }
 
