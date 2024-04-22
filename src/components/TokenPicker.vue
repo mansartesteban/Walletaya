@@ -6,7 +6,8 @@
     mini
     search
     :sortFunction="sortFunction"
-    @changed="emit('changed', $event)">
+    @changed="emit('changed', $event)"
+  >
     <template #selected-option-mini-icon="{ option }">
       <CIcon :token="option"></CIcon>
     </template>
@@ -32,7 +33,8 @@
               ? 'rgba(255, 255, 255, 1)'
               : 'rgba(255, 255, 255, .25)',
           }"
-          class="mr-n-md"></Btn>
+          class="mr-n-md"
+        ></Btn>
       </div>
     </template>
   </Select>

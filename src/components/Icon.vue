@@ -19,7 +19,7 @@ const props = defineProps({
   },
   color: {
     type: String,
-    default: "white",
+    default: "inherit",
   },
 });
 const slot = useSlots();
