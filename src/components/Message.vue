@@ -1,8 +1,7 @@
 <template>
   <div
     class="message glass rounded-md flex align-items-center gap-md"
-    :class="severity"
-  >
+    :class="severity">
     <Icon v-if="computedIcon">{{ computedIcon }}</Icon>
 
     <div class="flex-1">
@@ -22,15 +21,11 @@ const props = defineProps({
   severity: {
     type: String,
     default: null,
-    validator(v) {
-      return ["success", "warning", "error", "info"].includes(v);
-    },
+    validator: (v) => ["success", "warning", "error", "info"].includes(v),
   },
 });
 
-const computedIcon = computed(() => {
-  return props.icon || props.severity;
-});
+const computedIcon = computed(() => props.icon || props.severity);
 </script>
 
 <style scoped lang="scss">

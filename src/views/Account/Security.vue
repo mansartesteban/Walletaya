@@ -87,13 +87,12 @@ const dialogUserInformations = ref({
   mail: "",
 });
 
-const hasInformationsDefined = computed(() => {
-  return (
+const hasInformationsDefined = computed(
+  () =>
     userInformations.value.firstname.length > 0 &&
     userInformations.value.lastname.length > 0 &&
     userInformations.value.mail.length > 0
-  );
-});
+);
 
 const register = () => {
   authDialogOpened.value = true;
@@ -136,7 +135,6 @@ const securize = async () => {
       },
     })
     .then((credentials) => {
-      console.log("credential created", credentials);
       let credentialsToSave = {
         rawId: credentials.rawId,
         id: credentials.id,
