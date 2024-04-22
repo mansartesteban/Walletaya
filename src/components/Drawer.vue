@@ -1,8 +1,18 @@
 <template>
   <div class="drawer" :class="{ opened }">
     <div class="drawer-backdrop" @click="opened = false"></div>
-    <div class="drawer-view glass">
-      <div class="drawer-touch"></div>
+    <div
+      ref="drawerView"
+      class="drawer-view glass"
+      :style="opened ? computedStyle : ''"
+    >
+      <div
+        @touchmove="onDrag"
+        @touchstart="onDragStart"
+        @touchend="onDragEnd"
+        ref="drawerTouch"
+        class="drawer-touch"
+      ></div>
 
       <div class="scrollable">
         <slot></slot>
@@ -13,6 +23,45 @@
 
 <script setup>
 const opened = defineModel("opened");
+
+const drawerView = ref(null);
+const drawerTouch = ref(null);
+
+const originalBox = ref(null);
+const top = ref(0);
+const lastTop = ref(0);
+
+const onDragStart = (e) => {
+  let box = e.target.getBoundingClientRect();
+  originalBox.value = box;
+};
+const onDragEnd = (e) => {
+  top.value > lastTop.value ? close() : open();
+  originalBox.value = null;
+};
+const onDrag = (e) => {
+  e.preventDefault();
+  lastTop.value = top.value;
+  top.value = e.changedTouches[0].clientY;
+};
+
+const open = () => {
+  opened.value = true;
+  top.value = 0;
+};
+const close = () => {
+  opened.value = false;
+  top.value = 0;
+};
+
+const computedStyle = computed(() => ({
+  top: `${Math.max(top.value - (originalBox.value?.top || 0), 0)}px`,
+}));
+
+defineExpose({
+  close,
+  open,
+});
 </script>
 
 <style scoped lang="scss">
@@ -70,11 +119,18 @@ const opened = defineModel("opened");
     }
 
     > .drawer-touch {
-      height: var(--drawer-touch-height);
-      width: 32px;
-      background: rgba(255, 255, 255, 0.25);
-      margin: var(--md) auto;
-      border-radius: var(--border-radius);
+      &::before {
+        position: absolute;
+        content: "";
+        height: var(--drawer-touch-height);
+        width: 32px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: var(--border-radius);
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      padding: var(--md);
+      // border: 1px dashed red;
     }
   }
 }
