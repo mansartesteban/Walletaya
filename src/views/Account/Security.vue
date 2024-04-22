@@ -30,16 +30,17 @@
           informations de sécurité qui nous permettrons de vous authentifier.
         </Message>
       </div>
-      <Btn @click="register">{{
-        hasInformationsDefined ? "Modifier les informations" : "Définir"
-      }}</Btn>
+      <Btn @click="register" icon="user-edit">Modifier les informations</Btn>
       <Btn
         v-if="!appStore.userCredentials"
         @click="securize"
         :disabled="!hasInformationsDefined"
-        >Sécuriser le compte</Btn
+        icon="fingerprint">
+        Sécuriser le compte
+      </Btn>
+      <Btn v-else severity="error" @click="unsecurize" icon="security-block"
+        >Retirer la sécurité</Btn
       >
-      <Btn v-else severity="error" @click="unsecurize">Retirer la sécurité</Btn>
     </div>
   </Card>
 
@@ -47,16 +48,13 @@
     <div class="flex flex-column gap-md">
       <InputText
         v-model="dialogUserInformations.firstname"
-        label="Prénom"
-      ></InputText>
+        label="Prénom"></InputText>
       <InputText
         v-model="dialogUserInformations.lastname"
-        label="Nom"
-      ></InputText>
+        label="Nom"></InputText>
       <InputText
         v-model="dialogUserInformations.mail"
-        label="Adresse e-mail"
-      ></InputText>
+        label="Adresse e-mail"></InputText>
     </div>
   </Dialog>
 </template>
@@ -138,9 +136,12 @@ const securize = async () => {
       },
     })
     .then((credentials) => {
+      console.log("credential created", credentials);
       let credentialsToSave = {
         rawId: credentials.rawId,
         id: credentials.id,
+        attestationObject: credentials.response.attestationObject,
+        clientDataJSON: credentials.response.clientDataJSON,
       };
       appStore.saveUserCredentials(credentialsToSave);
     });

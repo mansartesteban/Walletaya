@@ -2,23 +2,21 @@
   <div class="flex flex-column gap-md">
     <Card noHeader noFooter>
       <div class="flex flex-column gap-md">
-        Monnaie par défaut
+        <!-- Monnaie par défaut
         <InputText
           v-model="defaultCurrencySymbol"
           label="Symbol"
           :placeholder="`Ex: £`"
-        ></InputText>
+        ></InputText> -->
         Format d'affichage des nombres
         <Select
           v-model="currencyFormat"
           :options="currencyFormats"
-          return-value="value"
-        >
+          return-value="value">
           <template #activator="{ on }">
             <InputText
               v-model="currencyFormatLabel"
-              @click="on.onClick"
-            ></InputText>
+              @click="on.onClick"></InputText>
           </template>
         </Select>
       </div>

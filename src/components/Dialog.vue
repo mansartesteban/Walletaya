@@ -1,14 +1,18 @@
 <template>
-  <div class="dialog" :class="{ opened }">
+  <div class="dialog" :class="{ opened, centered }">
     <div ref="dialogPanel" class="dialog-panel">
-      <Card :title="title">
+      <Card :title="title" :centered="centered">
         <template v-if="$slots.header" #header>
           <slot name="header"></slot>
         </template>
         <template #footer>
           <slot name="footer">
-            <Btn severity="none" @click="onCancel">{{ cancelLabel }}</Btn>
-            <Btn severity="primary" @click="onConfirm">{{ confirmLabel }}</Btn>
+            <Btn severity="none" @click="onCancel" icon="close">{{
+              cancelLabel
+            }}</Btn>
+            <Btn severity="primary" @click="onConfirm" icon="check">{{
+              confirmLabel
+            }}</Btn>
           </slot>
         </template>
         <slot></slot>
@@ -26,6 +30,10 @@ import { onClickOutside } from "@vueuse/core";
 const props = defineProps({
   title: {
     type: String,
+  },
+  centered: {
+    type: Boolean,
+    default: true,
   },
   cancelLabel: {
     type: String,
