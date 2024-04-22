@@ -1,5 +1,7 @@
 <template>
   <AppBackground></AppBackground>
+  <Snack></Snack>
+
   <template v-if="appStore.isAuthenticated || !appStore.userCredentials">
     <AppHeader ref="appHeader"></AppHeader>
 
@@ -43,6 +45,7 @@ import WidgetDock from "@/components/widgets/WidgetDock.vue";
 import Dialog from "@/components/Dialog.vue";
 import ContextMenu from "@/components/ContextMenu.vue";
 import Btn from "@/components/Btn.vue";
+import Snack from "@/components/Snack.vue";
 
 import useAppStore from "@/plugins/stores/App";
 import useTokenListStore from "@/plugins/stores/TokenList";

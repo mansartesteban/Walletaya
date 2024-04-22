@@ -35,7 +35,8 @@
         v-if="!appStore.userCredentials"
         @click="securize"
         :disabled="!hasInformationsDefined"
-        icon="fingerprint">
+        icon="fingerprint"
+      >
         Sécuriser le compte
       </Btn>
       <Btn v-else severity="error" @click="unsecurize" icon="security-block"
@@ -48,13 +49,16 @@
     <div class="flex flex-column gap-md">
       <InputText
         v-model="dialogUserInformations.firstname"
-        label="Prénom"></InputText>
+        label="Prénom"
+      ></InputText>
       <InputText
         v-model="dialogUserInformations.lastname"
-        label="Nom"></InputText>
+        label="Nom"
+      ></InputText>
       <InputText
         v-model="dialogUserInformations.mail"
-        label="Adresse e-mail"></InputText>
+        label="Adresse e-mail"
+      ></InputText>
     </div>
   </Dialog>
 </template>
@@ -69,10 +73,12 @@ import InputText from "@/components/forms/InputText.vue";
 
 import useSettingsStore from "@/plugins/stores/Settings";
 import useAppStore from "@/plugins/stores/App";
+import useToastStore from "@/plugins/stores/Toast";
 import { generateRandomChallenge } from "@/utils/Security";
 
 const appStore = useAppStore();
 const settings = useSettingsStore();
+const toast = useToastStore();
 
 const authDialogOpened = ref(false);
 
@@ -107,6 +113,7 @@ const onConfirm = () => {
   userInformations.value.mail = dialogUserInformations.value.mail;
   settings.setSetting("userInformations", userInformations.value);
   authDialogOpened.value = false;
+  toast.push("Enregistré !");
 };
 
 const securize = async () => {
@@ -142,6 +149,7 @@ const securize = async () => {
         clientDataJSON: credentials.response.clientDataJSON,
       };
       appStore.saveUserCredentials(credentialsToSave);
+      toast.push("Ton compte est maintenant sécurisé !");
     });
 };
 

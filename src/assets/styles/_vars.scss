@@ -34,6 +34,15 @@ $borderRadius: var(--md);
   --zi-dialog: var(--zi-modal);
 
   --shadow: rgba(0, 0, 0, 0.33) 0px 1px 4px, rgba(0, 0, 0, 0.3) 5px 5px 8px -5px, 0 0 15px 2px rgba(0, 0,, 0, .2);
+  --glass-background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    rgba(255, 255, 255, 0.05) 43%,
+    rgba(255, 255, 255, 0.02) 60%,
+    rgba(255, 255, 255, 0.04) 65%,
+    rgba(255, 255, 255, 0.02) 100%,
+  );
 
   --transition-menus-timing: ease-out;
   --transition-menus-duration: .290s;

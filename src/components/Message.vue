@@ -1,7 +1,8 @@
 <template>
   <div
     class="message glass rounded-md flex align-items-center gap-md"
-    :class="severity">
+    :class="[severity, { centered }]"
+  >
     <Icon v-if="computedIcon">{{ computedIcon }}</Icon>
 
     <div class="flex-1">
@@ -17,6 +18,10 @@ const props = defineProps({
   icon: {
     type: String,
     default: null,
+  },
+  centered: {
+    type: Boolean,
+    default: false,
   },
   severity: {
     type: String,
@@ -48,6 +53,10 @@ const computedIcon = computed(() => props.icon || props.severity);
   &.info {
     background: rgba($colorInfo, 0.5);
     border-color: $colorInfo;
+  }
+
+  &.centered {
+    text-align: center;
   }
 }
 </style>
