@@ -26,12 +26,15 @@ export default defineStore("app", {
   },
   actions: {
     setAuthentication(value) {
-      sessionStorage.setItem(useBase64("walletaya-auth-token"), value)
-      this.isAuthenticated = !!sessionStorage.getItem(useBase64("walletaya-auth-token"));
+      sessionStorage.setItem(useBase64("walletaya-auth-token"), value);
+      this.isAuthenticated = !!sessionStorage.getItem(
+        useBase64("walletaya-auth-token")
+      );
     },
     saveUserCredentials(data) {
       store.save("userCredentials", data).then(() => {
         this.userCredentials = data;
+        this.setAuthentication(data.id);
       });
     },
     removeUserCredentials() {
@@ -47,7 +50,9 @@ export default defineStore("app", {
         this.userCredentials = userCredentials?.value;
       });
 
-      this.isAuthenticated = !!sessionStorage.getItem(useBase64("walletaya-auth-token"));
+      this.isAuthenticated = !!sessionStorage.getItem(
+        useBase64("walletaya-auth-token")
+      );
 
       return promise;
     },

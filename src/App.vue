@@ -1,6 +1,6 @@
 <template>
   <AppBackground></AppBackground>
-  <template v-if="appStore.isAuthenticated">
+  <template v-if="appStore.isAuthenticated || !appStore.userCredentials">
     <AppHeader ref="appHeader"></AppHeader>
 
     <div class="view">
@@ -11,7 +11,8 @@
       :opened="settingsStore.hasRedWelcomeMessage === false"
       title="Bienvenue !"
       confirmLabel="J'ai compris"
-      @click="onConfirm">
+      @click="onConfirm"
+    >
       <p>Bonjour à toi !</p>
       <p>
         Voici ton espace personnel pour connaître l'état de ton ou tes

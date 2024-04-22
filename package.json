@@ -14,7 +14,7 @@
     "pinia": "^2.1.7",
     "unplugin-auto-import": "^0.17.5",
     "uuid": "^9.0.1",
-    "vue": "^3.4.23",
+    "vue": "^3.4.24",
     "vue-router": "^4.3.2",
     "vue-virtual-scroller": "2.0.0-beta.8"
   },
