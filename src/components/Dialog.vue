@@ -1,14 +1,18 @@
 <template>
-  <div class="dialog" :class="{ opened }">
+  <div class="dialog" :class="{ opened, centered }">
     <div ref="dialogPanel" class="dialog-panel">
-      <Card :title="title">
+      <Card :title="title" :centered="centered">
         <template v-if="$slots.header" #header>
           <slot name="header"></slot>
         </template>
         <template #footer>
           <slot name="footer">
-            <Btn severity="none" @click="emit('cancel')">Annuler</Btn>
-            <Btn severity="primary" @click="emit('confirm')">J'ai compris</Btn>
+            <Btn severity="none" @click="onCancel" icon="close">{{
+              cancelLabel
+            }}</Btn>
+            <Btn severity="primary" @click="onConfirm" icon="check">{{
+              confirmLabel
+            }}</Btn>
           </slot>
         </template>
         <slot></slot>
@@ -27,6 +31,18 @@ const props = defineProps({
   title: {
     type: String,
   },
+  centered: {
+    type: Boolean,
+    default: true,
+  },
+  cancelLabel: {
+    type: String,
+    default: "Annuler",
+  },
+  confirmLabel: {
+    type: String,
+    default: "Valider",
+  },
 });
 
 const emit = defineEmits(["closed", "opened", "cancel", "confirm"]);
@@ -34,19 +50,28 @@ const emit = defineEmits(["closed", "opened", "cancel", "confirm"]);
 const dialogPanel = ref(null);
 const opened = defineModel("opened", { default: false });
 
-function open() {
+const onCancel = () => {
+  close();
+  emit("cancel");
+};
+
+const onConfirm = () => {
+  emit("confirm");
+};
+
+const open = () => {
   opened.value = true;
   emit("opened");
-}
+};
 
-function close() {
+const close = () => {
   opened.value = false;
   emit("closed");
-}
+};
 
-function toggle() {
+const toggle = () => {
   opened.value ? close() : open();
-}
+};
 
 onClickOutside(dialogPanel, (e) => {
   close();

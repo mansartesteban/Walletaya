@@ -2,10 +2,11 @@ import Database from "@/Services/Database/Database";
 
 let database = new Database();
 database.start();
+database.openStore("app");
 database.openStore("user");
 database.openStore("transactions");
 
-let settingStore = database.getStore("user");
-settingStore.retrieve();
+database.getStore("user").retrieve();
+database.getStore("app").retrieve();
 
 export default database;

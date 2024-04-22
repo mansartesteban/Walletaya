@@ -51,7 +51,7 @@ const tabsContent = computed(() =>
     .default()
     .filter((node) => node.type.name === "Tab")
     .map((tab) => ({
-      is: tab.children.default,
+      is: tab.children?.default,
       attrs: tab.attrs,
       props: tab.props,
     }))

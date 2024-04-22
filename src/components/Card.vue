@@ -1,13 +1,15 @@
 <template>
-  <div class="card">
+  <div class="card" :class="{ centered }">
     <div class="blurry-container">
-      <div class="flex flex-column gap-md">
-        <div v-if="!noHeader" class="flex gap-md">
+      <div
+        class="flex flex-column gap-md"
+        :class="{ 'align-items-center': centered }">
+        <div v-if="!noHeader && ($slots.header || title)" class="flex gap-md">
           <template v-if="$slots.header">
             <slot name="header"></slot>
           </template>
           <template v-else>
-            <h1>{{ title }}</h1>
+            <div class="card-title">{{ title }}</div>
           </template>
         </div>
 
@@ -27,6 +29,11 @@
 const props = defineProps({
   title: {
     type: String,
+    default: null,
+  },
+  centered: {
+    type: Boolean,
+    default: false,
   },
   noHeader: {
     type: Boolean,
@@ -51,6 +58,18 @@ const props = defineProps({
   position: relative;
   padding: var(--md);
   overflow: hidden;
+
+  &.centered {
+    text-align: center;
+    .card-title {
+      text-align: center;
+    }
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
 
   &::before {
     content: "";

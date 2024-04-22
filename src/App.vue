@@ -1,24 +1,37 @@
 <template>
   <AppBackground></AppBackground>
-  <AppHeader ref="appHeader"></AppHeader>
+  <template v-if="appStore.isAuthenticated">
+    <AppHeader ref="appHeader"></AppHeader>
 
-  <div class="view">
-    <router-view></router-view>
-  </div>
-  <NavBar></NavBar>
-  <Dialog
-    :opened="settingsStore.hasRedWelcomeMessage === false"
-    title="Bienvenue !"
-    @click="onConfirm">
-    <p>Bonjour à toi !</p>
-    <p>
-      Voici ton espace personnel pour connaître l'état de ton ou tes
-      portefeuilles.
-    </p>
-  </Dialog>
+    <div class="view">
+      <router-view></router-view>
+    </div>
+    <NavBar></NavBar>
+    <Dialog
+      :opened="settingsStore.hasRedWelcomeMessage === false"
+      title="Bienvenue !"
+      confirmLabel="J'ai compris"
+      @click="onConfirm">
+      <p>Bonjour à toi !</p>
+      <p>
+        Voici ton espace personnel pour connaître l'état de ton ou tes
+        portefeuilles.
+      </p>
+    </Dialog>
 
-  <WidgetDock></WidgetDock>
-  <ContextMenu></ContextMenu>
+    <WidgetDock></WidgetDock>
+    <ContextMenu></ContextMenu>
+  </template>
+  <template v-else>
+    <Dialog :opened="true" title="Autentification requise" centered>
+      <div class="py-xl text-center">
+        Vous ne pouvez pas avoir accès à Walleteya sans vous autentifier
+      </div>
+      <template #footer>
+        <Btn @click="authenticate" icon="fingerprint">Réessayer</Btn>
+      </template>
+    </Dialog>
+  </template>
 </template>
 
 <script setup>
@@ -28,10 +41,12 @@ import NavBar from "@/components/NavBar.vue";
 import WidgetDock from "@/components/widgets/WidgetDock.vue";
 import Dialog from "@/components/Dialog.vue";
 import ContextMenu from "@/components/ContextMenu.vue";
+import Btn from "@/components/Btn.vue";
 
 import useAppStore from "@/plugins/stores/App";
 import useTokenListStore from "@/plugins/stores/TokenList";
 import useSettingsStore from "@/plugins/stores/Settings";
+import { generateRandomChallenge } from "@/utils/Security";
 
 const tokenListStore = useTokenListStore();
 const settingsStore = useSettingsStore();
@@ -41,9 +56,30 @@ const onConfirm = () => {
   settingsStore.setSetting("hasRedWelcomeMessage", true);
 };
 
-onMounted(() => {
+const authenticate = async () => {
+  try {
+    let credentials = await navigator.credentials.get({
+      publicKey: {
+        challenge: generateRandomChallenge(),
+        allowCredentials: [
+          { type: "public-key", id: appStore.userCredentials.rawId },
+        ],
+      },
+    });
+    appStore.setAuthentication(credentials.id);
+  } catch (err) {
+    // alert(err);
+  }
+};
+
+onBeforeMount(() => {
   settingsStore.retrieve().then(() => {
     tokenListStore.refreshTokens(false, appStore.usedTokens);
+  });
+  appStore.retrieve().then(async () => {
+    if (!appStore.isAuthenticated && appStore.userCredentials) {
+      authenticate();
+    }
   });
 });
 </script>
@@ -66,7 +102,7 @@ onMounted(() => {
 body {
   background: linear-gradient(-10deg, rgb(6, 9, 9) 0%, rgb(9, 26, 26) 100%);
   background-attachment: fixed;
-  font-weight: 500;
+  font-weight: 400;
   color: white;
 }
 

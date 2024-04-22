@@ -4,6 +4,7 @@
     :style="{
       height: size,
       width: size,
+      color: computedColor,
     }"
   ></component>
 </template>
@@ -16,8 +17,25 @@ const props = defineProps({
     type: [Number, String],
     default: "1rem",
   },
+  color: {
+    type: String,
+    default: "white",
+  },
 });
 const slot = useSlots();
+
+const computedColor = computed(() => {
+  let hookedColors = {
+    primary: "var(--color-primary)",
+    success: "var(--color-success)",
+    warning: "var(--color-warning)",
+    error: "var(--color-error)",
+    info: "var(--color-info)",
+  };
+  return Object.keys(hookedColors).includes(props.color)
+    ? hookedColors[props.color]
+    : props.color;
+});
 
 const icon = computed(() => {
   let slotContent = slot.default()[0];
