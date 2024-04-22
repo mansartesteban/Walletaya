@@ -63,9 +63,8 @@
         width: 100%;
         backdrop-filter: blur(var(--sm));
         z-index: -1;    
-        background: rgba(255, 255, 255, .02);
-
-      }
+        background: var(--glass-background);
+    }
 }
 
 .text-ellipsis {

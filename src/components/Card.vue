@@ -3,7 +3,8 @@
     <div class="blurry-container">
       <div
         class="flex flex-column gap-md"
-        :class="{ 'align-items-center': centered }">
+        :class="{ 'align-items-center': centered }"
+      >
         <div v-if="!noHeader && ($slots.header || title)" class="flex gap-md">
           <template v-if="$slots.header">
             <slot name="header"></slot>
@@ -82,7 +83,7 @@ const props = defineProps({
     z-index: -1;
     backdrop-filter: blur(var(--sm));
     border-radius: var(--border-radius);
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--glass-background);
   }
 
   .blurry-container {

@@ -1,6 +1,4 @@
-<template>
-  <div class="m-md flex flex-column gap-md"></div>
-</template>
+<template></template>
 
 <script setup></script>
 

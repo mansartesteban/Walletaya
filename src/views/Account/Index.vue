@@ -7,7 +7,6 @@
       <Security></Security>
     </Tab>
   </Tabs>
-  <div class="page flex flex-column gap-md p-md"></div>
 </template>
 
 <script setup>

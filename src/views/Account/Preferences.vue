@@ -12,11 +12,13 @@
         <Select
           v-model="currencyFormat"
           :options="currencyFormats"
-          return-value="value">
+          return-value="value"
+        >
           <template #activator="{ on }">
             <InputText
               v-model="currencyFormatLabel"
-              @click="on.onClick"></InputText>
+              @click="on.onClick"
+            ></InputText>
           </template>
         </Select>
       </div>
@@ -36,7 +38,9 @@ import Toggle from "@/components/forms/ButtonGroup.vue";
 import Select from "@/components/forms/Select.vue";
 
 import useSettingsStore from "@/plugins/stores/Settings";
+import useToastStore from "@/plugins/stores/Toast";
 
+const toast = useToastStore();
 const settings = useSettingsStore();
 
 const leftHanded = ref(settings.leftHanded);
@@ -76,5 +80,6 @@ const save = () => {
   settings.setSetting("defaultCurrency", defaultCurrencySymbol.value);
   settings.setSetting("leftHanded", leftHanded.value);
   settings.setSetting("currencyFormat", currencyFormat.value);
+  toast.push("Enregistré !");
 };
 </script>
