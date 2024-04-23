@@ -13,8 +13,7 @@
       :opened="settingsStore.hasRedWelcomeMessage === false"
       title="Bienvenue !"
       confirmLabel="J'ai compris"
-      @click="onConfirm"
-    >
+      @click="onConfirm">
       <p>Bonjour à toi !</p>
       <p>
         Voici ton espace personnel pour connaître l'état de ton ou tes
@@ -28,7 +27,7 @@
   <template v-else>
     <Dialog :opened="true" title="Autentification requise" centered>
       <div class="py-xl text-center">
-        Vous ne pouvez pas avoir accès à Walleteya sans vous autentifier
+        Tu ne peux pas avoir accès à Walleteya sans t'autentifier
       </div>
       <template #footer>
         <Btn @click="authenticate" icon="fingerprint">Réessayer</Btn>

@@ -3,8 +3,7 @@
     <div class="blurry-container">
       <div
         class="flex flex-column gap-md"
-        :class="{ 'align-items-center': centered }"
-      >
+        :class="{ 'align-items-center': centered }">
         <div v-if="!noHeader && ($slots.header || title)" class="flex gap-md">
           <template v-if="$slots.header">
             <slot name="header"></slot>
@@ -59,6 +58,7 @@ const props = defineProps({
   position: relative;
   padding: var(--md);
   overflow: hidden;
+  background: var(--glass-background);
 
   &.centered {
     text-align: center;
