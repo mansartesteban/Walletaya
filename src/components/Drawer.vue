@@ -4,15 +4,13 @@
     <div
       ref="drawerView"
       class="drawer-view glass"
-      :style="opened ? computedStyle : ''"
-    >
+      :style="opened ? computedStyle : ''">
       <div
         @touchmove="onDrag"
         @touchstart="onDragStart"
         @touchend="onDragEnd"
         ref="drawerTouch"
-        class="drawer-touch"
-      ></div>
+        class="drawer-touch"></div>
 
       <div class="scrollable">
         <slot></slot>
@@ -32,10 +30,12 @@ const top = ref(0);
 const lastTop = ref(0);
 
 const onDragStart = (e) => {
+  e.preventDefault();
   let box = e.target.getBoundingClientRect();
   originalBox.value = box;
 };
 const onDragEnd = (e) => {
+  e.preventDefault();
   top.value > lastTop.value ? close() : open();
   originalBox.value = null;
 };

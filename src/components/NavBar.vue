@@ -3,8 +3,7 @@
     <template v-for="menu in menus">
       <router-link
         class="navbar-button flex flex-column align-items-center justify-content-center gap-xs"
-        :to="menu.route"
-      >
+        :to="menu.route">
         <div class="navbar-button-icon">
           <Icon>{{ menu.icon }}</Icon>
         </div>
@@ -16,8 +15,7 @@
     <div
       ref="tooldockButton"
       class="navbar-button flex flex-column align-items-center justify-content-center gap-xs"
-      @click="toggleDock"
-    >
+      @click="toggleDock">
       <div class="navbar-button-icon">
         <Icon>tools</Icon>
       </div>
@@ -25,12 +23,10 @@
       <div
         ref="tooldock"
         class="tool-dock flex flex-column gap-md mb-md"
-        :class="{ 'tool-dock-opened': toolDockOpened }"
-      >
+        :class="{ 'tool-dock-opened': toolDockOpened }">
         <div
           class="tool-dock-app flex glass align-items-center gap-sm p-sm py-xs rounded-md"
-          @click.stop="toggleApp"
-        >
+          @click.stop="toggleApp">
           <div class="tool-dock-button-label">Calculatrice</div>
           <Btn icon="calculator" class="p-sm rounded-md"></Btn>
         </div>
@@ -54,7 +50,7 @@ import { useRoute } from "vue-router";
 import { animate, easingFunctions } from "@/utils/Animate";
 import { onClickOutside } from "@vueuse/core";
 
-import WidgetService from "@/Services/WidgetService";
+import WidgetService from "@/services/WidgetService";
 
 const calculator = WidgetService.Calculator;
 const route = useRoute();

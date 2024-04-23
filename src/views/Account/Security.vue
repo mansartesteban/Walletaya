@@ -35,8 +35,7 @@
         v-if="!appStore.userCredentials"
         @click="securize"
         :disabled="!hasInformationsDefined"
-        icon="fingerprint"
-      >
+        icon="fingerprint">
         Sécuriser le compte
       </Btn>
       <Btn v-else severity="error" @click="unsecurize" icon="security-block"
@@ -49,16 +48,13 @@
     <div class="flex flex-column gap-md">
       <InputText
         v-model="dialogUserInformations.firstname"
-        label="Prénom"
-      ></InputText>
+        label="Prénom"></InputText>
       <InputText
         v-model="dialogUserInformations.lastname"
-        label="Nom"
-      ></InputText>
+        label="Nom"></InputText>
       <InputText
         v-model="dialogUserInformations.mail"
-        label="Adresse e-mail"
-      ></InputText>
+        label="Adresse e-mail"></InputText>
     </div>
   </Dialog>
 </template>

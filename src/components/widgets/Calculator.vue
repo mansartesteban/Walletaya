@@ -22,14 +22,12 @@
         <Btn class="calculator-key" @touchstart.passive="clear">C</Btn>
         <Btn
           class="calculator-key"
-          @touchstart.passive="concatCalculation('/')"
-        >
+          @touchstart.passive="concatCalculation('/')">
           <Icon>divide</Icon></Btn
         >
         <Btn
           class="calculator-key"
-          @touchstart.passive="concatCalculation('*')"
-        >
+          @touchstart.passive="concatCalculation('*')">
           <Icon>close</Icon>
         </Btn>
         <Btn class="calculator-key" @touchstart.passive="removeLastCalculation">
@@ -99,7 +97,7 @@
 import Btn from "@/components/Btn.vue";
 import Icon from "@/components/Icon.vue";
 import Widget from "@/components/widgets/Widget.vue";
-import WidgetService from "@/Services/WidgetService";
+import WidgetService from "@/services/WidgetService";
 
 const calculator = WidgetService.Calculator;
 
