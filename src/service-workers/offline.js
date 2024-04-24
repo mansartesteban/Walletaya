@@ -1,5 +1,17 @@
+const swURL = "sw.js";
+
 export default (app) => {
+  // Register the service worker
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js");
+    // Wait for the 'load' event to not block other work
+    window.addEventListener("load", async () => {
+      // Try to register the service worker.
+      try {
+        const reg = await navigator.serviceWorker.register(swURL);
+        console.log("Service worker registered! 😎", reg);
+      } catch (err) {
+        console.log("😥 Service worker registration failed: ", err);
+      }
+    });
   }
 };
