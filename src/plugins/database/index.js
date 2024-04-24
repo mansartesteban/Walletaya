@@ -1,4 +1,4 @@
-import Database from "@/Services/Database/Database";
+import Database from "@/services/Database/Database";
 
 let database = new Database();
 database.start();
