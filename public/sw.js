@@ -1,64 +1,202 @@
-const cacheName = "walletaya-cache-v3";
-const contentToCache = [
+const cacheName = "walletaya-cache";
+
+const defaultContentToCache = [
+  "/sw.js",
   "/src/main.js",
   "/src/assets/styles/index.scss",
   "/src/components/App.vue",
-  // "/src/views/Portfolio/index.vue",
-  // "/src/views/Portfolio/Wallet.vue",
-  // "/src/views/Portfolio/History.vue",
-  // "/src/components/Tabs.vue",
-  // "/src/components/Tab.vue",
-  // "/src/views/Portfolio/WalletTokenLine.vue",
-  // "/src/views/Portfolio/TransactionForm.vue",
-  // "/src/components/Drawer.vue",
-  // "/src/views/Portfolio/WalletTokenDetail.vue",
-  // "/src/components/forms/InputNumber.vue",
-  // "/src/components/forms/DatePicker.vue",
-  // "/src/components/forms/ButtonGroup.vue",
 ];
 
-self.addEventListener("install", (event) => {
-  console.info("Service worker is installing ...");
+const cacheDefaultContent = async () => {
+  const cache = await caches.open(cacheName);
+  await cache.addAll(defaultContentToCache);
+
+  // Indicate that the SW has finished to cache content and go next step
   self.skipWaiting();
-  event.waitUntil(
-    (async () => {
-      const cache = await caches.open(cacheName);
-      await cache.addAll(contentToCache);
-    })()
-  );
-});
+};
 
-self.addEventListener("activate", (event) => {
-  clients.claim();
-  event.waitUntil(
-    (async () => {
-      const keys = await caches.keys();
-      await Promise.all(
-        keys.map((key) => {
-          if (!key.includes(cacheName)) {
-            return caches.delete(key);
-          }
-        })
-      );
-    })()
-  );
-  console.info("Service worker is actived !");
-});
+const deletedOldCache = async () => {
+  const keys = await caches.keys();
 
-self.addEventListener("fetch", (event) => {
-  console.info("Fetch detected on file : " + event.request.url);
-
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-
-      try {
-        return fetch(event.request);
-      } catch (err) {
-        console.err("Failed to fetch", err);
+  // Wait for each existing key to be deleted
+  await Promise.all(
+    keys.map((key) => {
+      if (!key.includes(cacheName)) {
+        return caches.delete(key);
       }
     })
   );
+
+  // Replace the old SW by the current freshly created
+  clients.claim();
+};
+
+// When the page loads
+self.addEventListener("install", (event) => {
+  event.waitUntil(cacheDefaultContent());
 });
+
+// When the current SW replace the old one
+self.addEventListener("activate", (event) => {
+  event.waitUntil(deletedOldCache());
+});
+
+const fetchCacheOrNetwork = async (event) => {
+  try {
+    // Try to normally fetch it from network and cache it
+    const responseFromNetwork = await fetch(event.request);
+    const cache = await caches.open(cacheName);
+    await cache.put(event.request, responseFromNetwork.clone());
+
+    // Return the fetched request from network
+    return responseFromNetwork;
+  } catch (error) {
+    // Checks if cache has the requested content and returns it if yes
+    const responseFromCache = await caches.match(event.request);
+    if (responseFromCache) {
+      return responseFromCache;
+    }
+
+    // If the request can't get any response, return a fallback content
+    // const fallbackResponse = await caches.match(fallbackUrl);
+    // if (fallbackResponse) {
+    //   return fallbackResponse;
+    // }
+
+    // If nothing can be return until here, return a default error
+    return new Response("Network error happened", {
+      status: 408,
+      headers: { "Content-Type": "text/plain" },
+    });
+  }
+};
+
+// Hooks request calls to enhance default behaviour
+self.addEventListener("fetch", (event) => {
+  event.respondWith(fetchCacheOrNetwork(event));
+});
+
+// // const putInCache = async (request, response) => {
+// //   const cache = await caches.open("v1");
+// //   await cache.put(request, response);
+// // };
+
+// // const cacheFirst = async (request) => {
+// //   const responseFromCache = await caches.match(request);
+// //   if (responseFromCache) {
+// //     return responseFromCache;
+// //   }
+
+// //   try {
+// //     const responseFromNetwork = await fetch(request);
+// //     putInCache(request, responseFromNetwork.clone());
+// //     return responseFromNetwork;
+// //   } catch (error) {
+// //     const fallbackResponse = await caches.match(fallbackUrl);
+// //     if (fallbackResponse) {
+// //       return fallbackResponse;
+// //     }
+// //     // Quand il n'y a même pas de contenu par défaut associé
+// //     // on doit tout de même renvoyer un objet Response
+// //     return new Response("Une erreur réseau s'est produite", {
+// //       status: 408,
+// //       headers: { "Content-Type": "text/plain" },
+// //     });
+// //   }
+// // };
+
+// // self.addEventListener("fetch", (event) => {
+// //   event.respondWith(
+// //     cacheFirst({
+// //       request: event.request,
+// //       fallbackUrl: "/gallery/myLittleVader.jpg",
+// //     }),
+// //   );
+// // });
+
+// const addResourcesToCache = async (resources) => {
+//   const cache = await caches.open(cacheName);
+//   await cache.addAll(resources);
+// };
+
+// const putInCache = async (request, response) => {
+//   const cache = await caches.open(cacheName);
+//   await cache.put(request, response);
+// };
+
+// const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
+//   // Pour commencer on essaie d'obtenir la ressource depuis le cache
+//   const responseFromCache = await caches.match(request);
+//   if (responseFromCache) {
+//     return responseFromCache;
+//   }
+
+//   // Ensuite, on tente d'utiliser et de mettre en cache
+//   // la réponse préchargée si elle existe
+//   const preloadResponse = await preloadResponsePromise;
+//   if (preloadResponse) {
+//     console.info("using preload response", request, preloadResponse);
+//     putInCache(request, preloadResponse.clone());
+//     return preloadResponse;
+//   }
+
+//   // Ensuite, on tente de l'obtenir du réseau
+//   try {
+//     const responseFromNetwork = await fetch(request);
+//     // Une réponse ne peut être utilisée qu'une fois
+//     // On la clone pour en mettre une copie en cache
+//     // et servir l'originale au navigateur
+//     putInCache(request, responseFromNetwork.clone());
+//     return responseFromNetwork;
+//   } catch (error) {
+//     const fallbackResponse = await caches.match(fallbackUrl);
+//     if (fallbackResponse) {
+//       return fallbackResponse;
+//     }
+//     // Quand il n'y a même pas de contenu par défaut associé
+//     // on doit tout de même renvoyer un objet Response
+//     return new Response("Network error happened", {
+//       status: 408,
+//       headers: { "Content-Type": "text/plain" },
+//     });
+//   }
+// };
+
+// // On active le préchargement à la navigation
+// const enableNavigationPreload = async () => {
+//   if (self.registration.navigationPreload) {
+//     await self.registration.navigationPreload.enable();
+//   }
+// };
+
+// self.addEventListener("activate", (event) => {
+//   event.waitUntil(enableNavigationPreload());
+// });
+
+// const deleteCache = async (key) => {
+//   await caches.delete(key);
+// };
+
+// const deleteOldCaches = async () => {
+//   const cacheKeepList = ["v1"];
+//   const keyList = await caches.keys();
+//   const cachesToDelete = keyList.filter((key) => !cacheKeepList.includes(key));
+//   await Promise.all(cachesToDelete.map(deleteCache));
+// };
+
+// self.addEventListener("activate", (event) => {
+//   event.waitUntil(deleteOldCaches());
+// });
+
+// self.addEventListener("install", (event) => {
+//   event.waitUntil(addResourcesToCache(contentToCache));
+// });
+
+// self.addEventListener("fetch", (event) => {
+//   event.respondWith(
+//     cacheFirst({
+//       request: event.request,
+//       preloadResponsePromise: event.preloadResponse,
+//     })
+//   );
+// });

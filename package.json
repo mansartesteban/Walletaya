@@ -1,12 +1,13 @@
 {
-  "name": "client",
+  "name": "walletaya",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "pnpm i && pnpm update && vite --force",
     "build": "pnpm i && pnpm update && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "app-publish": "sh ./scripts/publish.sh"
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",
@@ -14,7 +15,7 @@
     "pinia": "^2.1.7",
     "unplugin-auto-import": "^0.17.5",
     "uuid": "^9.0.1",
-    "vue": "^3.4.24",
+    "vue": "^3.4.25",
     "vue-router": "^4.3.2",
     "vue-virtual-scroller": "2.0.0-beta.8"
   },
