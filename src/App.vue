@@ -6,6 +6,7 @@
     <AppHeader ref="appHeader"></AppHeader>
 
     <div class="view">
+      <Offline></Offline>
       <router-view></router-view>
     </div>
     <NavBar></NavBar>
@@ -45,6 +46,8 @@ import Dialog from "@/components/Dialog.vue";
 import ContextMenu from "@/components/ContextMenu.vue";
 import Btn from "@/components/Btn.vue";
 import Snack from "@/components/Snack.vue";
+
+import Offline from "@/views/Offline.vue";
 
 import useAppStore from "@/plugins/stores/App";
 import useTokenListStore from "@/plugins/stores/TokenList";

@@ -1,8 +1,7 @@
 <template>
-  <div class="p-md">
+  <!-- <div class="p-md">
     <TokenPicker v-model="model"></TokenPicker>
-    TOTOTOTO DZ
-  </div>
+  </div> -->
   <!-- <div class="flex flex-column gap-md">
     <img src="https://picsum.photos/id/237/200/300" width="200" height="300" />
     <p>
