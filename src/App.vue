@@ -13,7 +13,8 @@
       :opened="settingsStore.hasRedWelcomeMessage === false"
       title="Bienvenue !"
       confirmLabel="J'ai compris"
-      @click="onConfirm">
+      @click="onConfirm"
+    >
       <p>Bonjour à toi !</p>
       <p>
         Voici ton espace personnel pour connaître l'état de ton ou tes
@@ -76,12 +77,11 @@ const authenticate = async () => {
 };
 
 onBeforeMount(() => {
-  settingsStore.retrieve().then(() => {
-    tokenListStore.refreshTokens(false, appStore.usedTokens);
-  });
+  settingsStore.retrieve();
   appStore.retrieve().then(async () => {
     if (!appStore.isAuthenticated && appStore.userCredentials) {
       authenticate();
+      tokenListStore.refreshTokens(true, appStore.usedTokens);
     }
   });
 });

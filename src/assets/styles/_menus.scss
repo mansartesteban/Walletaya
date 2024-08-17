@@ -35,13 +35,13 @@
       
       &.opened {
         height: fit-content;
+        border: 1px solid rgba(255, 255, 255, .1);
 
         .blurry-container  {
           height: unset;
           overflow-y: scroll;
         }
 
-        border: 1px solid rgba(255, 255, 255, .1);
         
       }
       

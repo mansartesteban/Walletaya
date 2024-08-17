@@ -9,6 +9,7 @@
     height: 0;
     padding: 0 var(--md);
     overflow: hidden;
+    transition: padding var(--transition-timing) var(--transition-duration);
 
     .detail {
       display: flex;
@@ -20,7 +21,6 @@
       }
     }
   
-    transition: padding var(--transition-timing) var(--transition-duration);
     
     &.opened {
       transition: padding var(--transition-timing) var(--transition-duration);

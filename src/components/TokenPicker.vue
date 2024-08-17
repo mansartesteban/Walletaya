@@ -53,7 +53,7 @@ import { normalizeString } from "@/utils/String";
 const settings = useSettingsStore();
 
 const model = defineModel({
-  get: (v) => getToken(v || settings.defaultToken.value),
+  get: (v) => getToken(v || settings.defaultToken?.value),
   set: (v) => v?.value,
 });
 
@@ -95,6 +95,6 @@ const sortFunction = (previousToken, currentToken, filter) => {
 };
 
 onMounted(() => {
-  model.value = getToken(settings.defaultToken.value);
+  model.value = getToken(settings.defaultToken?.value);
 });
 </script>

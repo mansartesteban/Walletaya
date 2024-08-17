@@ -119,6 +119,9 @@ defineExpose({
     }
 
     > .drawer-touch {
+      padding: var(--md);
+      // border: 1px dashed red;
+
       &::before {
         position: absolute;
         content: "";
@@ -129,8 +132,6 @@ defineExpose({
         left: 50%;
         transform: translateX(-50%);
       }
-      padding: var(--md);
-      // border: 1px dashed red;
     }
   }
 }

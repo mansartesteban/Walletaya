@@ -333,7 +333,7 @@ export default {
     last_updated: "2024-04-18T19:41:00.000Z",
     quote: {
       USD: {
-        price: 1.000542317814835,
+        price: 1.0,
         volume_24h: 65239787933.75704,
         volume_change_24h: -7.6607,
         percent_change_1h: 0.01126837,

@@ -45,6 +45,7 @@ export default defineStore("token", {
             },
           })
           .then((response) => {
+            console.log("rpon", response);
             this.marketValues = {
               ...this.marketValues,
               ...response.data.data,
