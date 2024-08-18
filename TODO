@@ -1,0 +1,7 @@
+OK Changer les ports pour 80 et 443 pour éviter de renseigner les ports sur le site
+Essayer de créer un serveur DNS
+Pourvoir héberger plusieurs applications sur une même ip (photographe.pitaya-inc.io, developper.pitaya-inc.io, tracrypto.pitaya-inc.io ...)
+Utiliser une pipeline pour qu'un push sur la branche master rebuild et redémarrer l'application
+Avoir une interface générale avec connexion qui permette de monitorer les applications
+Avoir un script qui génère un boilerplate pour servir les fichiers
+Avoir une gestion automatisée du renouvellement de certificat

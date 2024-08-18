@@ -1,15 +1,15 @@
 #!/bin/bash
-
-# Variables
+APP="~/apps/tracrypto"
 USER=pi
 HOST=192.168.1.16
-APP_DIR=/var/www/tracrypto
-LOCAL_BUILD_DIR=F:/dev/tracrypto/dist
 
+# pnpm build
 # Transférer les fichiers
-scp -r $LOCAL_BUILD_DIR $USER@$HOST:$APP_DIR
+scp -i ~/.ssh/raspberry -r ./dist $USER@$HOST:$APP
+scp -i ~/.ssh/raspberry -r ./prod/index.js $USER@$HOST:$APP
 
 # Se connecter au Raspberry Pi et démarrer l'application
-ssh $USER@$HOST 
+ssh -i ~/.ssh/raspberry $USER@$HOST << "ENDSSH"
 cd $APP_DIR
-ls
+npm run start &
+ENDSSH
