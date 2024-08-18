@@ -1,6 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { fileURLToPath, URL } from "url"
+import path from "path"
 import AutoImport from 'unplugin-auto-import/vite'
 
 
@@ -22,7 +22,7 @@ export default ({ mode }) => {
     envDir: "./",
     resolve: {
       alias: {
-        "@": fileURLToPath(new URL("/src", import.meta.url))
+        "@": path.resolve(__dirname, "./src")
       }
     },
     publicDir: 'public',

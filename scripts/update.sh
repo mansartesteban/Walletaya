@@ -5,6 +5,7 @@ cd ~/apps/tracrypto
 
 # Tirer les dernières modifications depuis GitHub
 git reset --hard origin/main
+git pull origin master
 
 # Installer les dépendances (si nécessaire)
 pnpm install
