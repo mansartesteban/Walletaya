@@ -46,6 +46,9 @@ dependencies:
     version: 2.0.0-beta.8(vue@3.4.38)
 
 devDependencies:
+  '@rollup/rollup-linux-arm-gnueabihf':
+    specifier: ^4.21.0
+    version: 4.21.0
   '@vitejs/plugin-vue':
     specifier: ^5.1.2
     version: 5.1.2(vite@5.4.1)(vue@3.4.38)
@@ -1865,7 +1868,6 @@ packages:
     os: [linux]
     requiresBuild: true
     dev: true
-    optional: true
 
   /@rollup/rollup-linux-arm-musleabihf@4.21.0:
     resolution: {integrity: sha512-efRIANsz3UHZrnZXuEvxS9LoCOWMGD1rweciD6uJQIx2myN3a8Im1FafZBzh7zk1RJ6oKcR16dU3UPldaKd83w==}
