@@ -17,5 +17,5 @@ if [ $? -eq 0 ]; then
 else
     # Sinon, démarrer l'application
     echo "Démarrage de l'application $APP_NAME"
-    pm2 start pnpm --name $APP_NAME -- run start
+    pm2 start npm --name $APP_NAME -- run start
 fi

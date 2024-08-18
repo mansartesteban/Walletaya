@@ -8,9 +8,9 @@ git reset --hard origin/main
 git pull origin main
 
 # Installer les dépendances (si nécessaire)
-pnpm install
+npm install
 
-pnpm run build
+npm run build
 
 # Relancer l'application
 sh ~/apps/tracrypto/scripts/start.sh 
