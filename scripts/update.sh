@@ -13,4 +13,4 @@ pnpm install
 pnpm run build
 
 # Relancer l'application
-sh ./start.sh 
+sh ~/apps/tracrypto/scripts/start.sh 
