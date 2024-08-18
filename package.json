@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm i && pnpm update && vite",
-    "build": "pnpm i && pnpm update && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "deploy": "sh ./scripts/deploy.sh",
     "test": "jest",
