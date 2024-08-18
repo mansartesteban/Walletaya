@@ -4,6 +4,7 @@
 APP_NAME="tracrypto"
 SERVER_PATH=~/apps/tracrypto/server
 
+
 # Vérifier si l'application est déjà en cours d'exécution
 pm2 describe $APP_NAME > /dev/null 2>&1
 
