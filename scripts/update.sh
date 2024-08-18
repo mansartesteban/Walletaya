@@ -7,7 +7,7 @@ cd ~/apps/tracrypto
 git reset --hard origin/main
 
 # Installer les dépendances (si nécessaire)
-pnpm install --production
+pnpm install
 
 pnpm run build
 
