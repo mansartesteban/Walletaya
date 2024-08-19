@@ -11,13 +11,13 @@ process.title = "js.tracrypto";
 app = express()
 
 const options = {
-    key: fs.readFileSync("secure.key"),
-    cert: fs.readFileSync("secure.cert"),
+    key: fs.readFileSync(path.resolve(__dirname, "secure.key")),
+    cert: fs.readFileSync(path.resolve(__dirname, "secure.cert")),
 }
 
 app.use(express.static('dist'));
 app.get('/*', (req, res) => {
-    res.sendFile(path.resolve(__dirname + '../dist/index.html'), {}, err => {
+    res.sendFile(path.resolve(__dirname, '../dist/index.html'), {}, err => {
         if (err) {
             res.status(500).send(err);
         }
