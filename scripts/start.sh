@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Nom de l'application dans PM2
-APP_NAME="tracrypto"
-SERVER_PATH=~/apps/tracrypto/server
+APP_NAME="walletaya"
+SERVER_PATH=~/apps/Walletaya/server
 
 
 # Vérifier si l'application est déjà en cours d'exécution

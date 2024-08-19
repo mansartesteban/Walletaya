@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Se déplacer dans le répertoire de l'application
-cd ~/apps/tracrypto
+cd ~/apps/Walletaya
 
 # Tirer les dernières modifications depuis GitHub
-git reset --hard origin/main
-git pull origin main
+# git reset --hard origin/main
+# git pull origin main
 
 # Installer les dépendances (si nécessaire)
-npm install
+pnpm install
 
-npm run build
+pnpm build
 
 # Relancer l'application
 sh ~/apps/tracrypto/scripts/start.sh 
