@@ -14,13 +14,18 @@ RUN pnpm install
 # Copier le reste de l'application
 COPY . .
 
+RUN pnpm build
+
+RUN rm package.*
+
+COPY server/* .
+
 # Exposer le port utilisé par l'application
 EXPOSE 6000
 EXPOSE 6001
 
 # Se déplacer dans le dossier du serveur
-RUN cd server
-RUN pwd
+RUN ls
 
 # Commande pour démarrer l'application
 CMD ["npm", "start"]
