@@ -20,6 +20,7 @@ EXPOSE 6001
 
 # Se déplacer dans le dossier du serveur
 RUN cd server
+RUN pwd
 
 # Commande pour démarrer l'application
-CMD ["pnpm", "start"]
+CMD ["npm", "start"]
