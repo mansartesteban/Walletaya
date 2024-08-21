@@ -20,8 +20,8 @@ jobs:
 
     - name: Git pull
       run: |
-        ssh -o StrictHostKeyChecking=no -p 5999 github@90.0.8.199 'echo "Changing directory" && cd ~/pitayahub/walletaya/repo && echo "Pulling repo ..." && git reset --hard origin/main && echo "Repository pulled !"' 
+        ssh -o StrictHostKeyChecking=no -p 5999 pitaya@90.0.8.199 'cd ~/pitayahub/walletaya/repo && git reset --hard origin/main' 
         
     - name: Executing deploy script on remote machine
       run: |
-        ssh -o StrictHostKeyChecking=no -p 5999 github@90.0.8.199 'sh ~/pitayahub/walletaya/repo/scripts/deploy.sh'
+        ssh -o StrictHostKeyChecking=no -p 5999 pitaya@90.0.8.199 'sh ~/pitayahub/walletaya/repo/scripts/deploy.sh'
