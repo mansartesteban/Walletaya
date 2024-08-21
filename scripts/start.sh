@@ -2,7 +2,7 @@
 
 # Nom de l'application dans PM2
 APP_NAME="walletaya"
-SERVER_PATH=~/apps/Walletaya/server
+SERVER_PATH= ~/app/server
 
 
 # Vérifier si l'application est déjà en cours d'exécution
