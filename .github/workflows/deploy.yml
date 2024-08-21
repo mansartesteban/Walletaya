@@ -20,4 +20,4 @@ jobs:
 
     - name: Deploy via SSH
       run: |
-        ssh -o StrictHostKeyChecking=no github@90.0.8.199 'bash -s' < ~/pitayahub/walletaya/scripts/deploy.sh
+        ssh -o StrictHostKeyChecking=no github@90.0.8.199 'sh ~/pitayahub/walletaya/scripts/deploy.sh'
