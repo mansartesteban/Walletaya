@@ -5,4 +5,4 @@ APP_NAME="walletaya"
 docker build -t $APP_NAME .
 
 # Exécuter le conteneur sur l'hôte
-docker run -it -d -p 6000:6000 $APP_NAME 
+docker run -it -d -p 6000:6000 --rm $APP_NAME 

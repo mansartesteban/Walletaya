@@ -28,8 +28,5 @@ RUN npm install
 EXPOSE 6000
 EXPOSE 6001
 
-# Se déplacer dans le dossier du serveur
-RUN ls
-
 # Commande pour démarrer l'application
 CMD ["npm", "start"]
