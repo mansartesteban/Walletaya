@@ -1,9 +1,10 @@
 # Utiliser une image de base officielle
 FROM node:18
 
+RUN npm install -g pnpm
+
 # Créer un répertoire de travail
 WORKDIR /app
-
 # Copier les fichiers package.json et package-lock.json
 COPY package*.json ./
 
