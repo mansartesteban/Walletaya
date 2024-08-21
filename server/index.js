@@ -27,6 +27,6 @@ app.get('/*', (req, res) => {
 http.createServer((req, res) => {
     res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
     res.end();
-  }).listen(6000);
+  }).listen(6001);
 
-https.createServer(options, app).listen(6001)
+https.createServer(options, app).listen(6000)
