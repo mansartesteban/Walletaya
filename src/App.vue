@@ -26,14 +26,15 @@
     <ContextMenu></ContextMenu>
   </template>
   <template v-else>
-    <Dialog :opened="true" title="Autentification requise" centered>
+    Je suis un changement
+    <!-- <Dialog :opened="true" title="Autentification requise" centered>
       <div class="py-xl text-center">
         Tu ne peux pas avoir accès à Walleteya sans t'autentifier
       </div>
       <template #footer>
         <Btn @click="authenticate" icon="fingerprint">Réessayer</Btn>
       </template>
-    </Dialog>
+    </Dialog> -->
   </template>
 </template>
 
