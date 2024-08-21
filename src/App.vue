@@ -2,7 +2,7 @@
   <AppBackground></AppBackground>
   <Snack></Snack>
 
-  <template v-if="appStore.isAuthenticated || !appStore.userCredentials">
+  <template v-if="appStore.isAuthenticated && appStore.userCredentials">
     <AppHeader ref="appHeader"></AppHeader>
 
     <div class="view">
@@ -56,12 +56,14 @@ const tokenListStore = useTokenListStore();
 const settingsStore = useSettingsStore();
 const appStore = useAppStore();
 
+
 const onConfirm = () => {
   settingsStore.setSetting("hasRedWelcomeMessage", true);
 };
 
 const authenticate = async () => {
   try {
+    console.log("auth ???")
     let credentials = await navigator.credentials.get({
       publicKey: {
         challenge: generateRandomChallenge(),

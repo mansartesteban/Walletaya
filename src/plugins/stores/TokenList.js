@@ -53,6 +53,7 @@ export default defineStore("token", {
           });
       } else {
         this.marketValues = cryptocurrencyQuotesLatest;
+        console.log("market values default", cryptocurrencyQuotesLatest)
       }
     },
   },

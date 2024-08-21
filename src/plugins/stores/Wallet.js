@@ -84,7 +84,6 @@ export default defineStore("wallet", {
     },
     usedTokens(state) {
       let usedTokens = [];
-      console.log("usedTokens", state.history);
       state.history.forEach((transaction) => {
         if (transaction.creditToken) {
           if (!usedTokens.includes(transaction.creditToken.value)) {
