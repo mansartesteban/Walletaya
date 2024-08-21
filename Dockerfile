@@ -20,6 +20,10 @@ RUN rm package.*
 
 COPY server/* .
 
+RUN rm -rf node_modules
+
+RUN npm install
+
 # Exposer le port utilisé par l'application
 EXPOSE 6000
 EXPOSE 6001
