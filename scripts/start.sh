@@ -8,8 +8,6 @@ SERVER_PATH= ~/app/server
 # Vérifier si l'application est déjà en cours d'exécution
 pm2 describe $APP_NAME > /dev/null 2>&1
 
-cd $SERVER_PATH
-
 if [ $? -eq 0 ]; then
     # Si l'application est en cours d'exécution, la redémarrer
     echo "Redémarrage de l'application $APP_NAME"
