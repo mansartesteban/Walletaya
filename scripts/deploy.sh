@@ -8,4 +8,4 @@ docker stop $APP_NAME
 docker rm $APP_NAME
 
 # Exécuter le conteneur sur l'hôte
-docker run -u pitaya -p 6000:6000 -p 6001:6001 --name $APP_NAME $APP_NAME 
+docker run -p 6000:6000 -p 6001:6001 --name $APP_NAME $APP_NAME 
