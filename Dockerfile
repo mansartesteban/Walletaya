@@ -1,9 +1,6 @@
 # Utiliser nodejs v18
 FROM node:18
 
-RUN useradd -r pitaya
-USER pitaya
-
 # Installer pnpm
 RUN npm install -g pnpm
 
