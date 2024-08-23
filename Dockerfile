@@ -1,5 +1,5 @@
-# Utiliser nodejs v18
-FROM node:18
+# Utiliser nodejs v16
+FROM node:16
 
 # Installer pnpm
 RUN npm install -g pnpm
@@ -17,6 +17,9 @@ COPY . .
 
 # Build l'image du front
 RUN pnpm build
+RUN rm package.json
+RUN rm package-lock.yaml
+RUN rm package-lock.json
 RUN rm -rf node_modules
 
 # Se déplacer dans le dossier du server et installer les dépendances
