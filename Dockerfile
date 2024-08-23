@@ -21,7 +21,6 @@ RUN rm -rf node_modules
 
 # Se déplacer dans le dossier du server et installer les dépendances
 RUN cd server
-RUN rm -rf node_modules
 RUN npm install
 
 # Créer un dossier de livraison finale et copie le front et le server
