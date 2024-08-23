@@ -26,7 +26,6 @@
     <ContextMenu></ContextMenu>
   </template>
   <template v-else>
-    <!-- Je suis un changement -->
     <!-- <Dialog :opened="true" title="Autentification requise" centered>
       <div class="py-xl text-center">
         Tu ne peux pas avoir accès à Walleteya sans t'autentifier
