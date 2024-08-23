@@ -1,5 +1,5 @@
-# Utiliser nodejs v16
-FROM node:16
+# Utiliser nodejs v18
+FROM node:18
 
 # Installer pnpm
 RUN npm install -g pnpm
