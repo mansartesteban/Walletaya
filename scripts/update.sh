@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Se déplacer dans le répertoire de l'application
-cd ~/apps/Walletaya
+cd /var/www/bunkapp/Walletaya/repo
 
 # Tirer les dernières modifications depuis GitHub
 
@@ -11,4 +11,4 @@ pnpm install
 pnpm build
 
 # Relancer l'application
-sh ~/apps/tracrypto/scripts/start.sh 
+sh ./scripts/start.sh 

@@ -1,4 +1,3 @@
-// const express = require("express")
 const https = require("https")
 const http = require("http")
 const path = require("path")
@@ -9,8 +8,6 @@ const process = require("process")
 process.title = "js.tracrypto";
 
 app = express()
-
-//tmp
 
 const options = {
     key: fs.readFileSync(path.resolve(__dirname, "secure.key")),
