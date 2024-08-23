@@ -24,4 +24,4 @@ jobs:
         
     - name: Executing deploy script on remote machine
       run: |
-        ssh -o StrictHostKeyChecking=no -p 5999 github@90.0.8.199 'sh /var/www/bunkapp/Walletaya/repo/scripts/deploy.sh'
+        ssh -o StrictHostKeyChecking=no -p 5999 github@90.0.8.199 'cd /var/www/bunkapp/Walletaya/repo && sh scripts/deploy.sh'
