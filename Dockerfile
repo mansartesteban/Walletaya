@@ -27,8 +27,8 @@ RUN npm install
 
 # Créer un dossier de livraison finale et copie le front et le server
 WORKDIR /serve
-RUN cp /setup/dist ./
-RUN cp /setup/server ./
+RUN cp -r /setup/dist ./
+RUN cp -r /setup/server ./
 
 # Nettoyer l'image pour l'alléger
 RUN rm -rf /setup
