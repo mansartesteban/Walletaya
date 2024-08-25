@@ -18,7 +18,6 @@ COPY . .
 # Build l'image du front
 RUN pnpm build
 RUN rm package.json
-RUN rm package-lock.yaml
 RUN rm package-lock.json
 RUN rm -rf node_modules
 
