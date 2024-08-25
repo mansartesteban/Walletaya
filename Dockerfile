@@ -17,6 +17,8 @@ COPY . .
 
 # Build l'image du front
 RUN pnpm build
+RUN rm package.json
+RUN rm package-lock.yaml
 RUN rm -rf node_modules
 
 # Se déplacer dans le dossier du server et installer les dépendances
