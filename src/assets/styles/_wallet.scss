@@ -1,14 +1,11 @@
 .transaction-line {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);  
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 
   &:active {
     background: rgba(255, 255, 255, 0.1);
   }
 
   .wallet-token-detail {
-    height: 0;
-    padding: 0 var(--md);
-    overflow: hidden;
 
     .detail {
       display: flex;
@@ -19,28 +16,19 @@
         font-size: .75rem;
       }
     }
-  
-    transition: padding var(--transition-timing) var(--transition-duration);
-    
-    &.opened {
-      transition: padding var(--transition-timing) var(--transition-duration);
-      border-top: 1px solid rgba(255, 255, 255, .05);  
-      padding: var(--md);
-      overflow: visible;
-      height: fit-content;
-    }
+
   }
 
   .positive {
     color: var(--color-success);
   }
-  
+
   .negative {
     color: var(--color-error);
   }
-  
+
 }
+
 .sublabel {
   color: rgba(255, 255, 255, 0.5);
 }
-

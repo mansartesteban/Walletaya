@@ -1,14 +1,14 @@
-import { defineStore } from "pinia";
-import { coinmarketcapApi } from "@/plugins/axios";
-import cryptocurrencyList from "@/endpoints/cryptocurrency-list";
-import cryptocurrencyQuotesLatest from "@/endpoints/cryptocurrency-quotes-latest";
+import { defineStore } from "pinia"
+import { coinmarketcapApi } from "@/plugins/axios"
+import cryptocurrencyList from "@/endpoints/cryptocurrency-list"
+import cryptocurrencyQuotesLatest from "@/endpoints/cryptocurrency-quotes-latest.json"
 
 export default defineStore("token", {
   state: () => {
     return {
       tokens: cryptocurrencyList,
       marketValues: {},
-    };
+    }
   },
   getters: {
     tokenList(state) {
@@ -18,20 +18,21 @@ export default defineStore("token", {
           value: token.slug,
           symbol: token.symbol,
           label: token.name,
-        };
-      });
+        }
+      })
     },
     prices(state) {
-      let prices = {};
+      let prices = {}
+      console.log("state.marketValues", state.marketValues)
       Object.values(state.marketValues).forEach((tokenValue) => {
-        prices[tokenValue.id] = tokenValue.quote.USD.price;
-      });
-      return prices;
+        prices[tokenValue.id] = tokenValue.quote.USD.price
+      })
+      return prices
     },
   },
   actions: {
     getTokenPrice(token) {
-      return this.prices[token.id] || 0;
+      return this.prices[token.id] || 0
     },
     refreshTokens(fetchApi = false, tokens = []) {
       if (fetchApi && tokens.length > 0) {
@@ -48,11 +49,11 @@ export default defineStore("token", {
             this.marketValues = {
               ...this.marketValues,
               ...response.data.data,
-            };
-          });
+            }
+          })
       } else {
-        this.marketValues = cryptocurrencyQuotesLatest;
+        this.marketValues = cryptocurrencyQuotesLatest.data
       }
     },
   },
-});
+})

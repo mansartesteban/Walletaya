@@ -7,10 +7,12 @@
 </template>
 
 <script setup>
-import WalletTokenLine from "./WalletTokenLine.vue";
-import useWalletStore from "@/plugins/stores/Wallet";
+import WalletTokenLine from "./WalletTokenLine.vue"
+import useWalletStore from "@/plugins/stores/Wallet"
+import useTokenListStore from "@/plugins/stores/TokenList"
 
-const walletStore = useWalletStore();
+const walletStore = useWalletStore()
+const tokenListStore = useTokenListStore()
 
-const aggregations = computed(() => walletStore.aggregatedTransactions);
+const aggregations = computed(() => Object.values(walletStore.aggregatedTransactions).sort((a, b) => tokenListStore.prices?.[b.token.id] - tokenListStore.prices?.[a.token.id]))
 </script>
