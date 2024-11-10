@@ -25,14 +25,8 @@ export const search = (searchText = "", items = []) => {
     )
 }
 
-export const NUMBER_FORMAT = {
-  SPACE_COMA: "space-coma",
-  SPACE_DOT: "space-dot",
-  DOT_COMA: "dot-coma",
-  COMA_DOT: "coma-dot",
-};
 export const formatNumber = (n, format = "space-coma", decimalCount = 4) => {
-  let [integer, floating] = Number(n).toString().split(".");
+  let [integer, floating] = n.toString().split(".")
 
   integer = integer
     .split("")
@@ -43,16 +37,13 @@ export const formatNumber = (n, format = "space-coma", decimalCount = 4) => {
     .map(a => [...a].reverse().join(""))
 
   let formats = {
-    [NUMBER_FORMAT.SPACE_COMA]: [" ", ","],
-    [NUMBER_FORMAT.SPACE_DOT]: [" ", "."],
-    [NUMBER_FORMAT.DOT_COMA]: [".", ","],
-    [NUMBER_FORMAT.COMA_DOT]: [",", "."],
-  };
-  const [thousandSeparator, decimalSeparator] = formats[format || "space-coma"];
-  return [
-    integer.join(thousandSeparator).split("").reverse().join(""),
-    floating?.substr(0, decimalCount),
-  ]
+    "space-coma": [" ", ","],
+    "space-dot": [" ", "."],
+    "dot-coma": [".", ","],
+    "coma-dot": [",", "."],
+  }
+  const [thousandSeparator, decimalSeparator] = formats[format || "space-coma"]
+  return [integer.join(thousandSeparator), floating?.substr(0, decimalCount)]
     .filter(Boolean)
     .join(decimalSeparator)
 }
