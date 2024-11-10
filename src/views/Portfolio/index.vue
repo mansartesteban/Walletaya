@@ -1,5 +1,12 @@
 <template>
   <Tabs>
+    <Menu
+      :options="[{ label: 'Portfolio 1', value: 1 }]"
+      full-width
+      class="m-md"
+    >
+      <template #activator-label="{ option }">{{ option?.label }}</template>
+    </Menu>
     <Tab title="Historique" anchor="history2" noGutters>
       <PortfolioHistory></PortfolioHistory>
     </Tab>
@@ -15,6 +22,7 @@ import PortfolioHistory from "./History.vue";
 
 import Tabs from "@/components/Tabs.vue";
 import Tab from "@/components/Tab.vue";
+import Menu from "@/components/Menu.vue";
 
 import database from "@/plugins/database";
 import { getToken } from "@/utils/Token";

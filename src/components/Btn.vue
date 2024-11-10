@@ -1,6 +1,6 @@
 <template>
   <div
-    class="btn flex flex-1 align-items-center justify-content-center gap-sm"
+    class="btn flex flex-1 align-items-center justify-content-center gap-md"
     @click="onClick"
     :class="[
       severity,
@@ -12,15 +12,16 @@
         icon,
         rounded,
         glass: fab,
+        'icon-reverse': iconReverse,
         'icon-only': icon && !label && !$slots.default,
       },
       size ? `size-${size}` : '',
     ]"
   >
-    <Icon v-if="icon">{{ icon }}</Icon>
     <div v-if="label || $slots.default" class="btn-label">
       <slot>{{ label }}</slot>
     </div>
+    <Icon v-if="icon">{{ icon }}</Icon>
     <div class="ripple" :class="{ active: ripple.state }"></div>
   </div>
 </template>
@@ -36,6 +37,10 @@ const props = defineProps({
   icon: {
     type: String,
     default: undefined,
+  },
+  iconReverse: {
+    type: Boolean,
+    default: false,
   },
   flat: {
     type: Boolean,

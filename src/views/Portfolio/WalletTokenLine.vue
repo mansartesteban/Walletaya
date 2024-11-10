@@ -1,8 +1,6 @@
 <template>
-  <div class="transaction-line" @click="detailsOpened = !detailsOpened">
-    <div
-      class="flex align-items-center justify-content-space-between gap-md p-md"
-    >
+  <div class="transaction-line" @click="openDetails">
+    <div class="flex align-items-center justify-content-space-between gap-md p-md">
       <div class="flex align-items-center gap-md">
         <CIcon :token="aggregate.token"></CIcon>
         <div class="flex flex-column gap-xs">
@@ -19,43 +17,43 @@
         </div>
       </div>
     </div>
-    <WalletTokenDetail
-      v-model:opened="detailsOpened"
-      :aggregate="aggregate"
-    ></WalletTokenDetail>
+    <WalletTokenDetail ref="detailsSection" :aggregate="aggregate"></WalletTokenDetail>
   </div>
 </template>
 
 <script setup>
-import CIcon from "@/components/CIcon.vue";
-import WalletTokenDetail from "./WalletTokenDetail.vue";
+import CIcon from "@/components/CIcon.vue"
+import WalletTokenDetail from "./WalletTokenDetail.vue"
 
-import useTokenListStore from "@/plugins/stores/TokenList";
+import useTokenListStore from "@/plugins/stores/TokenList"
 
-import { amount as calculateAmount } from "@/utils/Token";
+import { amount as calculateAmount } from "@/utils/Token"
 
 const props = defineProps({
   aggregate: {
     type: Object,
     default: null,
   },
-});
+})
 
-const detailsOpened = ref(false);
-
-const tokenListStore = useTokenListStore();
+const tokenListStore = useTokenListStore()
 
 const assets = (agg) => {
   return calculateAmount(
     agg.cumulativeAmount * tokenListStore.prices[agg.token.id]
-  );
-};
+  )
+}
 
 const amount = (agg) => {
-  return calculateAmount(agg.cumulativeAmount, true);
-};
+  return calculateAmount(agg.cumulativeAmount, true)
+}
 
 const tokenPrice = (agg) => {
-  return calculateAmount(tokenListStore.prices[agg.token.id], false, 4);
-};
+  return calculateAmount(tokenListStore.prices?.[agg.token.id] || 0, false, 4)
+}
+
+const detailsSection = ref()
+const openDetails = () => {
+  detailsSection.value?.toggle()
+}
 </script>

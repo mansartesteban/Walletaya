@@ -8,6 +8,10 @@
     text-align: center;
     position: relative;
     
+    &.icon-reverse {
+      flex-direction: row-reverse !important;
+    }
+
     .btn-label {
       white-space: nowrap;
       text-overflow: ellipsis;

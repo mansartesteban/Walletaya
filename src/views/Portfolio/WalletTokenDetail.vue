@@ -1,5 +1,5 @@
 <template>
-  <div class="wallet-token-detail flex flex-column gap-sm" :class="{ opened }">
+  <div ref="detailSection" class="wallet-token-detail flex flex-column gap-sm p-md m-lg">
     <div class="detail">
       <span class="sublabel">Valeur lissée</span>
       <span class="value">
@@ -10,6 +10,12 @@
       <span class="sublabel">Prix d'achat moyen</span>
       <span class="value">
         {{ averageCreditPrice(aggregate) }}
+      </span>
+    </div>
+    <div class="detail">
+      <span class="sublabel">Prix de vente moyen</span>
+      <span class="value">
+        {{ averageDebitPrice(aggregate) }}
       </span>
     </div>
     <div class="detail">
@@ -46,37 +52,44 @@
 </template>
 
 <script setup>
-import useTokenListStore from "@/plugins/stores/TokenList";
+import useTokenListStore from "@/plugins/stores/TokenList"
+import useAutoCollapse from "@mansartesteban/use-auto-collapse"
 
-import { amount as calculateAmount } from "@/utils/Token";
+import { amount as calculateAmount } from "@/utils/Token"
 
 const props = defineProps({
   aggregate: {
     type: Object,
   },
-});
+})
 
-const tokenListStore = useTokenListStore();
-
-const opened = defineModel("opened");
+const tokenListStore = useTokenListStore()
 
 const smoothedPrice = (agg) => {
-  return calculateAmount(agg.cumulativeAssets / agg.cumulativeAmount);
-};
+  return calculateAmount(agg.cumulativeAssets / agg.cumulativeAmount)
+}
 
 const averageCreditPrice = (agg) => {
   return calculateAmount(
-    agg.cumulativeAssetsCredit / agg.cumulativeAmountCredit
-  );
-};
+    agg.cumulativeAmountCredit !== 0 ?
+      agg.cumulativeAssetsCredit / agg.cumulativeAmountCredit : 0
+  )
+}
+
+const averageDebitPrice = (agg) => {
+  return calculateAmount(
+    agg.cumulativeAmountDebit !== 0 ?
+      agg.cumulativeAssetsDebit / agg.cumulativeAmountDebit : 0
+  )
+}
 
 const credited = (agg) => {
-  return calculateAmount(agg.credited);
-};
+  return calculateAmount(agg.credited)
+}
 
 const debited = (agg) => {
-  return calculateAmount(agg.debited);
-};
+  return calculateAmount(agg.debited)
+}
 
 const priceVariation = (agg) => {
   return (
@@ -84,13 +97,26 @@ const priceVariation = (agg) => {
       agg.cumulativeAssets) /
       agg.cumulativeAssets) *
     100
-  ).toFixed(2);
-};
+  ).toFixed(2)
+}
 
 const profit = (agg) => {
   return (
     agg.cumulativeAmount * tokenListStore.getTokenPrice(agg.token) -
     agg.credited
-  );
-};
+  )
+}
+
+const detailSection = ref()
+let collapsible = ref()
+const toggle = () => {
+  collapsible.value?.toggle()
+}
+onMounted(() => {
+  collapsible.value = useAutoCollapse(detailSection.value, { openedByDefault: false, handleMargins: "vertical" })
+})
+
+defineExpose({
+  toggle
+})
 </script>

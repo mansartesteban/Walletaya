@@ -3,27 +3,27 @@ export const normalizeString = (str = "") => {
     .normalize("NFD")
     .replace(/\p{Diacritic}/gu, "")
     .replace(/[\(\)\|\\-_.,;:/!§@\s+%*]/gu, "")
-    .toLowerCase();
-};
+    .toLowerCase()
+}
 
 export const search = (searchText = "", items = []) => {
-  searchText = searchText.split(" ");
+  searchText = searchText.split(" ")
   if (!Array.isArray(searchText)) {
-    searchText = [searchText];
+    searchText = [searchText]
   }
   return searchText.length === 0
     ? items
     : items.filter((item) =>
-        searchText.every((searchChunk) => {
-          if (typeof item === "object") {
-            item = Object.values(item).join("");
-          } else if (Array.isArray(item)) {
-            item = item.join("");
-          }
-          return normalizeString(item).includes(normalizeString(searchChunk));
-        })
-      );
-};
+      searchText.every((searchChunk) => {
+        if (typeof item === "object") {
+          item = Object.values(item).join("")
+        } else if (Array.isArray(item)) {
+          item = item.join("")
+        }
+        return normalizeString(item).includes(normalizeString(searchChunk))
+      })
+    )
+}
 
 export const NUMBER_FORMAT = {
   SPACE_COMA: "space-coma",
@@ -38,7 +38,9 @@ export const formatNumber = (n, format = "space-coma", decimalCount = 4) => {
     .split("")
     .reverse()
     .join("")
-    .match(/.{1,3}/g);
+    .match(/.{1,3}/g)
+    .reverse()
+    .map(a => [...a].reverse().join(""))
 
   let formats = {
     [NUMBER_FORMAT.SPACE_COMA]: [" ", ","],
@@ -52,5 +54,5 @@ export const formatNumber = (n, format = "space-coma", decimalCount = 4) => {
     floating?.substr(0, decimalCount),
   ]
     .filter(Boolean)
-    .join(decimalSeparator);
-};
+    .join(decimalSeparator)
+}
