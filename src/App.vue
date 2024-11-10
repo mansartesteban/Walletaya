@@ -2,69 +2,60 @@
   <AppBackground></AppBackground>
   <Snack></Snack>
 
-  <template v-if="appStore.isAuthenticated && appStore.userCredentials">
-    <AppHeader ref="appHeader"></AppHeader>
+  <!-- <template v-if="appStore.isAuthenticated && appStore.userCredentials"> -->
+  <AppHeader ref="appHeader"></AppHeader>
 
-    <div class="view">
-      <router-view></router-view>
-    </div>
-    <NavBar></NavBar>
-    <Dialog
-      :opened="settingsStore.hasRedWelcomeMessage === false"
-      title="Bienvenue !"
-      confirmLabel="J'ai compris"
-      @click="onConfirm"
-    >
-      <p>Bonjour à toi !</p>
-      <p>
-        Voici ton espace personnel pour connaître l'état de ton ou tes
-        portefeuilles.
-      </p>
-    </Dialog>
+  <div class="view">
+    <router-view></router-view>
+  </div>
+  <NavBar></NavBar>
+  <Dialog :opened="settingsStore.hasRedWelcomeMessage === false" title="Bienvenue !" confirmLabel="J'ai compris"
+    @click="onConfirm">
+    <p>Bonjour à toi !</p>
+    <p>
+      Voici ton espace personnel pour connaître l'état de ton ou tes portefeuilles.
+    </p>
+  </Dialog>
 
-    <WidgetDock></WidgetDock>
-    <ContextMenu></ContextMenu>
-  </template>
-  <template v-else>
-    Je suis un changement
-    <!-- <Dialog :opened="true" title="Autentification requise" centered>
+  <WidgetDock></WidgetDock>
+  <ContextMenu></ContextMenu>
+  <!-- <template v-else>
+    <Dialog :opened="true" title="Autentification requise" centered>
       <div class="py-xl text-center">
         Tu ne peux pas avoir accès à Walleteya sans t'autentifier
       </div>
       <template #footer>
         <Btn @click="authenticate" icon="fingerprint">Réessayer</Btn>
       </template>
-    </Dialog> -->
-  </template>
+</Dialog>
+</template> -->
 </template>
 
 <script setup>
-import AppBackground from "@/components/AppBackground.vue";
-import AppHeader from "@/components/AppHeader.vue";
-import NavBar from "@/components/NavBar.vue";
-import WidgetDock from "@/components/widgets/WidgetDock.vue";
-import Dialog from "@/components/Dialog.vue";
-import ContextMenu from "@/components/ContextMenu.vue";
-import Btn from "@/components/Btn.vue";
-import Snack from "@/components/Snack.vue";
+import AppBackground from "@/components/AppBackground.vue"
+import AppHeader from "@/components/AppHeader.vue"
+import NavBar from "@/components/NavBar.vue"
+import WidgetDock from "@/components/widgets/WidgetDock.vue"
+import Dialog from "@/components/Dialog.vue"
+import ContextMenu from "@/components/ContextMenu.vue"
+import Snack from "@/components/Snack.vue"
 
-import useAppStore from "@/plugins/stores/App";
-import useTokenListStore from "@/plugins/stores/TokenList";
-import useSettingsStore from "@/plugins/stores/Settings";
-import { generateRandomChallenge } from "@/utils/Security";
+import useAppStore from "@/plugins/stores/App"
+import useTokenListStore from "@/plugins/stores/TokenList"
+import useSettingsStore from "@/plugins/stores/Settings"
+import { generateRandomChallenge } from "@/utils/Security"
 
-const tokenListStore = useTokenListStore();
-const settingsStore = useSettingsStore();
-const appStore = useAppStore();
+const tokenListStore = useTokenListStore()
+const settingsStore = useSettingsStore()
+const appStore = useAppStore()
 
 
 const onConfirm = () => {
-  settingsStore.setSetting("hasRedWelcomeMessage", true);
-};
+  settingsStore.setSetting("hasRedWelcomeMessage", true)
+}
 
 const authenticate = async () => {
   try {
-    console.log("auth ???")
     let credentials = await navigator.credentials.get({
       publicKey: {
         challenge: generateRandomChallenge(),
@@ -72,22 +63,22 @@ const authenticate = async () => {
           { type: "public-key", id: appStore.userCredentials.rawId },
         ],
       },
-    });
-    appStore.setAuthentication(credentials.id);
+    })
+    appStore.setAuthentication(credentials.id)
   } catch (err) {
     // alert(err);
   }
-};
+}
 
 onBeforeMount(() => {
-  settingsStore.retrieve();
+  settingsStore.retrieve()
   appStore.retrieve().then(async () => {
     if (!appStore.isAuthenticated && appStore.userCredentials) {
-      authenticate();
-      tokenListStore.refreshTokens(true, appStore.usedTokens);
+      authenticate()
+      tokenListStore.refreshTokens(true, appStore.usedTokens)
     }
-  });
-});
+  })
+})
 </script>
 
 <style lang="scss">

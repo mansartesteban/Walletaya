@@ -48,8 +48,11 @@ import Btn from "@/components/Btn.vue"
 import { v4 as uuid } from "uuid"
 import { getToken } from "@/utils/Token"
 import database from "@/plugins/database"
+import useToastStore from "@/plugins/stores/Toast"
 
 const model = ref()
+
+const toast = useToastStore()
 
 const importCMC = async () => {
   const res = await fetch("/Binance_with_transaction_history.csv", {
@@ -103,7 +106,13 @@ const importCMC = async () => {
 
       await store.save(id, toSave)
       console.log("saved line", i, id)
+      if (i % 10 === 0) {
+
+        toast.push("Importé " + i)
+      }
     }
+
+    toast.push("Importé")
 
   }
 }
