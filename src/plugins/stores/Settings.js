@@ -41,12 +41,12 @@ export default defineStore("settings", {
     save() {
       store.save(
         "settings",
-        Object.assign({}, JSON.parse(JSON.stringify(this.$state)))
+        Object.assign({}, JSON.parse(JSON.stringify(this.$state))),
       );
     },
     starToken(token, add = null) {
       let foundIndex = this.favoriteTokens.findIndex(
-        (favoriteToken) => favoriteToken === token.value
+        (favoriteToken) => favoriteToken === token.value,
       );
       if (add !== null) {
         if (add) {

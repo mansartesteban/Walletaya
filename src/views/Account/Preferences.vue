@@ -1,7 +1,10 @@
 <template>
-  <div class="flex flex-column gap-md">
-    <Card noHeader noFooter>
-      <div class="flex flex-column gap-md">
+  <div class="flex flex-col gap-4">
+    <Card
+      noHeader
+      noFooter
+    >
+      <div class="flex flex-col gap-4">
         <!-- Monnaie par défaut
         <InputText
           v-model="defaultCurrencySymbol"
@@ -24,9 +27,17 @@
       </div>
     </Card>
     <Card>
-      <Toggle v-model="leftHanded" :items="hands"></Toggle>
+      <Toggle
+        v-model="leftHanded"
+        :items="hands"
+      ></Toggle>
     </Card>
-    <Btn severity="success" icon="save" @click="save">Sauvegarder</Btn>
+    <Btn
+      severity="success"
+      icon="save"
+      @click="save"
+      >Sauvegarder</Btn
+    >
   </div>
 </template>
 
@@ -71,7 +82,7 @@ let currencyFormats = [
 const currencyFormatLabel = computed(
   () =>
     currencyFormats.find((format) => format.value === currencyFormat.value)
-      .label
+      .label,
 );
 
 const defaultCurrencySymbol = ref(settings.defaultCurrency);

@@ -1,9 +1,15 @@
 <template>
   <Tabs>
-    <Tab title="Préférences" anchor="preferences">
+    <Tab
+      title="Préférences"
+      anchor="preferences"
+    >
       <Preferences></Preferences>
     </Tab>
-    <Tab title="Securité" anchor="security">
+    <Tab
+      title="Securité"
+      anchor="security"
+    >
       <Security></Security>
     </Tab>
   </Tabs>

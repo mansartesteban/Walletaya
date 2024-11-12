@@ -1,23 +1,36 @@
 <template>
-  <Btn v-if="!drawerOpened" @click="showTransactionForm" fab>
-    <Icon size="24">transaction-add</Icon>
+  <Btn
+    v-if="!drawerOpened"
+    @click="showTransactionForm"
+    fab
+  >
+    <Icon size="lg">transaction-add</Icon>
   </Btn>
-  <div class="flex flex-column">
+  <div class="flex items-center gap-4 px-4 py-2">
+    <span>Filtrer :</span>
+    <TokenPicker
+      v-model="tokenFilter"
+      clearable
+    ></TokenPicker>
+  </div>
+  <div class="flex flex-col">
     <template v-for="transaction in history">
-      <div v-if="transaction.transactionType === 0"
-        class="transaction-line flex align-items-center justify-content-space-between gap-md p-md"
-        @click="fillForm(transaction)">
-        <div class="flex align-items-center gap-md">
+      <div
+        v-if="transaction.transactionType === 0"
+        class="transaction-line flex items-center justify-between gap-4 p-4 border-t border-white/10"
+        @click="fillForm(transaction)"
+      >
+        <div class="flex items-center gap-4">
           <CIcon :token="transaction.creditToken"></CIcon>
-          <div class="flex flex-column gap-xs">
+          <div class="flex flex-col gap-1">
             <div>{{ transaction.creditToken.symbol }}</div>
             <div class="sublabel nowrap">
               {{ amount(transaction.creditValue, false, 4) }}
             </div>
           </div>
         </div>
-        <div class="flex flex-column align-items-end gap-xs">
-          <div class="positive nowrap">
+        <div class="flex flex-col items-end gap-1">
+          <div class="text-green-600 nowrap">
             + {{ amount(transaction.creditAmount, true) }}
           </div>
           <div class="sublabel nowrap">
@@ -25,20 +38,22 @@
           </div>
         </div>
       </div>
-      <div v-if="transaction.transactionType === 2"
-        class="transaction-line flex align-items-center justify-content-space-between gap-md p-md"
-        @click="fillForm(transaction)">
-        <div class="flex align-items-center gap-md">
+      <div
+        v-if="transaction.transactionType === 2"
+        class="transaction-line flex items-center justify-between gap-4 p-4 border-t border-white/10"
+        @click="fillForm(transaction)"
+      >
+        <div class="flex items-center gap-4">
           <CIcon :token="transaction.debitToken"></CIcon>
-          <div class="flex flex-column gap-xs">
+          <div class="flex flex-col gap-2">
             <div>{{ transaction.debitToken.symbol }}</div>
             <div class="sublabel nowrap">
               {{ amount(transaction.debitValue, false, 4) }}
             </div>
           </div>
         </div>
-        <div class="flex flex-column align-items-end gap-xs">
-          <div class="negative nowrap">
+        <div class="flex flex-col items-end gap-1">
+          <div class="text-red-600 nowrap">
             - {{ amount(transaction.debitAmount, true) }}
           </div>
           <div class="sublabel nowrap">
@@ -46,20 +61,23 @@
           </div>
         </div>
       </div>
-      <div v-if="transaction.transactionType === 1" class="transaction-line flex flex-column"
-        @click="fillForm(transaction)">
-        <div class="flex align-items-center justify-content-space-between gap-md p-md">
-          <div class="flex align-items-center gap-md">
+      <div
+        v-if="transaction.transactionType === 1"
+        class="transaction-line flex flex-col border-t border-white/10"
+        @click="fillForm(transaction)"
+      >
+        <div class="flex items-center justify-between gap-4 p-4">
+          <div class="flex items-center gap-4">
             <CIcon :token="transaction.creditToken"></CIcon>
-            <div class="flex flex-column gap-xs">
+            <div class="flex flex-col gap-1">
               <div>{{ transaction.creditToken.label }}</div>
               <div class="sublabel">
                 {{ amount(transaction.creditValue, false, 4) }}
               </div>
             </div>
           </div>
-          <div class="flex flex-column align-items-end gap-xs">
-            <div class="positive nowrap">
+          <div class="flex flex-col items-end gap-1">
+            <div class="text-green-600 nowrap">
               + {{ amount(transaction.creditAmount, true) }}
             </div>
             <div class="sublabel nowrap">
@@ -67,18 +85,18 @@
             </div>
           </div>
         </div>
-        <div class="flex align-items-center justify-content-space-between gap-md p-md">
-          <div class="flex align-items-center gap-md">
+        <div class="flex items-center justify-between gap-4 p-4">
+          <div class="flex items-center gap-4">
             <CIcon :token="transaction.debitToken"></CIcon>
-            <div class="flex flex-column gap-xs">
+            <div class="flex flex-col gap-1">
               <div>{{ transaction.debitToken.label }}</div>
               <div class="sublabel">
                 {{ amount(transaction.debitValue, false, 4) }}
               </div>
             </div>
           </div>
-          <div class="flex flex-column align-items-end gap-xs">
-            <div class="negative nowrap">
+          <div class="flex flex-col items-end gap-1">
+            <div class="text-red-600 nowrap">
               - {{ amount(transaction.debitAmount, true) }}
             </div>
             <div class="sublabel nowrap">
@@ -91,37 +109,47 @@
   </div>
 
   <Drawer v-model:opened="drawerOpened">
-    <TransitionForm ref="transactionForm" @deleted="drawerOpened = false" @saved="drawerOpened = false">
-    </TransitionForm>
+    <TransactionForm
+      ref="transactionForm"
+      @deleted="drawerOpened = false"
+      @saved="drawerOpened = false"
+    >
+    </TransactionForm>
   </Drawer>
 </template>
 
 <script setup>
-import Btn from "@/components/Btn.vue"
-import Icon from "@/components/Icon.vue"
-import TransitionForm from "./TransactionForm.vue"
-import Drawer from "@/components/Drawer.vue"
-import CIcon from "@/components/CIcon.vue"
-import { amount } from "@/utils/Token"
-import useWalletStore from "@/plugins/stores/Wallet"
+import { amount } from "@/utils/Token";
+import useWalletStore from "@/plugins/stores/Wallet";
 
-const walletStore = useWalletStore()
-const drawerOpened = ref(false)
-const transactionForm = ref()
+const walletStore = useWalletStore();
+const drawerOpened = ref(false);
+const transactionForm = ref();
 
 function fillForm(transaction) {
-  transactionForm.value.fillForm(transaction)
-  drawerOpened.value = true
+  transactionForm.value.fillForm(transaction);
+  drawerOpened.value = true;
 }
 
 function showTransactionForm() {
-  transactionForm.value.reset()
-  drawerOpened.value = true
+  console.log("transactionForm", transactionForm);
+  transactionForm.value.reset();
+  drawerOpened.value = true;
 }
 
-const history = computed(() => {
-  return walletStore.history.sort((a, b) => b.date - a.date)
-})
-</script>
+const tokenFilter = ref(null);
 
-<style scoped lang="scss"></style>
+const history = computed(() => {
+  return walletStore.history
+    .sort((a, b) => b.date - a.date)
+    .filter((transaction) => {
+      return (
+        tokenFilter.value === null ||
+        [
+          transaction.creditToken?.value,
+          transaction.debitToken?.value,
+        ].includes(tokenFilter.value)
+      );
+    });
+});
+</script>

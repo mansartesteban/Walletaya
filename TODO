@@ -6,3 +6,17 @@ Utiliser une pipeline pour qu'un push sur la branche master rebuild et redémarr
 Avoir une interface générale avec connexion qui permette de monitorer les applications
 Avoir un script qui génère un boilerplate pour servir les fichiers
 Avoir une gestion automatisée du renouvellement de certificat
+
+App:
+OK - Au clic sur le sélecteur de token, faire un focus dans le champ
+OK - TokenPicker avec clearable
+OK - Vérifier le ripple sur les boutons
+- Au clic sur le sélecteur de token quand afficher le token de la value courante en premier
+- Ajouter la traduction
+- Avoir un calendrier
+- Remettre en place la sécurité
+- Répondre aux standard PWA
+- Vérifier tous les calculs d'aggrégation
+- Retirer tous les scrollbar
+- Personnaliser les couleurs
+- Position des menus overlay par rapport à la fenêtre

@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
-import "@/assets/styles/index.scss";
+import "@/assets/styles/style.css";
 import "vue-virtual-scroller/dist/vue-virtual-scroller.css";
 
 import stores from "@/plugins/stores";

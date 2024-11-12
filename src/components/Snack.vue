@@ -1,10 +1,9 @@
 <template>
-  <div class="toast-container flex flex-column flex-reverse gap-md">
+  <div class="fixed bottom-20 left-16 right-16 flex flex-col-reverse gap-4">
     <Message
       centered
       v-for="toast in toasts.toasts"
       :type="toast.type"
-      class="p-xs"
     >
       {{ toast }}
     </Message>
@@ -18,12 +17,3 @@ import useToastStore from "@/plugins/stores/Toast";
 
 const toasts = useToastStore();
 </script>
-
-<style scoped lang="scss">
-.toast-container {
-  position: fixed;
-  bottom: calc(var(--navbar-height) + var(--md));
-  left: var(--xl);
-  right: var(--xl);
-}
-</style>

@@ -1,59 +1,62 @@
 <template>
-  <div class="transaction-line" @click="openDetails">
-    <div class="flex align-items-center justify-content-space-between gap-md p-md">
-      <div class="flex align-items-center gap-md">
+  <div
+    class="border-t border-white/10 active:bg-white/10"
+    @click="openDetails"
+  >
+    <div class="flex items-center justify-between gap-4 p-4">
+      <div class="flex items-center gap-4">
         <CIcon :token="aggregate.token"></CIcon>
-        <div class="flex flex-column gap-xs">
+        <div class="flex flex-col gap-1">
           <div>{{ aggregate.token.label }}</div>
           <div class="sublabel">
             {{ tokenPrice(aggregate) }}
           </div>
         </div>
       </div>
-      <div class="flex flex-column align-items-end gap-xs">
+      <div class="flex flex-col items-end gap-1">
         {{ amount(aggregate) }}
         <div class="sublabel">
           {{ assets(aggregate) }}
         </div>
       </div>
     </div>
-    <WalletTokenDetail ref="detailsSection" :aggregate="aggregate"></WalletTokenDetail>
+    <WalletTokenDetail
+      ref="detailsSection"
+      :aggregate="aggregate"
+    ></WalletTokenDetail>
   </div>
 </template>
 
 <script setup>
-import CIcon from "@/components/CIcon.vue"
-import WalletTokenDetail from "./WalletTokenDetail.vue"
+import useTokenListStore from "@/plugins/stores/TokenList";
 
-import useTokenListStore from "@/plugins/stores/TokenList"
-
-import { amount as calculateAmount } from "@/utils/Token"
+import { amount as calculateAmount } from "@/utils/Token";
 
 const props = defineProps({
   aggregate: {
     type: Object,
     default: null,
   },
-})
+});
 
-const tokenListStore = useTokenListStore()
+const tokenListStore = useTokenListStore();
 
 const assets = (agg) => {
   return calculateAmount(
-    agg.cumulativeAmount * tokenListStore.prices[agg.token.id]
-  )
-}
+    agg.cumulativeAmount * tokenListStore.prices[agg.token.id],
+  );
+};
 
 const amount = (agg) => {
-  return calculateAmount(agg.cumulativeAmount, true)
-}
+  return calculateAmount(agg.cumulativeAmount, true);
+};
 
 const tokenPrice = (agg) => {
-  return calculateAmount(tokenListStore.prices?.[agg.token.id] || 0, false, 4)
-}
+  return calculateAmount(tokenListStore.prices?.[agg.token.id] || 0, false, 4);
+};
 
-const detailsSection = ref()
+const detailsSection = ref();
 const openDetails = () => {
-  detailsSection.value?.toggle()
-}
+  detailsSection.value?.toggle();
+};
 </script>

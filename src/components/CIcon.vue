@@ -1,7 +1,7 @@
 <template>
   <img
     :src="`https://s2.coinmarketcap.com/static/img/coins/64x64/${id}.png`"
-    style="width: 1.5rem; height: 1.5rem"
+    class="w-6 h-6 rounded-full"
   />
 </template>
 
@@ -14,12 +14,6 @@ const props = defineProps({
 });
 
 const id = computed(() =>
-  typeof props.token === "object" ? props.token.id : props.token
+  typeof props.token === "object" ? props.token.id : props.token,
 );
 </script>
-
-<style scoped>
-img {
-  border-radius: 99px;
-}
-</style>

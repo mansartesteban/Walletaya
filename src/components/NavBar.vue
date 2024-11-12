@@ -1,41 +1,37 @@
 <template>
-  <div class="navbar flex align-items-stretch justify-content-space-evenly">
+  <div
+    class="fixed flex items-stretch justify-content-space-evenly bottom-0 h-16 w-full bg-primary"
+  >
     <template v-for="menu in menus">
       <router-link
-        class="navbar-button flex flex-column align-items-center justify-content-center gap-xs"
+        class="group [&:not(.router-link-exact-active)]:text-white/50 [&:not(.router-link-exact-active)]:gap-1 h-100 flex flex-col flex-1 items-center justify-center text-xs"
         :to="menu.route"
       >
-        <div class="navbar-button-icon">
-          <Icon>{{ menu.icon }}</Icon>
+        <div class="">
+          <Icon
+            class="w-4 h-4 group-[.router-link-exact-active]:w-8 group-[.router-link-exact-active]:h-8"
+            >{{ menu.icon }}
+          </Icon>
         </div>
         <div class="navbar-button-label">
           {{ menu.label }}
         </div>
       </router-link>
     </template>
-    <div
-      ref="tooldockButton"
-      class="navbar-button flex flex-column align-items-center justify-content-center gap-xs"
-      @click="toggleDock"
-    >
+    <!-- <div ref="tooldockButton" class="navbar-button flex flex-col align-items-center justify-content-center gap-xs"
+      @click="toggleDock">
       <div class="navbar-button-icon">
         <Icon>tools</Icon>
       </div>
       <div class="navbar-button-label">Outils</div>
-      <div
-        ref="tooldock"
-        class="tool-dock flex flex-column gap-md mb-md"
-        :class="{ 'tool-dock-opened': toolDockOpened }"
-      >
-        <div
-          class="tool-dock-app flex glass align-items-center gap-sm p-sm py-xs rounded-md"
-          @click.stop="toggleApp"
-        >
+      <div ref="tooldock" class="tool-dock flex flex-column gap-md mb-md"
+        :class="{ 'tool-dock-opened': toolDockOpened }">
+        <div class="tool-dock-app flex glass align-items-center gap-sm p-sm py-xs rounded-md" @click.stop="toggleApp">
           <div class="tool-dock-button-label">Calculatrice</div>
           <Btn icon="calculator" class="p-sm rounded-md"></Btn>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- <navbar-indicator
       class="navbar-button-indicator"
       :direction="direction"
@@ -45,11 +41,6 @@
 </template>
 
 <script setup>
-import NavbarIndicator from "@/components/NavBarIndicator.vue";
-import Icon from "@/components/Icon.vue";
-import Btn from "@/components/Btn.vue";
-
-import { nextTick, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { animate, easingFunctions } from "@/utils/Animate";
 import { onClickOutside } from "@vueuse/core";
@@ -88,7 +79,7 @@ const menus = ref([
 
 const routeMenuIndex = computed(() => {
   const foundIndex = menus.value.findIndex(
-    (menu) => menu.route.name === route.name
+    (menu) => menu.route.name === route.name,
   );
   return foundIndex > -1 ? foundIndex : 0;
 });
@@ -130,9 +121,9 @@ watch(
       oldValue < newValue ? -30 : 30,
       290,
       easingFunctions.easeOutBack,
-      true
+      true,
     );
-  }
+  },
 );
 
 onMounted(() => {
@@ -143,30 +134,3 @@ onMounted(() => {
   });
 });
 </script>
-
-<style scoped lang="scss">
-@import "@/assets/styles/vars";
-
-.tool-dock {
-  position: absolute;
-  bottom: 100%;
-  right: var(--md);
-  height: fit-content;
-  overflow-y: hidden;
-  display: none;
-}
-
-.tool-dock.tool-dock-opened {
-  height: fit-content;
-  display: block;
-}
-
-.tool-dock .tool-dock-app {
-  transform: scale(0);
-  transition: var(--transition);
-}
-
-.tool-dock.tool-dock-opened .tool-dock-app {
-  transform: scale(1);
-}
-</style>

@@ -1,36 +1,64 @@
 <template>
-  <Card noFooter title="Authentification">
-    <div class="flex flex-column gap-md">
-      <div class="flex flex-column gap-sm">
-        <div class="flex gap-md">
-          <Icon v-if="userInformations.firstname.length === 0" color="error"
+  <Card
+    noFooter
+    title="Authentification"
+  >
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-2">
+        <div class="flex gap-4">
+          <Icon
+            v-if="userInformations.firstname.length === 0"
+            color="error"
             >error</Icon
           >
-          <Icon v-else color="success">success</Icon>
+          <Icon
+            v-else
+            color="success"
+            >success</Icon
+          >
           <div>Prénom : {{ userInformations.firstname }}</div>
         </div>
-        <div class="flex gap-md">
-          <Icon v-if="userInformations.lastname.length === 0" color="error"
+        <div class="flex gap-4">
+          <Icon
+            v-if="userInformations.lastname.length === 0"
+            color="error"
             >error</Icon
           >
-          <Icon v-else color="success">success</Icon>
+          <Icon
+            v-else
+            color="success"
+            >success</Icon
+          >
           <div>Nom : {{ userInformations.lastname }}</div>
         </div>
-        <div class="flex gap-md">
-          <Icon v-if="userInformations.mail.length === 0" color="error"
+        <div class="flex gap-4">
+          <Icon
+            v-if="userInformations.mail.length === 0"
+            color="error"
             >error</Icon
           >
-          <Icon v-else color="success">success</Icon>
+          <Icon
+            v-else
+            color="success"
+            >success</Icon
+          >
           <div>Mail : {{ userInformations.mail }}</div>
         </div>
       </div>
-      <div v-if="!hasInformationsDefined" class="text-justify">
+      <div
+        v-if="!hasInformationsDefined"
+        class="text-justify"
+      >
         <Message severity="info">
           Pour sécuriser votre compte, vous devez d'abord ajouter des
           informations de sécurité qui nous permettrons de vous authentifier.
         </Message>
       </div>
-      <Btn @click="register" icon="user-edit">Modifier les informations</Btn>
+      <Btn
+        @click="register"
+        icon="user-edit"
+        >Modifier les informations</Btn
+      >
       <Btn
         v-if="!appStore.userCredentials"
         @click="securize"
@@ -39,14 +67,21 @@
       >
         Sécuriser le compte
       </Btn>
-      <Btn v-else severity="error" @click="unsecurize" icon="security-block"
+      <Btn
+        v-else
+        severity="error"
+        @click="unsecurize"
+        icon="security-block"
         >Retirer la sécurité</Btn
       >
     </div>
   </Card>
 
-  <Dialog v-model:opened="authDialogOpened" @confirm="onConfirm">
-    <div class="flex flex-column gap-md">
+  <Dialog
+    v-model:opened="authDialogOpened"
+    @confirm="onConfirm"
+  >
+    <div class="flex flex-col gap-4">
       <InputText
         v-model="dialogUserInformations.firstname"
         label="Prénom"
@@ -97,7 +132,7 @@ const hasInformationsDefined = computed(
   () =>
     userInformations.value.firstname.length > 0 &&
     userInformations.value.lastname.length > 0 &&
-    userInformations.value.mail.length > 0
+    userInformations.value.mail.length > 0,
 );
 
 const register = () => {

@@ -8,7 +8,7 @@ What is important to understand is that my goal with this app is not to compete 
 
 ## Crytpocurrency
 
-## Investment 
+## Investment
 
 ## Team
 
@@ -29,11 +29,5 @@ After some years, I felt the need to evolve and I changed of company, a bigger o
 After some years, I switched of company again for a bigger one in Paris ecosystem. On this one I really technically stepped up as I am in a small team responsible for evolve technical stack of each teams, my perimeter was oriented on front-end and UI/UX design.
 
 Now, I wan't to go a step further by creating an application from scratch and deploy to smartphone application stores. I want to develop the most UX friendly application possible.
-
-
-
-
-
-
 
 (WRITING IN PROGRESS)

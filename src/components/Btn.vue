@@ -1,6 +1,7 @@
 <template>
   <div
-    class="btn flex flex-1 align-items-center justify-content-center gap-md"
+    ref="buttonElement"
+    class="relative select-none overflow-clip flex flex-1 items-center justify-center gap-4 [&:not(.rounded-full)]:rounded-2xl p-4 cursor-pointer text-center [&.fab]:fixed [&.fab]:right-4 [&.fab]:bottom-[calc(1rem+64px)] [&.fab]:drop-shadow-lg [&.fab]:rounded-full [&.fab]:w-16 [&.fab]:h-16 [&.fab]:flex [&.fab]:items-center [&.fab]:justify-center [&.fab]:bg-primary [&.icon-only]:flex-none [&.primary]:bg-primary [&.success]:bg-green-600 [&.warning]:bg-amber-600 [&.error]:bg-red-600 [&.info]:bg-sky-600 [&.flat]:bg-none"
     @click="onClick"
     :class="[
       severity,
@@ -10,19 +11,30 @@
         elevated,
         fab,
         icon,
-        rounded,
+        'rounded-full': rounded || fab,
         glass: fab,
         'icon-reverse': iconReverse,
         'icon-only': icon && !label && !$slots.default,
       },
-      size ? `size-${size}` : '',
+      size ? `h-${computedSize} w-${computedSize}` : '',
     ]"
   >
-    <div v-if="label || $slots.default" class="btn-label">
+    <div
+      v-if="label || $slots.default"
+      class="whitespace-nowrap text-ellipsis overflow-hidden"
+    >
       <slot>{{ label }}</slot>
     </div>
-    <Icon v-if="icon">{{ icon }}</Icon>
-    <div class="ripple" :class="{ active: ripple.state }"></div>
+    <Icon
+      v-if="icon"
+      :size="iconSize"
+      >{{ icon }}</Icon
+    >
+    <div
+      ref="rippleElement"
+      class="ripple hidden absolute bg-white/25 rounded-full w-4 h-4 [&.active]:block -translate-x-1/2 -translate-y-1/2"
+      :class="{ active: ripple.state }"
+    ></div>
   </div>
 </template>
 
@@ -37,6 +49,9 @@ const props = defineProps({
   icon: {
     type: String,
     default: undefined,
+  },
+  iconSize: {
+    type: String,
   },
   iconReverse: {
     type: Boolean,
@@ -65,7 +80,7 @@ const props = defineProps({
   size: {
     type: String,
     default: null,
-    validator: (v) => ["xs", "sm", "md", "lg", "xl"].includes(v),
+    validator: (v) => ["xs", "sm", "md", "lg", "xl", "2xl"].includes(v),
   },
   severity: {
     type: String,
@@ -84,18 +99,60 @@ const ripple = ref({
   y: 0,
 });
 
-let rippleTimeout = null;
+const sizes = {
+  xs: "2",
+  sm: "4",
+  md: "8",
+  lg: "12",
+  xl: "16",
+  "2xl": 20,
+};
+
+const computedSize = computed(() => {
+  return sizes[props.size];
+});
+
+const rippleElement = ref();
+const buttonElement = ref();
 
 function onClick(e) {
-  ripple.value.state = true;
-  ripple.value.x = [e.clientX - e.target.offsetLeft, "px"].join("");
-  ripple.value.y = [e.clientY - e.target.offsetTop, "px"].join("");
-
-  if (rippleTimeout) {
-    clearTimeout(rippleTimeout);
-  }
-  setTimeout(() => (ripple.value.state = false), 300); // - TOFIX
-
+  ripple.value.state = false;
+  setTimeout(() => {
+    ripple.value.state = true;
+    ripple.value.x = [e.clientX - buttonElement.value.offsetLeft, "px"].join(
+      "",
+    );
+    ripple.value.y = [e.clientY - buttonElement.value.offsetTop, "px"].join("");
+  }, 0);
   emit("click", e);
 }
+
+onMounted(() => {
+  rippleElement.value.addEventListener(
+    "animationend",
+    () => (ripple.value.state = false),
+  );
+});
 </script>
+
+<style scoped lang="scss">
+.ripple {
+  top: v-bind("ripple.y");
+  left: v-bind("ripple.x");
+  animation: ripple 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+@keyframes ripple {
+  0% {
+    width: 0%;
+    height: 0%;
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    width: 100vh;
+    height: 100vh;
+  }
+}
+</style>

@@ -19,5 +19,5 @@ export default [
   "Dora",
   "Diego",
   "David",
-  "Isabelle"
-]
+  "Isabelle",
+];

@@ -1,12 +1,10 @@
 <template>
   <component
     :is="icon"
-    :style="{
-      height: size,
-      width: size,
-      color: computedColor,
-    }"
-  ></component>
+    :class="[size, color]"
+    class="[&.xs]:h-2 [&.xs]:w-2 [&.sm]:h-3 [&.sm]:w-3 [&.md]:h-4 [&.md]:w-4 [&.lg]:h-6 [&.lg]:w-6 [&.xl]:h-8 [&.xl]:w-8 [&.2xl]:h-10 [&.2xl]:w-10 [&.success]:text-green-500 [&.error]:text-red-500 [&.info]:text-sky-500 [&.warning]:text-amber-500"
+  >
+  </component>
 </template>
 
 <script setup>
@@ -14,28 +12,19 @@ import { defineAsyncComponent } from "vue";
 
 const props = defineProps({
   size: {
-    type: [Number, String],
-    default: "1rem",
+    type: String,
+    default: "sm",
+    validator: (v) => {
+      return ["xs", "sm", "md", "lg", "xl", "2xl"].includes(v);
+    },
   },
   color: {
     type: String,
-    default: "inherit",
+    validator: (v) => ["success", "error", "warning", "info"].includes(v),
   },
 });
-const slot = useSlots();
 
-const computedColor = computed(() => {
-  let hookedColors = {
-    primary: "var(--color-primary)",
-    success: "var(--color-success)",
-    warning: "var(--color-warning)",
-    error: "var(--color-error)",
-    info: "var(--color-info)",
-  };
-  return Object.keys(hookedColors).includes(props.color)
-    ? hookedColors[props.color]
-    : props.color;
-});
+const slot = useSlots();
 
 const icon = computed(() => {
   let slotContent = slot.default()[0];

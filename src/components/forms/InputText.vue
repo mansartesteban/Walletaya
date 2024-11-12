@@ -1,6 +1,6 @@
 <template>
   <div
-    class="input input-text"
+    class="group group-input relative flex items-center flex-1 bg-black/35 outline outline-1 outline-[--primary-color] rounded-2xl px-4 py-2 [&.focused]:outline [&.focused]:outline-white/50"
     :class="{
       focused: isFocused,
       filled: model !== undefined && model !== null && model !== '',
@@ -8,18 +8,31 @@
     }"
     @click="focus"
   >
-    <label v-if="label" :for="id">{{ label }}</label>
-    <input
-      ref="input"
-      type="text"
-      :id="id"
-      v-model="model"
-      @focus="onFocus"
-      @blur="onBlur"
-      :placeholder="computedPlaceholder"
-      :disabled="readOnly"
-    />
-    <div v-if="append" class="append">{{ append }}</div>
+    <label
+      v-if="label"
+      :for="id"
+      class="absolute group-[.group-input:not(.filled):not(.focused)]:-translate-y-1/2 group-[.group-input:not(.filled):not(.focused)]:text-white/65 group-[.group-input:not(.filled):not(.focused)]:top-1/2 group-[.group-input:not(.filled):not(.focused)]:text-base group-[.group-input.filled]:left-4 group-[.group-input.filled]:top-2 group-[.group-input.filled]:text-xs group-[.group-input.focused]:left-4 group-[.group-input.focused]:top-2 group-[.group-input.focused]:text-xs"
+      >{{ label }}</label
+    >
+    <div class="flex flex-1 items-center gap-4">
+      <input
+        ref="input"
+        type="text"
+        :id="id"
+        class="bg-transparent outline-none w-full placeholder:text-white/40 group-[.group-input:not(.no-label)]:mt-4 [&:disabled]:pointer-events-none"
+        v-model="model"
+        @focus="onFocus"
+        @blur="onBlur"
+        :placeholder="computedPlaceholder"
+        :disabled="readOnly"
+      />
+      <div
+        v-if="append"
+        class="text-ellipsis whitespace-nowrap overflow-clip"
+      >
+        {{ append }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -56,7 +69,7 @@ const isFocused = ref(false);
 const input = ref();
 
 const computedPlaceholder = computed(() =>
-  isFocused.value && !model.value ? props.placeholder : ""
+  isFocused.value && !model.value ? props.placeholder : "",
 );
 
 const onFocus = (e) => {
@@ -71,4 +84,8 @@ const onBlur = (e) => {
 const focus = (e) => {
   input.value.focus();
 };
+
+defineExpose({
+  focus,
+});
 </script>

@@ -36,7 +36,7 @@ class Store {
     if (foundIndex > -1) {
       let onFinished = this.db.deleteItem(
         this,
-        this.datas.splice(foundIndex, 1)[0]
+        this.datas.splice(foundIndex, 1)[0],
       );
       onFinished.then(() => {
         this.callbacks.onSave.forEach((cb) => cb());

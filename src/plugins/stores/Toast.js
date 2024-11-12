@@ -22,7 +22,7 @@ export default defineStore("toast", {
       setTimeout(() => {
         this.internalAlerts.splice(
           this.internalAlerts.findIndex((toast) => toast.id === id),
-          1
+          1,
         );
       }, 3000);
     },

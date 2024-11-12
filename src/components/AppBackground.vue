@@ -11,7 +11,7 @@
       >
         <path
           transform="matrix(1 0 0 1 100 100)"
-          fill="var(--color-primary)"
+          fill="var(--primary-color)"
           opacity=".25"
         >
           <animate
@@ -120,20 +120,3 @@ onMounted(() => {
 //   },
 // ]);
 </script>
-
-<style scoped lang="scss">
-.app-background {
-  position: fixed;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-
-  .blob {
-    position: absolute;
-    filter: blur(30px);
-  }
-}
-</style>

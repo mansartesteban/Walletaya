@@ -1,8 +1,8 @@
 <template>
-  <div class="toggle flex w-100 h-100">
+  <div class="toggle flex w-full h-full">
     <div
       v-for="item in items"
-      class="item flex align-items-center justify-content-center"
+      class="item flex items-center justify-center flex-1 text-center px-4 py-2 text-white/50 border-primary [&.active]:text-white [&.active]:bg-primary [&:first-child]:border-t [&:first-child]:border-b [&:first-child]:border-l [&:first-child]:rounded-l-2xl [&:last-child]:border-t [&:last-child]:border-r [&:last-child]:border-b [&:last-child]:rounded-r-2xl [&:not(:first-child):not(:last-child)]:border-t [&:not(:first-child):not(:last-child)]:border-b"
       :class="{ active: item.value === model?.value }"
       @click="selectItem(item)"
     >
@@ -39,42 +39,3 @@ onMounted(() => {
   }
 });
 </script>
-
-<style scoped lang="scss">
-.toggle {
-  .item {
-    flex: 1;
-    text-align: center;
-    font-size: 1rem;
-    padding: var(--sm) var(--md);
-    transition: var(--transition);
-    color: rgba(255, 255, 255, 0.5);
-
-    &.active {
-      color: rgba(255, 255, 255, 1);
-      background: var(--color-primary);
-      border-color: var(--color-primary);
-    }
-
-    &:first-child {
-      border-width: 1px 0 1px 1px;
-      border-style: solid;
-      border-color: var(--color-primary);
-      border-radius: var(--border-radius) 0 0 var(--border-radius);
-    }
-
-    &:last-child {
-      border-width: 1px 1px 1px 0;
-      border-style: solid;
-      border-color: var(--color-primary);
-      border-radius: 0 var(--border-radius) var(--border-radius) 0;
-    }
-
-    &:not(:first-child):not(:last-child) {
-      border-width: 1px 0 1px 0;
-      border-style: solid;
-      border-color: var(--color-primary);
-    }
-  }
-}
-</style>

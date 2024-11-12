@@ -31,28 +31,28 @@ describe("Function 'formatNumber'", () => {
   });
   test("Separators", () => {
     expect(formatNumber(9999999.9999, NUMBER_FORMAT.COMA_DOT)).toBe(
-      "9,999,999.9999"
+      "9,999,999.9999",
     );
     expect(formatNumber("9999999.9999", NUMBER_FORMAT.COMA_DOT)).toBe(
-      "9,999,999.9999"
+      "9,999,999.9999",
     );
     expect(formatNumber(9999999.9999, NUMBER_FORMAT.DOT_COMA)).toBe(
-      "9.999.999,9999"
+      "9.999.999,9999",
     );
     expect(formatNumber("9999999.9999", NUMBER_FORMAT.DOT_COMA)).toBe(
-      "9.999.999,9999"
+      "9.999.999,9999",
     );
     expect(formatNumber(9999999.9999, NUMBER_FORMAT.SPACE_COMA)).toBe(
-      "9 999 999,9999"
+      "9 999 999,9999",
     );
     expect(formatNumber("9999999.9999", NUMBER_FORMAT.SPACE_COMA)).toBe(
-      "9 999 999,9999"
+      "9 999 999,9999",
     );
     expect(formatNumber(9999999.9999, NUMBER_FORMAT.SPACE_DOT)).toBe(
-      "9 999 999.9999"
+      "9 999 999.9999",
     );
     expect(formatNumber("9999999.9999", NUMBER_FORMAT.SPACE_DOT)).toBe(
-      "9 999 999.9999"
+      "9 999 999.9999",
     );
   });
 });

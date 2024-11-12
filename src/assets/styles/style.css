@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #054f61;
+  --success-color: #009b5f;
+  --error-color: #c0243e;
+  --warning-color: #c88842;
+  --info-color: #604b99;
+  --primary-gradient: linear-gradient(
+    90deg,
+    #0f564c 0%,
+    var(--primary-color) 100%
+  );
+  --glass-background: linear-gradient(
+    130deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    rgba(255, 255, 255, 0.05) 43%,
+    rgba(255, 255, 255, 0.02) 60%,
+    rgba(255, 255, 255, 0.04) 65%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+}
+
+body {
+  color: white;
+  overflow-x: clip;
+  background: linear-gradient(-10deg, rgb(6, 9, 9) 0%, rgb(9, 26, 26) 100%);
+  background-attachment: fixed;
+  font-weight: 400;
+  font-family: Satoshi;
+}
+
+@layer base {
+  @font-face {
+    font-family: Satoshi;
+    src: url("@/assets/fonts/Satoshi.ttf");
+  }
+
+  .bg-primary {
+    background: var(--primary-gradient);
+  }
+
+  .outline-primary {
+    outline-color: var(--primary-color);
+  }
+  .border-primary {
+    border-color: var(--primary-color);
+  }
+
+  .bg-glass {
+    background: var(--glass-background);
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+
+  .glass {
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+  }
+
+  .glass::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    flex: 1;
+    width: 100%;
+    backdrop-filter: blur(8px);
+    z-index: -1;
+    background: var(--glass-background);
+  }
+}

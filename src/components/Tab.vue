@@ -1,5 +1,9 @@
 <template>
-  <article class="tab-content" :class="{'no-gutters': noGutters}" :id="computedAnchor">
+  <article
+    class="snap-start overflow-y-auto scrollbar-none p-4 [&.no-gutters]:p-0"
+    :class="{ 'no-gutters': noGutters }"
+    :id="computedAnchor"
+  >
     <slot></slot>
   </article>
 </template>
@@ -8,7 +12,7 @@
 const props = defineProps({
   noGutters: {
     type: Boolean,
-    default: false
+    default: false,
   },
   anchor: {
     type: String,

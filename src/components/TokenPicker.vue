@@ -6,6 +6,7 @@
     mini
     search
     :sortFunction="sortFunction"
+    :clearable="clearable"
     @changed="emit('changed', $event)"
   >
     <template #selected-option-mini-icon="{ option }">
@@ -17,10 +18,12 @@
     </template>
 
     <template #option-label="{ option }">
-      <div class="flex flex-1 align-items-center justify-content-space-between">
-        <div class="flex flex-1 flex-column gap-xs">
-          <div class="text-ellipsis">{{ option.label }}</div>
-          <span class="sublabel">{{ option.symbol }}</span>
+      <div class="flex flex-1 items-center justify-between">
+        <div class="flex flex-1 flex-col gap-1">
+          <div class="text-ellipsis leading-4">{{ option.label }}</div>
+          <span class="sublabel leading-4 text-white/50">{{
+            option.symbol
+          }}</span>
         </div>
         <Btn
           @click.stop="starToken($event, option)"
@@ -33,7 +36,7 @@
               ? 'rgba(255, 255, 255, 1)'
               : 'rgba(255, 255, 255, .25)',
           }"
-          class="mr-n-md"
+          class="-mr-4"
         ></Btn>
       </div>
     </template>
@@ -41,20 +44,22 @@
 </template>
 
 <script setup>
-import CIcon from "@/components/CIcon.vue";
-import Btn from "@/components/Btn.vue";
-import Select from "@/components/forms/Select.vue";
 import useSettingsStore from "@/plugins/stores/Settings";
 import { onMounted } from "vue";
 import { getToken } from "@/utils/Token";
 import useTokenStore from "@/plugins/stores/TokenList";
 import { normalizeString } from "@/utils/String";
 
+const props = defineProps({
+  clearable: {
+    type: Boolean,
+  },
+});
 const settings = useSettingsStore();
 
 const model = defineModel({
   get: (v) => getToken(v || settings.defaultToken?.value),
-  set: (v) => v?.value,
+  set: (v) => v?.value || null,
 });
 
 const emit = defineEmits(["changed"]);
@@ -87,7 +92,7 @@ const sortFunction = (previousToken, currentToken, filter) => {
   if (
     settings.favoriteTokens.includes(previousTokenValue) ||
     [previousTokenLabel, previousTokenValue, previousTokenSymbol].includes(
-      filter
+      filter,
     )
   ) {
     return -1;
@@ -95,6 +100,8 @@ const sortFunction = (previousToken, currentToken, filter) => {
 };
 
 onMounted(() => {
-  model.value = getToken(settings.defaultToken?.value);
+  if (!props.clearable) {
+    model.value = getToken(settings.defaultToken?.value);
+  }
 });
 </script>

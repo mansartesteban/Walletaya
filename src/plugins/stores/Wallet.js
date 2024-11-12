@@ -1,11 +1,11 @@
-import { defineStore } from "pinia"
-import WalletAggregator from "@/utils/WalletAggregator"
+import { defineStore } from "pinia";
+import WalletAggregator from "@/utils/WalletAggregator";
 
 export default defineStore("wallet", {
   state: () => {
     return {
       history: [],
-    }
+    };
   },
   getters: {
     aggregatedTransactions(state) {
@@ -22,17 +22,17 @@ export default defineStore("wallet", {
             debited: 0,
             creditCount: 0,
             debitCount: 0,
+            transactionCount: 0,
             cumulativeAmount: 0,
             cumulativeAmountCredit: 0,
             cumulativeAmountDebit: 0,
-            transactionCount: 0,
             cumulativeValue: 0,
             cumulativeValueCredit: 0,
             cumulativeValueDebit: 0,
             cumulativeAssets: 0,
             cumulativeAssetsCredit: 0,
             cumulativeAssetsDebit: 0,
-          }
+          };
         }
         if (
           transaction.debitToken &&
@@ -46,20 +46,20 @@ export default defineStore("wallet", {
             debited: 0,
             creditCount: 0,
             debitCount: 0,
+            transactionCount: 0,
             cumulativeAmount: 0,
             cumulativeAmountCredit: 0,
             cumulativeAmountDebit: 0,
-            transactionCount: 0,
             cumulativeValue: 0,
             cumulativeValueCredit: 0,
             cumulativeValueDebit: 0,
             cumulativeAssets: 0,
             cumulativeAssetsCredit: 0,
             cumulativeAssetsDebit: 0,
-          }
+          };
         }
-        return aggregations
-      }, {})
+        return aggregations;
+      }, {});
 
       state.history.forEach((transaction) => {
         if (transaction.creditToken) {
@@ -67,37 +67,43 @@ export default defineStore("wallet", {
             WalletAggregator.aggregate(
               aggregations[transaction.creditToken.value],
               transaction.creditToken,
-              transaction
-            )
+              transaction,
+            );
         }
         if (transaction.debitToken) {
           aggregations[transaction.debitToken.value] =
             WalletAggregator.aggregate(
               aggregations[transaction.debitToken.value],
               transaction.debitToken,
-              transaction
-            )
+              transaction,
+            );
         }
-      })
+      });
 
-      return aggregations
+      return aggregations;
     },
     usedTokens(state) {
-      let usedTokens = []
+      let usedTokens = [];
       state.history.forEach((transaction) => {
-        if (transaction.creditToken && !usedTokens.includes(transaction.creditToken.value)) {
-          usedTokens.push(transaction.creditToken.value)
+        if (
+          transaction.creditToken &&
+          !usedTokens.includes(transaction.creditToken.value)
+        ) {
+          usedTokens.push(transaction.creditToken.value);
         }
-        if (transaction.debitToken && !usedTokens.includes(transaction.debitToken.value)) {
-          usedTokens.push(transaction.debitToken.value)
+        if (
+          transaction.debitToken &&
+          !usedTokens.includes(transaction.debitToken.value)
+        ) {
+          usedTokens.push(transaction.debitToken.value);
         }
-      })
-      return usedTokens
+      });
+      return usedTokens;
     },
   },
   actions: {
     setHistory(history) {
-      this.history = history
+      this.history = history;
     },
   },
-})
+});

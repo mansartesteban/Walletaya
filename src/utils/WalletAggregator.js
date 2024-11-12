@@ -23,6 +23,16 @@ const aggCredited = (transaction, token) => {
     transaction.creditToken &&
     transaction.creditToken.value === token.value
   ) {
+    if (transaction.creditToken.value === "bitcoin") {
+      console.log(
+        "transaction",
+        transaction,
+        token.value,
+        transaction.creditAmount,
+        transaction.creditValue,
+        transaction.creditAmount * transaction.creditValue,
+      );
+    }
     return transaction.creditAmount * transaction.creditValue;
   }
   return 0;
@@ -128,29 +138,29 @@ export default {
     aggregation.cumulativeAmount += aggCumulativeAmount(transaction, token);
     aggregation.cumulativeAmountCredit += aggCumulativeAmountCredit(
       transaction,
-      token
+      token,
     );
     aggregation.cumulativeAmountDebit += aggCumulativeAmountDebit(
       transaction,
-      token
+      token,
     );
     aggregation.cumulativeValue += aggCumulativeValue(transaction, token);
     aggregation.cumulativeValueCredit += aggCumulativeValueCredit(
       transaction,
-      token
+      token,
     );
     aggregation.cumulativeValueDebit += aggCumulativeValueDebit(
       transaction,
-      token
+      token,
     );
     aggregation.cumulativeAssets += aggCumulativeAssets(transaction, token);
     aggregation.cumulativeAssetsCredit += aggCumulativeAssetsCredit(
       transaction,
-      token
+      token,
     );
     aggregation.cumulativeAssetsDebit += aggCumulativeAssetsDebit(
       transaction,
-      token
+      token,
     );
     return aggregation;
   },

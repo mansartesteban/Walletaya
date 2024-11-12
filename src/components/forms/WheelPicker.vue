@@ -1,20 +1,24 @@
 <template>
   <div
-    class="wheel-picker wheel-selector-wrapper input flex flex-1 flex-column align-items-center scroll-snap-y p-0"
+    class="wheel-picker wheel-selector-wrapper relative flex flex-1 flex-col items-center p-0 h-24 bg-black/35 outline outline-1 outline-primary rounded-2xl py-2 px-4 before:content-[''] before:z-[1] before:absolute before:h-4 before:w-full before:t-0 after:content-[''] after:z-[1] after:absolute after:h-4 after:w-full after:b-0"
   >
     <div
       ref="scroller"
-      class="wheel-selector-scroller flex flex-column align-items-center scroll-snap-y"
+      class="wheel-selector-scroller flex flex-col items-center snap-y snap-mandatory overflow-y-scroll h-24 w-full"
     >
-      <div class="wheel-selector-item"></div>
       <div
-        class="wheel-selector-item"
+        class="wheel-selector-item flex items-center p-4 snap-start min-h-4 max-h-4 scale-125 [&:not(.selected)]:text-white/20 [&:not(.selected)]:scale-75"
+      ></div>
+      <div
+        class="wheel-selector-item flex items-center p-4 snap-start min-h-4 max-h-4 scale-125 [&:not(.selected)]:text-white/20 [&:not(.selected)]:scale-75"
         :class="{ selected: index === model }"
         v-for="(item, index) in computedItems"
       >
         {{ item.label }}
       </div>
-      <div class="wheel-selector-item"></div>
+      <div
+        class="wheel-selector-item flex items-center p-4 snap-start min-h-4 max-h-4 scale-125 [&:not(.selected)]:text-white/20 [&:not(.selected)]:scale-75"
+      ></div>
     </div>
   </div>
 </template>
@@ -90,51 +94,3 @@ onMounted(() => {
   });
 });
 </script>
-
-<style scoped lang="scss">
-.wheel-selector-wrapper {
-  --item-height: calc(v-bind("itemHeight") * 1px);
-  position: relative;
-  height: calc(var(--item-height) * 3);
-
-  &::before,
-  &::after {
-    z-index: 1;
-    content: "";
-    position: absolute;
-    height: var(--item-height);
-    width: 100%;
-  }
-
-  &::before {
-    top: 0;
-  }
-
-  &::after {
-    bottom: 0;
-  }
-
-  .wheel-selector-scroller {
-    overflow-y: scroll;
-    height: calc(var(--item-height) * 3 + var(--md) * 2);
-    width: 100%;
-
-    .wheel-selector-item {
-      display: flex;
-      align-items: center;
-      padding: var(--md);
-      scroll-snap-align: start;
-      min-height: var(--item-height);
-      max-height: var(--item-height);
-      transform: scale(1.25);
-
-      transition: color var(--transition-timing) var(--transition-duration),
-        transform var(--transition-timing) var(--transition-duration);
-      &:not(.selected) {
-        color: rgba(255, 255, 255, 0.2);
-        transform: scale(0.75);
-      }
-    }
-  }
-}
-</style>

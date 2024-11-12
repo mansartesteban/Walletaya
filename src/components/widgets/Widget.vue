@@ -2,7 +2,7 @@
   <!-- :class="{ closed: widgetInstance.closed, moving: draggable.moving.value }" -->
   <div
     ref="widget"
-    class="widget flex flex-column glass"
+    class="widget flex flex-col glass"
     @touchstart.passive="onTouchStart"
     @touchmove.passive="onTouchMove"
     @touchend.passive="onTouchEnd"
@@ -17,14 +17,13 @@
       @maximize="widgetInstance.onMaximize"
       @close="widgetInstance.close()"
     />
-    <div class="widget-content flex flex-column flex-1">
+    <div class="widget-content flex flex-col flex-1">
       <slot></slot>
     </div>
   </div>
 </template>
 
 <script setup>
-import WidgetBar from "@/components/widgets/WidgetBar.vue";
 // import useDrag from "@/composables/useDrag";
 
 const props = defineProps({

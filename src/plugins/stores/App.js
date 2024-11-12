@@ -28,7 +28,7 @@ export default defineStore("app", {
     setAuthentication(value) {
       sessionStorage.setItem(useBase64("walletaya-auth-token"), value);
       this.isAuthenticated = !!sessionStorage.getItem(
-        useBase64("walletaya-auth-token")
+        useBase64("walletaya-auth-token"),
       );
     },
     saveUserCredentials(data) {
@@ -51,7 +51,7 @@ export default defineStore("app", {
       });
 
       this.isAuthenticated = !!sessionStorage.getItem(
-        useBase64("walletaya-auth-token")
+        useBase64("walletaya-auth-token"),
       );
 
       return promise;

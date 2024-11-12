@@ -89,7 +89,7 @@ export default function Touch(element) {
         // Prepares a trigger which clears himself within a delay of {doubleTapTimer}ms, if a second touch is made within this delay, triggers the doubleTap event
         touchReleaseTrigger = setTimeout(
           () => (touchReleaseTrigger = null),
-          doubleTapTimer
+          doubleTapTimer,
         );
       }
 
@@ -111,7 +111,7 @@ export default function Touch(element) {
       callback(event, ...params);
       if (options?.vibrate && unref(options.vibrate)) {
         window.navigator.vibrate(
-          typeof options.vibrate === "boolean" ? [30] : options.vibrate
+          typeof options.vibrate === "boolean" ? [30] : options.vibrate,
         );
       }
     });

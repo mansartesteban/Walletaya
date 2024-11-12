@@ -15,5 +15,5 @@ export default [
   "Da Mota",
   "Di Rosa",
   "Martinez",
-  "Flores"
-]
+  "Flores",
+];

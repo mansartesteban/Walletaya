@@ -2,22 +2,38 @@
   <InputText
     :modelValue="dateDisplay(date)"
     label="Date de transaction"
-    @click="drawerOpened = true"
+    @click.stop="drawerOpened = true"
     readOnly
-  ></InputText>
+  >
+  </InputText>
   <Drawer v-model:opened="drawerOpened">
-    <div class="date-picker flex flex-column gap-md">
+    <div class="date-picker flex flex-col gap-4">
       Date
-      <div class="flex gap-md">
-        <WheelPicker v-model="modelDay" :items="days"></WheelPicker>
-        <WheelPicker v-model="modelMonth" :items="months"></WheelPicker>
-        <WheelPicker v-model="modelYear" :items="years"></WheelPicker>
+      <div class="flex gap-4">
+        <WheelPicker
+          v-model="modelDay"
+          :items="days"
+        ></WheelPicker>
+        <WheelPicker
+          v-model="modelMonth"
+          :items="months"
+        ></WheelPicker>
+        <WheelPicker
+          v-model="modelYear"
+          :items="years"
+        ></WheelPicker>
       </div>
       <template v-if="timePicker">
         Heure
-        <div class="flex gap-md">
-          <WheelPicker v-model="modelHour" :items="hours"></WheelPicker>
-          <WheelPicker v-model="modelMinute" :items="minutes"></WheelPicker>
+        <div class="flex gap-4">
+          <WheelPicker
+            v-model="modelHour"
+            :items="hours"
+          ></WheelPicker>
+          <WheelPicker
+            v-model="modelMinute"
+            :items="minutes"
+          ></WheelPicker>
         </div>
       </template>
       <Btn @click="validate">Valider</Btn>
@@ -26,10 +42,6 @@
 </template>
 
 <script setup>
-import WheelPicker from "./WheelPicker.vue";
-import Drawer from "@/components/Drawer.vue";
-import Btn from "@/components/Btn.vue";
-import InputText from "@/components/forms/InputText.vue";
 import { dateDisplay } from "@/utils/Date";
 
 const props = defineProps({
@@ -71,7 +83,7 @@ const validate = () => {
     modelMonth.value - 1,
     modelDay.value,
     modelHour.value,
-    modelMinute.value
+    modelMinute.value,
   );
   drawerOpened.value = false;
 };
@@ -135,12 +147,12 @@ const months = [
 ];
 const days = computed(() =>
   [...new Array(new Date(2024, modelMonth.value, 0).getDate())].map(
-    (v, k) => k + 1
-  )
+    (v, k) => k + 1,
+  ),
 );
 const hours = [...new Array(24)].map((v, k) => k.toString().padStart(2, "0"));
 const minutes = [...new Array(12 * 5)].map((v, k) =>
-  k.toString().padStart(2, "0")
+  k.toString().padStart(2, "0"),
 );
 
 const setModel = (d) => {
@@ -159,5 +171,3 @@ onMounted(() => {
   setModel(props.modelValue);
 });
 </script>
-
-<style scoped lang="scss"></style>

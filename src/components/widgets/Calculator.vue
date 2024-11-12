@@ -5,7 +5,7 @@
         </Btn>
     </div> -->
   <Widget :widgetInstance="calculator">
-    <div class="calculator flex flex-column align-items-stretch p-sm gap-sm">
+    <div class="calculator flex flex-col items-stretch p-4 gap-4">
       <div class="calculator-screen p-md">
         <template v-if="calculation">
           {{ calculation }}
@@ -18,75 +18,113 @@
                 </template>
                 <template v-else>0</template> -->
       </div>
-      <div class="calculator-keypad gap-sm">
-        <Btn class="calculator-key" @touchstart.passive="clear">C</Btn>
+      <div class="calculator-keypad gap-4">
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="clear"
+          >C</Btn
+        >
         <Btn
           class="calculator-key"
           @touchstart.passive="concatCalculation('/')"
         >
-          <Icon>divide</Icon></Btn
-        >
+          <Icon>divide</Icon>
+        </Btn>
         <Btn
           class="calculator-key"
           @touchstart.passive="concatCalculation('*')"
         >
           <Icon>close</Icon>
         </Btn>
-        <Btn class="calculator-key" @touchstart.passive="removeLastCalculation">
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="removeLastCalculation"
+        >
           <Icon>backspace</Icon>
         </Btn>
 
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('7')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('7')"
           >7</Btn
         >
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('8')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('8')"
           >8</Btn
         >
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('9')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('9')"
           >9</Btn
         >
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('-')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('-')"
           >-</Btn
         >
 
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('4')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('4')"
           >4</Btn
         >
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('5')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('5')"
           >5</Btn
         >
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('6')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('6')"
           >6</Btn
         >
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('+')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('+')"
           >+</Btn
         >
 
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('1')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('1')"
           >1</Btn
         >
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('2')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('2')"
           >2</Btn
         >
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('3')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('3')"
           >3</Btn
         >
-        <Btn class="calculator-key" @touchstart.passive="copy">
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="copy"
+        >
           <Icon>copy</Icon>
         </Btn>
 
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('%')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('%')"
           >%</Btn
         >
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('0')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('0')"
           >0</Btn
         >
-        <Btn class="calculator-key" @touchstart.passive="concatCalculation('.')"
+        <Btn
+          class="calculator-key"
+          @touchstart.passive="concatCalculation('.')"
           >.</Btn
         >
         <Btn
           class="calculator-key"
-          style="background: var(--color-primary)"
+          style="background: var(--primary-color)"
           @click="save"
           >=</Btn
         >
@@ -96,9 +134,6 @@
 </template>
 
 <script setup>
-import Btn from "@/components/Btn.vue";
-import Icon from "@/components/Icon.vue";
-import Widget from "@/components/widgets/Widget.vue";
 import WidgetService from "@/Services/WidgetService";
 
 const calculator = WidgetService.Calculator;
