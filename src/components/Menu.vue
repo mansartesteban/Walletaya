@@ -65,7 +65,7 @@
               name="option-icon"
               v-bind="{ option: option }"
             >
-              <Icon :size="20">{{ option.icon }}</Icon>
+              <span class="mi">{{ option.icon }}</span>
             </slot>
 
             <slot

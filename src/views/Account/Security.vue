@@ -6,41 +6,41 @@
     <div class="flex flex-col gap-4">
       <div class="flex flex-col gap-2">
         <div class="flex gap-4">
-          <Icon
+          <span
             v-if="userInformations.firstname.length === 0"
-            color="error"
-            >error</Icon
+            class="mi text-red-600"
+            >error</span
           >
-          <Icon
+          <span
             v-else
-            color="success"
-            >success</Icon
-          >
+            class="mi text-green-600"
+            >check_circle
+          </span>
           <div>Prénom : {{ userInformations.firstname }}</div>
         </div>
         <div class="flex gap-4">
-          <Icon
+          <span
             v-if="userInformations.lastname.length === 0"
-            color="error"
-            >error</Icon
+            class="mi text-red-600"
+            >error</span
           >
-          <Icon
+          <span
             v-else
-            color="success"
-            >success</Icon
+            class="mi text-green-600"
+            >check_circle</span
           >
           <div>Nom : {{ userInformations.lastname }}</div>
         </div>
         <div class="flex gap-4">
-          <Icon
+          <span
             v-if="userInformations.mail.length === 0"
-            color="error"
-            >error</Icon
+            class="mi text-red-600"
+            >error</span
           >
-          <Icon
+          <span
             v-else
-            color="success"
-            >success</Icon
+            class="mi text-green-600"
+            >check_circle</span
           >
           <div>Mail : {{ userInformations.mail }}</div>
         </div>
@@ -56,7 +56,7 @@
       </div>
       <Btn
         @click="register"
-        icon="user-edit"
+        icon="person_edit"
         >Modifier les informations</Btn
       >
       <Btn
@@ -71,7 +71,7 @@
         v-else
         severity="error"
         @click="unsecurize"
-        icon="security-block"
+        icon="encrypted_off"
         >Retirer la sécurité</Btn
       >
     </div>
@@ -100,7 +100,6 @@
 
 <script setup>
 import Card from "@/components/Card.vue";
-import Icon from "@/components/Icon.vue";
 import Message from "@/components/Message.vue";
 import Dialog from "@/components/Dialog.vue";
 import Btn from "@/components/Btn.vue";

@@ -28,7 +28,9 @@
         <Btn
           @click.stop="starToken($event, option)"
           :icon="
-            settings.favoriteTokens.includes(option.value) ? 'star' : 'star-off'
+            settings.favoriteTokens.includes(option.value)
+              ? 'bookmark_added'
+              : 'bookmark'
           "
           flat
           :style="{

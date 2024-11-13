@@ -3,7 +3,7 @@
     class="toolbar flex align-items-center justify-content-space-between py-xs px-sm"
   >
     <div class="toolbar-left flex align-items-center justify-content-start">
-      <Icon>{{ icon }}</Icon>
+      <span class="mi">{{ icon }}</span>
     </div>
     <div class="toolbar-middle flex align-items-center justify-content-center">
       <div class="toolbar-title">{{ title }}</div>
@@ -23,9 +23,6 @@
 </template>
 
 <script setup>
-import Btn from "@/components/Btn.vue";
-import Icon from "@/components/Icon.vue";
-
 const props = defineProps({
   title: {
     type: String,

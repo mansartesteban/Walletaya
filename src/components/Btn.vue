@@ -25,10 +25,10 @@
     >
       <slot>{{ label }}</slot>
     </div>
-    <Icon
+    <span
       v-if="icon"
-      :size="iconSize"
-      >{{ icon }}</Icon
+      class="mi"
+      >{{ icon }}</span
     >
     <div
       ref="rippleElement"
@@ -39,8 +39,6 @@
 </template>
 
 <script setup>
-import Icon from "@/components/Icon.vue";
-
 const props = defineProps({
   label: {
     type: String,

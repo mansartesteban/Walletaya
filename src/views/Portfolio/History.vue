@@ -3,9 +3,8 @@
     v-if="!drawerOpened"
     @click="showTransactionForm"
     fab
-  >
-    <Icon size="md">transaction-add</Icon>
-  </Btn>
+    icon="forms_add_on"
+  ></Btn>
   <div class="flex items-center gap-4 px-4 py-2">
     <span>Filtrer :</span>
     <TokenPicker

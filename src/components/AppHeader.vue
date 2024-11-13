@@ -15,7 +15,7 @@
       :class="{ 'flex-reverse': settings.leftHanded }"
     >
       <Btn
-        icon="refresh"
+        icon="sync"
         @click="refresh"
         flat
         iconSize="sm"

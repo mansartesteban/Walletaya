@@ -16,13 +16,11 @@
           class="[&:not(.router-link-exact-active)]:gap-1 h-100 flex flex-col flex-1 items-center justify-center text-sm"
           :class="{ 'text-white/50': !isActive }"
         >
-          <div class="">
-            <Icon
-              class=""
-              :size="isActive ? 'md' : 'sm'"
-              >{{ menu.icon }}
-            </Icon>
-          </div>
+          <span
+            class="mi"
+            :class="isActive ? 'text-lg leading-5' : 'text-2xl leading-6'"
+            >{{ menu.icon }}</span
+          >
           <div class="navbar-button-label">
             {{ menu.label }}
           </div>
@@ -74,17 +72,17 @@ const menus = ref([
   {
     label: "Portfolio",
     route: { name: "Portfolio" },
-    icon: "chart",
+    icon: "query_stats",
   },
   {
     label: "Mon compte",
     route: { name: "Account" },
-    icon: "account",
+    icon: "query_stats",
   },
   {
     label: "Sandbox",
     route: { name: "Sandbox" },
-    icon: "chart",
+    icon: "construction",
   },
 ]);
 

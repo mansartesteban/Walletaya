@@ -31,7 +31,7 @@
           </InputNumber>
           <Btn
             v-if="transactionType === 1"
-            icon="magic"
+            icon="equal"
             @click="debitAutoCalculate"
           ></Btn>
           <TokenPicker
@@ -57,7 +57,7 @@
 
     <Btn
       v-if="transactionType === 1"
-      icon="exchange"
+      icon="swap_vert"
       class="-my-8 mx-auto"
       size="lg"
       rounded
@@ -84,7 +84,7 @@
           </InputNumber>
           <Btn
             v-if="transactionType === 1"
-            icon="magic"
+            icon="equal"
             @click="creditAutoCalculate"
           ></Btn>
           <TokenPicker
