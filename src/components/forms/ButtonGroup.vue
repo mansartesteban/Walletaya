@@ -29,9 +29,9 @@ const model = defineModel({
   },
 });
 
-function selectItem(item) {
+const selectItem = (item) => {
   model.value = item;
-}
+};
 
 onMounted(() => {
   if (model.value === undefined) {

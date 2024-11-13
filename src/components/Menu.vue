@@ -21,14 +21,12 @@
         </Btn>
       </slot>
     </template>
-    <div
+
+    <Overlay
+      v-model:opened="opened"
       ref="menuPanel"
-      class="glass shadow-xl outline-none translate-y-2 [&:not(.opened)]:border-none w-60 p-0 fixed z-[100] h-0 rounded-2xl overflow-clip before:content-[''] before:absolute before:top-0 before:left-0 before:min-h-full before:flex-1 before:w-full before:z-[-1] [&.opened]:h-auto"
-      :class="{ opened }"
+      class="w-60"
     >
-      <!-- :style="fullWidth
-            ? 'z-index: 10000; bottom: 0; left: 0; right: 0; width: unset'
-            : ''" -->
       <div
         v-if="search || clearable"
         class="flex h-16 p-2 gap-2"
@@ -79,12 +77,11 @@
           </div>
         </slot>
       </RecycleScroller>
-    </div>
+    </Overlay>
   </div>
 </template>
 
 <script setup>
-import { onClickOutside } from "@vueuse/core";
 import { search as searchFunction } from "@/utils/String";
 import { RecycleScroller } from "vue-virtual-scroller";
 
@@ -137,18 +134,13 @@ const model = defineModel({
   set: (v) => (props.returnValue ? v[props.returnValue] : v),
 });
 const searchText = ref("");
-const opened = ref(false);
+const opened = defineModel("opened", {
+  type: Boolean,
+  default: false,
+});
 const fullWidth = ref(false);
 const localPosition = ref({ x: 0, y: 0 });
-const computedPosition = computed(() => props.position || localPosition.value);
 
-const activatorEvents = ref({
-  onClick: onActivatorClick,
-});
-
-const optionEvents = ref({
-  onClick: selectValue,
-});
 const menu = ref(null);
 const menuPanel = ref(null);
 
@@ -159,14 +151,14 @@ const filteredOptions = computed(() => {
     : filteredOptions;
 });
 
-function onActivatorClick(e) {
-  let box = menuPanel.value.getBoundingClientRect();
+const onActivatorClick = (e) => {
+  let box = menuPanel.value.$el.getBoundingClientRect();
   localPosition.value.x = box.left;
   localPosition.value.y = box.top;
   toggle();
-}
+};
 
-function selectValue(option) {
+const selectValue = (option) => {
   if (option.callback) {
     option.callback(option);
   }
@@ -177,48 +169,39 @@ function selectValue(option) {
   if (!props.persistOnClick) {
     close();
   }
-}
+};
+
+const activatorEvents = ref({
+  onClick: onActivatorClick,
+});
+
+const optionEvents = ref({
+  onClick: selectValue,
+});
 
 const clearValue = () => {
   model.value = null;
   emit("cleared");
 };
 
-function resize() {
+const resize = () => {
   nextTick(() => {
-    if (fullWidth) {
-      let margin = 16;
-      let menuWidth = 240;
-      let menuHeight = 240;
+    let box = menuPanel.value.$el.getBoundingClientRect();
 
-      let left = computedPosition.value.x;
-      let top = computedPosition.value.y;
-
-      menuPanel.value.style.left = [left, "px"].join("");
-      menuPanel.value.style.top = [top, "px"].join("");
-
-      if (left < margin) {
-        menuPanel.value.style.left = [margin, "px"].join("");
-      }
-      if (top < margin) {
-        menuPanel.value.style.top = [margin, "px"].join("");
-      }
-
-      if (left + menuWidth > window.innerWidth - margin) {
-        menuPanel.value.style.left = [
-          window.innerWidth - (margin + menuWidth),
-          "px",
-        ].join("");
-      }
-      if (top + menuHeight > window.innerHeight - margin) {
-        menuPanel.value.style.top = [
-          window.innerHeight - (margin + menuHeight),
-          "px",
-        ].join("");
-      }
+    if (box.x + box.width > window.innerWidth) {
+      menuPanel.value.$el.style.right = "16px";
+    }
+    if (box.y + box.height > window.innerHeight) {
+      menuPanel.value.$el.style.bottom = "16px";
+    }
+    if (box.x < 16) {
+      menuPanel.value.$el.style.left = "16px";
+    }
+    if (box.y < 16) {
+      menuPanel.value.$el.style.top = "16px";
     }
   });
-}
+};
 
 const searchInput = ref();
 const focus = (e) => {
@@ -228,8 +211,8 @@ const focus = (e) => {
 const unfocus = (e) => {};
 
 const open = () => {
-  resize();
   opened.value = true;
+  resize();
   nextTick(() => {
     if (props.search) {
       searchInput.value.focus();
@@ -247,11 +230,11 @@ const toggle = () => {
   opened.value ? close() : open();
 };
 
-onClickOutside(menuPanel, close);
-
 defineExpose({
   open,
+  show: open,
   close,
+  hide: close,
   toggle,
 });
 </script>

@@ -1,4 +1,4 @@
-export default function useDrag(element) {
+export default (element) => {
   const offset = ref({
     x: 0,
     y: 0,
@@ -58,4 +58,4 @@ export default function useDrag(element) {
     stopDrag,
     drag,
   };
-}
+};

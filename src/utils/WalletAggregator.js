@@ -24,14 +24,14 @@ const aggCredited = (transaction, token) => {
     transaction.creditToken.value === token.value
   ) {
     if (transaction.creditToken.value === "bitcoin") {
-      console.log(
-        "transaction",
-        transaction,
-        token.value,
-        transaction.creditAmount,
-        transaction.creditValue,
-        transaction.creditAmount * transaction.creditValue,
-      );
+      // console.log(
+      //   "transaction",
+      //   transaction,
+      //   token.value,
+      //   transaction.creditAmount,
+      //   transaction.creditValue,
+      //   transaction.creditAmount * transaction.creditValue,
+      // );
     }
     return transaction.creditAmount * transaction.creditValue;
   }

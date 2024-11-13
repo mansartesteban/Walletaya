@@ -15,9 +15,9 @@
       :style="opened ? computedStyle : ''"
     >
       <div
-        @touchmove="onDrag"
-        @touchstart="onDragStart"
-        @touchend="onDragEnd"
+        @touchmove.passive="onDrag"
+        @touchstart.passive="onDragStart"
+        @touchend.passive="onDragEnd"
         ref="drawerTouch"
         class="p-4"
       ></div>
@@ -50,7 +50,6 @@ const onDragEnd = (e) => {
   originalBox.value = null;
 };
 const onDrag = (e) => {
-  e.preventDefault();
   lastTop.value = top.value;
   top.value = e.changedTouches[0].clientY;
 };

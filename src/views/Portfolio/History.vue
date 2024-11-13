@@ -4,7 +4,7 @@
     @click="showTransactionForm"
     fab
   >
-    <Icon size="lg">transaction-add</Icon>
+    <Icon size="md">transaction-add</Icon>
   </Btn>
   <div class="flex items-center gap-4 px-4 py-2">
     <span>Filtrer :</span>
@@ -126,16 +126,15 @@ const walletStore = useWalletStore();
 const drawerOpened = ref(false);
 const transactionForm = ref();
 
-function fillForm(transaction) {
+const fillForm = (transaction) => {
   transactionForm.value.fillForm(transaction);
   drawerOpened.value = true;
-}
+};
 
-function showTransactionForm() {
-  console.log("transactionForm", transactionForm);
+const showTransactionForm = () => {
   transactionForm.value.reset();
   drawerOpened.value = true;
-}
+};
 
 const tokenFilter = ref(null);
 

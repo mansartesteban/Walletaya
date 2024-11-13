@@ -2,11 +2,21 @@
   <InputText
     :modelValue="dateDisplay(date)"
     label="Date de transaction"
-    @click.stop="drawerOpened = true"
+    @click.stop="opened = true"
     readOnly
   >
   </InputText>
-  <Drawer v-model:opened="drawerOpened">
+  <Overlay
+    class="hidden md:block"
+    v-model:opened="opened"
+    no-activator
+  >
+    testseoino
+  </Overlay>
+  <Drawer
+    class="block md:hidden"
+    v-model:opened="opened"
+  >
     <div class="date-picker flex flex-col gap-4">
       Date
       <div class="flex gap-4">
@@ -68,7 +78,7 @@ const date = defineModel({
   default: new Date(),
 });
 
-const drawerOpened = ref(false);
+const opened = ref(false);
 
 const now = new Date();
 const modelMinute = ref(0);
@@ -85,7 +95,7 @@ const validate = () => {
     modelHour.value,
     modelMinute.value,
   );
-  drawerOpened.value = false;
+  opened.value = false;
 };
 
 const years = computed(() => {

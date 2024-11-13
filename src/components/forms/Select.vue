@@ -102,10 +102,10 @@ const select = ref();
 
 const model = defineModel();
 
-function selectOption(option) {
+const selectOption = (option) => {
   model.value = props.returnValue ? option[props.returnValue] : option;
   emit("changed", option);
-}
+};
 
 const clearValue = () => {
   model.value = null;

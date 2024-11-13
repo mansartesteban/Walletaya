@@ -1,7 +1,7 @@
 <template>
   <div
     ref="buttonElement"
-    class="relative select-none overflow-clip flex flex-1 items-center justify-center gap-4 [&:not(.rounded-full)]:rounded-2xl p-4 cursor-pointer text-center [&.fab]:fixed [&.fab]:right-4 [&.fab]:bottom-[calc(1rem+64px)] [&.fab]:drop-shadow-lg [&.fab]:rounded-full [&.fab]:w-16 [&.fab]:h-16 [&.fab]:flex [&.fab]:items-center [&.fab]:justify-center [&.fab]:bg-primary [&.icon-only]:flex-none [&.primary]:bg-primary [&.success]:bg-green-600 [&.warning]:bg-amber-600 [&.error]:bg-red-600 [&.info]:bg-sky-600 [&.flat]:bg-none"
+    class="relative select-none [&.xs]:h-2 [&.xs]:w-2 [&.sm]:h-4 [&.sm]:w-4 [&.md]:h-8 [&.md]:w-8 [&.lg]:h-12 [&.lg]:w-12 [&.xl]:h-16 [&.xl]:w-16 [&.2xl]:h-20 [&.2xl]:w-20 overflow-clip flex flex-1 items-center justify-center gap-4 [&:not(.rounded-full)]:rounded-2xl p-4 cursor-pointer text-center [&.fab]:fixed [&.fab]:right-4 [&.fab]:bottom-[calc(1rem+64px)] [&.fab]:drop-shadow-lg [&.fab]:rounded-full [&.fab]:w-16 [&.fab]:h-16 [&.fab]:flex [&.fab]:items-center [&.fab]:justify-center [&.fab]:bg-primary [&.icon-only]:flex-none [&.primary]:bg-primary [&.success]:bg-green-600 [&.warning]:bg-amber-600 [&.error]:bg-red-600 [&.info]:bg-sky-600 [&.flat]:bg-none"
     @click="onClick"
     :class="[
       severity,
@@ -9,6 +9,7 @@
         flat,
         disabled,
         elevated,
+        size,
         fab,
         icon,
         'rounded-full': rounded || fab,
@@ -16,7 +17,6 @@
         'icon-reverse': iconReverse,
         'icon-only': icon && !label && !$slots.default,
       },
-      size ? `h-${computedSize} w-${computedSize}` : '',
     ]"
   >
     <div
@@ -99,33 +99,24 @@ const ripple = ref({
   y: 0,
 });
 
-const sizes = {
-  xs: "2",
-  sm: "4",
-  md: "8",
-  lg: "12",
-  xl: "16",
-  "2xl": 20,
-};
-
-const computedSize = computed(() => {
-  return sizes[props.size];
-});
-
 const rippleElement = ref();
 const buttonElement = ref();
 
-function onClick(e) {
+const onClick = (e) => {
   ripple.value.state = false;
   setTimeout(() => {
-    ripple.value.state = true;
-    ripple.value.x = [e.clientX - buttonElement.value.offsetLeft, "px"].join(
-      "",
-    );
-    ripple.value.y = [e.clientY - buttonElement.value.offsetTop, "px"].join("");
+    if (buttonElement.value) {
+      ripple.value.state = true;
+      ripple.value.x = [e.clientX - buttonElement.value.offsetLeft, "px"].join(
+        "",
+      );
+      ripple.value.y = [e.clientY - buttonElement.value.offsetTop, "px"].join(
+        "",
+      );
+    }
   }, 0);
   emit("click", e);
-}
+};
 
 onMounted(() => {
   rippleElement.value.addEventListener(

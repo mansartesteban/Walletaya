@@ -115,9 +115,7 @@ const getAnchor = (anchor) => {
   return anchor;
 };
 const attachTabScroll = () => {
-  console.log("attache scroll");
   tabs.value.addEventListener("scroll", () => {
-    console.log("scroll??");
     let localActiveIndex = Math.round(
       tabs.value.scrollLeft / tabs.value.clientWidth,
     );

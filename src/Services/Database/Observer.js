@@ -25,7 +25,7 @@ class Observer {
   }
 
   unset(observer) {
-    this.observers = this.observers.filter(function (item) {
+    this.observers = this.observers.filter((item) => {
       if (item !== observer) {
         return item;
       }

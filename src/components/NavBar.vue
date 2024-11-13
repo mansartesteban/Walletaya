@@ -4,18 +4,29 @@
   >
     <template v-for="menu in menus">
       <router-link
-        class="group [&:not(.router-link-exact-active)]:text-white/50 [&:not(.router-link-exact-active)]:gap-1 h-100 flex flex-col flex-1 items-center justify-center text-xs"
+        class="group"
+        custom
         :to="menu.route"
+        v-slot="{ isActive, href, navigate }"
       >
-        <div class="">
-          <Icon
-            class="w-4 h-4 group-[.router-link-exact-active]:w-8 group-[.router-link-exact-active]:h-8"
-            >{{ menu.icon }}
-          </Icon>
-        </div>
-        <div class="navbar-button-label">
-          {{ menu.label }}
-        </div>
+        <a
+          v-bind="$attrs"
+          :href="href"
+          @click="navigate"
+          class="[&:not(.router-link-exact-active)]:gap-1 h-100 flex flex-col flex-1 items-center justify-center text-sm"
+          :class="{ 'text-white/50': !isActive }"
+        >
+          <div class="">
+            <Icon
+              class=""
+              :size="isActive ? 'md' : 'sm'"
+              >{{ menu.icon }}
+            </Icon>
+          </div>
+          <div class="navbar-button-label">
+            {{ menu.label }}
+          </div>
+        </a>
       </router-link>
     </template>
     <!-- <div ref="tooldockButton" class="navbar-button flex flex-col align-items-center justify-content-center gap-xs"
@@ -95,10 +106,10 @@ const toggleDock = (e) => {
   toolDockOpened.value = !toolDockOpened.value;
 };
 
-function toggleApp() {
+const toggleApp = () => {
   calculator.toggle();
   toolDockOpened.value = false;
-}
+};
 
 onClickOutside(tooldock, (e) => {
   if (toolDockOpened.value) {

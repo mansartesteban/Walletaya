@@ -15,7 +15,7 @@ const doubleTapTimer = 300;
  * @onTap Triggered when the screen is touched and the digit is released
  */
 
-export default function Touch(element) {
+export default (element) => {
   const isDragging = ref(false);
   const isTouching = ref(false);
 
@@ -201,7 +201,7 @@ export default function Touch(element) {
       tap: onTap,
     },
   };
-}
+};
 
 // // - TODO onSwipeUp + speed/acceleration + fingerCount
 // // - TODO onSwipeDown + speed/acceleration + fingerCount

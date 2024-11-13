@@ -23,7 +23,7 @@ export default defineStore("token", {
     },
     prices(state) {
       let prices = {};
-      console.log("state.marketValues", state.marketValues);
+      // console.log("state.marketValues", state.marketValues);
       Object.values(state.marketValues).forEach((tokenValue) => {
         prices[tokenValue.id] = tokenValue.quote.USD.price;
       });
@@ -35,7 +35,7 @@ export default defineStore("token", {
       return this.prices[token.id] || 0;
     },
     refreshTokens(fetchApi = false, tokens = []) {
-      console.log("fetch", fetchApi, tokens, cryptocurrencyQuotesLatest.data);
+      // console.log("fetch", fetchApi, tokens, cryptocurrencyQuotesLatest.data);
       if (fetchApi && tokens.length > 0) {
         // coinmarketcapApi
         //   .get("/v2/cryptocurrency/quotes/latest", {

@@ -143,38 +143,38 @@ const localModel = ref(0);
 
 const calculation = ref("");
 
-function save() {
+const save = () => {
   compute();
   model.value = localModel.value;
   calculation.value = localModel.value;
   compute();
-}
+};
 
-function copy() {
+const copy = () => {
   navigator.clipboard.writeText(model.value);
-}
+};
 
-function compute() {
+const compute = () => {
   localModel.value = eval(calculation.value);
-}
+};
 
-function concatCalculation(character = "") {
+const concatCalculation = (character = "") => {
   calculation.value += character;
   compute();
-}
+};
 
-function removeLastCalculation() {
+const removeLastCalculation = () => {
   calculation.value = calculation.value.substr(0, calculation.value.length - 1);
   if (calculation.value.length === 0) {
     calculation.value = "";
   }
   compute();
-}
+};
 
-function clear() {
+const clear = () => {
   calculation.value = "";
   compute();
-}
+};
 </script>
 
 <style scoped>

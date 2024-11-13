@@ -2,7 +2,7 @@
   <component
     :is="icon"
     :class="[size, color]"
-    class="[&.xs]:h-2 [&.xs]:w-2 [&.sm]:h-3 [&.sm]:w-3 [&.md]:h-4 [&.md]:w-4 [&.lg]:h-6 [&.lg]:w-6 [&.xl]:h-8 [&.xl]:w-8 [&.2xl]:h-10 [&.2xl]:w-10 [&.success]:text-green-500 [&.error]:text-red-500 [&.info]:text-sky-500 [&.warning]:text-amber-500"
+    class="[&.xs]:h-2 [&.xs]:w-2 [&.sm]:h-4 [&.sm]:w-4 [&.md]:h-6 [&.md]:w-6 [&.lg]:h-8 [&.lg]:w-8 [&.xl]:h-10 [&.xl]:w-10 [&.2xl]:h-12 [&.2xl]:w-12 [&.success]:text-green-500 [&.error]:text-red-500 [&.info]:text-sky-500 [&.warning]:text-amber-500"
   >
   </component>
 </template>
