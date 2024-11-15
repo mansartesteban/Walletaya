@@ -9,8 +9,6 @@
 </template>
 
 <script setup>
-import Toolbar from "@/components/Toolbar.vue";
-
 const props = defineProps({
   title: {
     type: String,

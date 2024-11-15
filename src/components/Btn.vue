@@ -1,7 +1,7 @@
 <template>
   <div
     ref="buttonElement"
-    class="relative select-none overflow-clip flex items-center justify-center gap-4 [&.full-width]:w-full [&:not(.rounded-full)]:rounded-2xl p-4 cursor-pointer text-center [&.fab]:fixed [&.fab]:right-4 [&.fab]:bottom-[calc(1rem+64px)] [&.fab]:drop-shadow-lg [&.fab]:rounded-full [&.fab]:w-16 [&.fab]:h-16 [&.fab]:flex [&.fab]:items-center [&.fab]:justify-center [&.fab]:bg-primary [&.icon-only]:flex-none [&.primary]:bg-primary [&.success]:bg-green-600 [&.warning]:bg-amber-600 [&.error]:bg-red-600 [&.info]:bg-sky-600 [&.flat]:bg-none [&.xs]:h-2 [&.xs]:w-2 [&.sm]:h-4 [&.sm]:w-4 [&.md]:h-8 [&.md]:w-8 [&.lg]:h-12 [&.lg]:w-12 [&.xl]:h-16 [&.xl]:w-16 [&.2xl]:h-20 [&.2xl]:w-20 [&.outlined]:outline [&.outlined]:outline-1 [&.outlined]:outline-primary"
+    class="relative select-none overflow-clip flex items-center justify-center gap-4 [&.full-width]:w-full [&:not(.rounded-full)]:rounded-2xl p-4 cursor-pointer text-center [&.fab]:fixed [&.fab]:right-4 [&.fab]:bottom-[calc(1rem+64px)] [&.fab]:drop-shadow-lg [&.fab]:rounded-full [&.fab]:w-16 [&.fab]:h-16 [&.fab]:flex [&.fab]:items-center [&.fab]:justify-center [&.fab]:bg-primary [&.icon-only]:flex-none [&.primary]:bg-primary [&.success]:bg-green-600 [&.warning]:bg-amber-600 [&.error]:bg-red-600 [&.info]:bg-sky-600 [&.flat]:bg-none [&.xs]:h-2 [&.xs]:w-2 [&.sm]:h-4 [&.sm]:w-4 [&.md]:h-8 [&.md]:w-8 [&.lg]:h-12 [&.lg]:w-12 [&.xl]:h-16 [&.xl]:w-16 [&.2xl]:h-20 [&.2xl]:w-20 [&.outlined]:outline [&.outlined]:outline-2 [&.outlined]:outline-primary"
     @click="onClick"
     :class="[
       severity,
@@ -11,7 +11,6 @@
         disabled: disabled,
         elevated: elevated,
         fab: fab,
-        // glass: fab,
         icon: icon,
         outlined: outlined,
         'full-width': fullWidth,
@@ -24,7 +23,7 @@
     <slot>
       <div
         v-if="label"
-        class="whitespace-nowrap text-ellipsis overflow-hidden pointer-events-none"
+        class="whitespace-nowrap text-ellipsis overflow-clip pointer-events-none"
       >
         {{ label }}
       </div>

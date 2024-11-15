@@ -6,14 +6,14 @@
     readOnly
   >
   </InputText>
+  <!-- class="hidden md:block" -->
   <Overlay
-    class="hidden md:block"
     v-model:opened="opened"
     no-activator
   >
-    <Calendar v-model="date"></Calendar>
+    <CalendarPicker v-model="date"></CalendarPicker>
   </Overlay>
-  <Drawer
+  <!-- <Drawer
     class="block md:hidden"
     v-model:opened="opened"
   >
@@ -48,7 +48,7 @@
       </template>
       <Btn @click="validate">Valider</Btn>
     </div>
-  </Drawer>
+  </Drawer> -->
 </template>
 
 <script setup>
@@ -79,7 +79,7 @@ const date = defineModel({
   default: new Date(),
 });
 
-const opened = ref(true);
+const opened = ref(false);
 
 const now = new Date();
 const modelMinute = ref(0);

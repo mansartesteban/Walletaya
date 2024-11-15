@@ -47,7 +47,7 @@
           ></InputNumber>
         </div>
         <div class="text-center flex items-center gap-1 text-red-600">
-          <div class="overflow-hidden text-ellipsis whitespace-nowrap">
+          <div class="overflow-clip text-ellipsis whitespace-nowrap">
             - {{ debitComputedAmount }}
           </div>
           <div>USTD</div>
@@ -100,7 +100,7 @@
           ></InputNumber>
         </div>
         <div class="text-center flex items-center gap-1 text-green-600">
-          <div class="overflow-hidden text-ellipsis whitespace-nowrap">
+          <div class="overflow-clip text-ellipsis whitespace-nowrap">
             + {{ creditComputedAmount }}
           </div>
           <div>USTD</div>

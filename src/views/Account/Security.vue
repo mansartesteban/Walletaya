@@ -99,12 +99,6 @@
 </template>
 
 <script setup>
-import Card from "@/components/Card.vue";
-import Message from "@/components/Message.vue";
-import Dialog from "@/components/Dialog.vue";
-import Btn from "@/components/Btn.vue";
-import InputText from "@/components/forms/InputText.vue";
-
 import useSettingsStore from "@/plugins/stores/Settings";
 import useAppStore from "@/plugins/stores/App";
 import useToastStore from "@/plugins/stores/Toast";

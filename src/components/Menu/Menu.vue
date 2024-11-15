@@ -46,11 +46,13 @@
         ></Btn>
       </div>
       <RecycleScroller
+        ref="scroller"
         :items="filteredOptions"
-        :item-size="48"
+        :item-size="itemSize"
         key-field="value"
         v-slot="{ item: option }"
         class="flex flex-col overflow-clip max-h-60"
+        style="scrollbar-gutter: stable"
       >
         <slot
           name="option"
@@ -68,14 +70,23 @@
               name="option-icon"
               v-bind="{ option: option }"
             >
-              <span class="mi">{{ option.icon }}</span>
+              <span
+                v-if="option.icon"
+                class="mi"
+                >{{ option.icon }}</span
+              >
             </slot>
 
             <slot
               name="option-label"
               v-bind="{ option: option }"
             >
-              {{ option.label }}
+              <div
+                v-if="option.label"
+                class="text-ellipsis overflow-clip whitespace-nowrap min-w-0"
+              >
+                {{ option.label }}
+              </div>
             </slot>
           </Btn>
         </slot>
@@ -132,10 +143,13 @@ const emit = defineEmits(["option-clicked", "cleared"]);
 const model = defineModel({
   get: (v) =>
     props.returnValue
-      ? props.options.find((option) => option[props.returnValue] === v)
+      ? props.options.find((option) =>
+          props.returnValue ? option[props.returnValue] === v : option === v,
+        )
       : v,
   set: (v) => (props.returnValue ? v[props.returnValue] : v),
 });
+const scroller = ref();
 const searchText = ref("");
 const opened = defineModel("opened", {
   type: Boolean,
@@ -143,6 +157,7 @@ const opened = defineModel("opened", {
 });
 const internalFullWidth = ref(false);
 const localPosition = ref({ x: 0, y: 0 });
+const itemSize = ref(48);
 
 const menu = ref(null);
 const menuPanel = ref(null);
@@ -217,6 +232,14 @@ const open = () => {
   opened.value = true;
   resize();
   nextTick(() => {
+    if (model.value) {
+      let foundOptionIndex = props.options.findIndex((option) =>
+        props.returnValue
+          ? option[props.returnValue] === model.value[props.returnValue]
+          : option === model.value,
+      );
+      scroller.value.scrollToItem(foundOptionIndex - 2);
+    }
     if (props.search) {
       searchInput.value.focus();
     }
@@ -232,6 +255,8 @@ const close = () => {
 const toggle = () => {
   opened.value ? close() : open();
 };
+
+onMounted(() => {});
 
 defineExpose({
   open,

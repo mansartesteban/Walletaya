@@ -15,7 +15,7 @@
         <template #activator="{ on, model }">
           <Btn
             flat
-            class="flex-1"
+            class="text-ellipsis whitespace-nowrap overflow-clip flex-1"
             v-bind="on"
             >{{ model?.label }}</Btn
           >
@@ -30,7 +30,7 @@
         <template #activator="{ on }">
           <Btn
             flat
-            class="flex-1"
+            class="text-ellipsis whitespace-nowrap overflow-clip flex-1"
             v-bind="on"
             >{{ modelView.getFullYear() }}</Btn
           ></template
@@ -75,7 +75,6 @@
 <script setup>
 const model = defineModel({ default: null });
 const modelView = ref(new Date());
-// const model = ref(new Date(2024, 10, 30));
 
 const weekDays = [
   {

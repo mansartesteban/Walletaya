@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-import Menu from "@/components/Menu.vue";
 import useContextMenu from "@/composables/useContextMenu";
 
 const contextMenu = useContextMenu();

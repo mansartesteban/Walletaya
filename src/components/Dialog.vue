@@ -40,9 +40,6 @@
 </template>
 
 <script setup>
-import Card from "@/components/Card.vue";
-import Btn from "@/components/Btn.vue";
-
 import { onClickOutside } from "@vueuse/core";
 
 const props = defineProps({

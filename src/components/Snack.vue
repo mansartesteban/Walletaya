@@ -11,8 +11,6 @@
 </template>
 
 <script setup>
-import Message from "@/components/Message.vue";
-
 import useToastStore from "@/plugins/stores/Toast";
 
 const toasts = useToastStore();

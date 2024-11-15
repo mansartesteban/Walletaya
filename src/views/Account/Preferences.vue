@@ -42,12 +42,6 @@
 </template>
 
 <script setup>
-import InputText from "@/components/forms/InputText.vue";
-import Btn from "@/components/Btn.vue";
-import Card from "@/components/Card.vue";
-import Toggle from "@/components/forms/ButtonGroup.vue";
-import Select from "@/components/forms/Select.vue";
-
 import useSettingsStore from "@/plugins/stores/Settings";
 import useToastStore from "@/plugins/stores/Toast";
 

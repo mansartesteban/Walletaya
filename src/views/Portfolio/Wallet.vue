@@ -7,7 +7,6 @@
 </template>
 
 <script setup>
-import WalletTokenLine from "./WalletTokenLine.vue";
 import useWalletStore from "@/plugins/stores/Wallet";
 import useTokenListStore from "@/plugins/stores/TokenList";
 

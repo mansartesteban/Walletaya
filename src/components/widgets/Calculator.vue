@@ -195,7 +195,7 @@ const clear = () => {
   text-align: right;
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow: clip;
 }
 
 .calculator-keypad {
