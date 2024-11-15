@@ -8,7 +8,7 @@
       :class="{ opened }"
       @click="opened = false"
     ></div>
-    <div
+    <Glass
       ref="drawerView"
       class="rounded-t-2xl max-h-full top-full shadow-lg transition-[top] [&.opened]:top-0 glass w-full"
       :class="{ opened }"
@@ -27,7 +27,7 @@
       >
         <slot></slot>
       </div>
-    </div>
+    </Glass>
   </div>
 </template>
 

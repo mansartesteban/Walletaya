@@ -128,6 +128,7 @@
         icon-reverse
         elevated
         severity="success"
+        full-width
       >
         {{ transactionId ? "Modifier" : "Ajouter" }}
       </Btn>

@@ -1,17 +1,20 @@
 <template>
   <!-- <Btn class="mb-md" @click="importCMC">Import</Btn> -->
-  <TokenPicker v-model="model"></TokenPicker>
+  <div class="flex flex-col gap-4 p-4">
+    <TokenPicker v-model="model"></TokenPicker>
+    <DatePicker v-model="modelDate"></DatePicker>
+  </div>
+  <br />
 </template>
 
 <script setup>
-import TokenPicker from "@/components/TokenPicker.vue";
-import Btn from "@/components/Btn.vue";
 import { v4 as uuid } from "uuid";
 import { getToken } from "@/utils/Token";
 import database from "@/plugins/database";
 import useToastStore from "@/plugins/stores/Toast";
 
 const model = ref();
+const modelDate = ref(new Date(2024, 5, 6));
 
 const toast = useToastStore();
 

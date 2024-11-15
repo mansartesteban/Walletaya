@@ -1,17 +1,16 @@
 <template>
   <div
     ref="menu"
-    class="group"
-    :class="{ 'w-full': fullWidth, opened }"
+    :class="[{ 'w-full': fullWidth || internalFullWidth, opened }]"
   >
     <template v-if="!noActivator">
       <slot
         name="activator"
-        v-bind="{ on: activatorEvents }"
+        v-bind="{ on: activatorEvents, model }"
       >
         <Btn
           class="menu-activator"
-          icon="chevron-down"
+          icon="keyboard_arrow_down"
           @click="activatorEvents.onClick"
         >
           <slot
@@ -43,6 +42,7 @@
           v-if="clearable"
           @click="clearValue"
           icon="close"
+          size="lg"
         ></Btn>
       </div>
       <RecycleScroller
@@ -56,10 +56,13 @@
           name="option"
           v-bind="{ on: optionEvents, option: option }"
         >
-          <div
+          <Btn
             @click="optionEvents.onClick(option)"
+            :flat="option.value !== model?.value"
             class="flex items-center gap-4 p-4 user-select-none h-12 [&.selected]:bg-primary [&.selected]:border-t [&.selected]:border-b border-white/20 mt-[-1px] drop-shadow-md"
-            :class="{ selected: model && option.value === model.value }"
+            :class="{
+              selected: model && option.value === model.value,
+            }"
           >
             <slot
               name="option-icon"
@@ -74,7 +77,7 @@
             >
               {{ option.label }}
             </slot>
-          </div>
+          </Btn>
         </slot>
       </RecycleScroller>
     </Overlay>
@@ -138,7 +141,7 @@ const opened = defineModel("opened", {
   type: Boolean,
   default: false,
 });
-const fullWidth = ref(false);
+const internalFullWidth = ref(false);
 const localPosition = ref({ x: 0, y: 0 });
 
 const menu = ref(null);
@@ -205,7 +208,7 @@ const resize = () => {
 
 const searchInput = ref();
 const focus = (e) => {
-  fullWidth.value = true;
+  internalFullWidth.value = true;
 };
 
 const unfocus = (e) => {};
@@ -221,9 +224,9 @@ const open = () => {
 };
 
 const close = () => {
-  searchText.value = "";
   opened.value = false;
-  fullWidth.value = false;
+  searchText.value = "";
+  internalFullWidth.value = false;
 };
 
 const toggle = () => {

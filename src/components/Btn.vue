@@ -1,38 +1,42 @@
 <template>
   <div
     ref="buttonElement"
-    class="relative select-none [&.xs]:h-2 [&.xs]:w-2 [&.sm]:h-4 [&.sm]:w-4 [&.md]:h-8 [&.md]:w-8 [&.lg]:h-12 [&.lg]:w-12 [&.xl]:h-16 [&.xl]:w-16 [&.2xl]:h-20 [&.2xl]:w-20 overflow-clip flex flex-1 items-center justify-center gap-4 [&:not(.rounded-full)]:rounded-2xl p-4 cursor-pointer text-center [&.fab]:fixed [&.fab]:right-4 [&.fab]:bottom-[calc(1rem+64px)] [&.fab]:drop-shadow-lg [&.fab]:rounded-full [&.fab]:w-16 [&.fab]:h-16 [&.fab]:flex [&.fab]:items-center [&.fab]:justify-center [&.fab]:bg-primary [&.icon-only]:flex-none [&.primary]:bg-primary [&.success]:bg-green-600 [&.warning]:bg-amber-600 [&.error]:bg-red-600 [&.info]:bg-sky-600 [&.flat]:bg-none"
+    class="relative select-none overflow-clip flex items-center justify-center gap-4 [&.full-width]:w-full [&:not(.rounded-full)]:rounded-2xl p-4 cursor-pointer text-center [&.fab]:fixed [&.fab]:right-4 [&.fab]:bottom-[calc(1rem+64px)] [&.fab]:drop-shadow-lg [&.fab]:rounded-full [&.fab]:w-16 [&.fab]:h-16 [&.fab]:flex [&.fab]:items-center [&.fab]:justify-center [&.fab]:bg-primary [&.icon-only]:flex-none [&.primary]:bg-primary [&.success]:bg-green-600 [&.warning]:bg-amber-600 [&.error]:bg-red-600 [&.info]:bg-sky-600 [&.flat]:bg-none [&.xs]:h-2 [&.xs]:w-2 [&.sm]:h-4 [&.sm]:w-4 [&.md]:h-8 [&.md]:w-8 [&.lg]:h-12 [&.lg]:w-12 [&.xl]:h-16 [&.xl]:w-16 [&.2xl]:h-20 [&.2xl]:w-20 [&.outlined]:outline [&.outlined]:outline-1 [&.outlined]:outline-primary"
     @click="onClick"
     :class="[
       severity,
+      size,
       {
-        flat,
-        disabled,
-        elevated,
-        size,
-        fab,
-        icon,
+        flat: flat,
+        disabled: disabled,
+        elevated: elevated,
+        fab: fab,
+        // glass: fab,
+        icon: icon,
+        outlined: outlined,
+        'full-width': fullWidth,
         'rounded-full': rounded || fab,
-        glass: fab,
         'icon-reverse': iconReverse,
         'icon-only': icon && !label && !$slots.default,
       },
     ]"
   >
-    <div
-      v-if="label || $slots.default"
-      class="whitespace-nowrap text-ellipsis overflow-hidden"
-    >
-      <slot>{{ label }}</slot>
-    </div>
+    <slot>
+      <div
+        v-if="label"
+        class="whitespace-nowrap text-ellipsis overflow-hidden pointer-events-none"
+      >
+        {{ label }}
+      </div>
+    </slot>
     <span
       v-if="icon"
-      class="mi"
+      class="mi pointer-events-none"
       >{{ icon }}</span
     >
     <div
       ref="rippleElement"
-      class="ripple hidden absolute bg-white/25 rounded-full w-4 h-4 [&.active]:block -translate-x-1/2 -translate-y-1/2"
+      class="ripple absolute bg-white/25 rounded-full w-4 h-4 [&:not(.active)]:hidden -translate-x-1/2 -translate-y-1/2 pointer-events-none"
       :class="{ active: ripple.state }"
     ></div>
   </div>
@@ -71,14 +75,22 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  outlined: {
+    type: Boolean,
+    default: false,
+  },
   rounded: {
     type: Boolean,
     default: false,
   },
+  fullWidth: {
+    type: Boolean,
+    deefault: false,
+  },
   size: {
     type: String,
-    default: null,
-    validator: (v) => ["xs", "sm", "md", "lg", "xl", "2xl"].includes(v),
+    default: "",
+    validator: (v) => ["", "xs", "sm", "md", "lg", "xl", "2xl"].includes(v),
   },
   severity: {
     type: String,
@@ -105,12 +117,8 @@ const onClick = (e) => {
   setTimeout(() => {
     if (buttonElement.value) {
       ripple.value.state = true;
-      ripple.value.x = [e.clientX - buttonElement.value.offsetLeft, "px"].join(
-        "",
-      );
-      ripple.value.y = [e.clientY - buttonElement.value.offsetTop, "px"].join(
-        "",
-      );
+      ripple.value.x = [e.offsetX, "px"].join("");
+      ripple.value.y = [e.offsetY, "px"].join("");
     }
   }, 0);
   emit("click", e);

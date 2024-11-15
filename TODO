@@ -7,10 +7,18 @@ Avoir une interface générale avec connexion qui permette de monitorer les appl
 Avoir un script qui génère un boilerplate pour servir les fichiers
 Avoir une gestion automatisée du renouvellement de certificat
 
+Divers
+
+- Avoir la possibilité de partager son portfolio
+  - Accès avec lien
+  - Durrée de vie du lien
+  - Autorisation d'accès avec mail
+
 App:
 OK - Au clic sur le sélecteur de token, faire un focus dans le champ
 OK - TokenPicker avec clearable
 OK - Vérifier le ripple sur les boutons
+
 - Au clic sur le sélecteur de token quand afficher le token de la value courante en premier
 - Ajouter la traduction
 - Avoir un calendrier

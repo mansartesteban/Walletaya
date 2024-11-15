@@ -11,7 +11,7 @@
     v-model:opened="opened"
     no-activator
   >
-    <Calendar></Calendar>
+    <Calendar v-model="date"></Calendar>
   </Overlay>
   <Drawer
     class="block md:hidden"
@@ -73,12 +73,13 @@ const date = defineModel({
       modelMonth.value = v.getMonth() + 1;
       modelYear.value = v.getFullYear();
     }
+
     return v;
   },
   default: new Date(),
 });
 
-const opened = ref(false);
+const opened = ref(true);
 
 const now = new Date();
 const modelMinute = ref(0);
@@ -157,7 +158,7 @@ const months = [
 ];
 
 const days = computed(() =>
-  [...new Array(new Date(2024, modelMonth.value, 0).getDate())].map(
+  [...new Array(new Date(modelYear.value, modelMonth.value, 0).getDate())].map(
     (v, k) => k + 1,
   ),
 );

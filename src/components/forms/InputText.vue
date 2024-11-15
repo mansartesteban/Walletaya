@@ -11,7 +11,7 @@
     <label
       v-if="label"
       :for="id"
-      class="absolute group-[.group-input:not(.filled):not(.focused)]:-translate-y-1/2 group-[.group-input:not(.filled):not(.focused)]:text-white/65 group-[.group-input:not(.filled):not(.focused)]:top-1/2 group-[.group-input:not(.filled):not(.focused)]:text-base group-[.group-input.filled]:left-4 group-[.group-input.filled]:top-2 group-[.group-input.filled]:text-xs group-[.group-input.focused]:left-4 group-[.group-input.focused]:top-2 group-[.group-input.focused]:text-xs"
+      class="absolute w-full pr-8 text-ellipsis whitespace-nowrap overflow-clip group-[.group-input:not(.filled):not(.focused)]:-translate-y-1/2 group-[.group-input:not(.filled):not(.focused)]:text-white/65 group-[.group-input:not(.filled):not(.focused)]:top-1/2 group-[.group-input:not(.filled):not(.focused)]:text-base group-[.group-input.filled]:left-4 group-[.group-input.filled]:top-2 group-[.group-input.filled]:text-xs group-[.group-input.focused]:left-4 group-[.group-input.focused]:top-2 group-[.group-input.focused]:text-xs"
       >{{ label }}</label
     >
     <div class="flex flex-1 items-center gap-4">
