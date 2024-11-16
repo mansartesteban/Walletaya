@@ -8,22 +8,34 @@
         name="activator"
         v-bind="{ on: activatorEvents, model }"
       >
-        <Btn
-          class="menu-activator"
-          icon="keyboard_arrow_down"
-          @click="activatorEvents.onClick"
+        <MenuOption
+          :option="model"
+          v-bind="activatorEvents"
         >
-          <slot
-            name="activator-label"
-            v-bind="{ option: model }"
-          ></slot>
-        </Btn>
+          <template
+            v-if="model.icon"
+            #option-icon="slotProps"
+          >
+            <slot
+              name="option-icon"
+              v-bind="slotProps"
+            ></slot>
+          </template>
+          <template
+            v-if="model.label"
+            #option-label="slotProps"
+          >
+            <slot
+              name="option-label"
+              v-bind="slotProps"
+            ></slot>
+          </template>
+        </MenuOption>
       </slot>
     </template>
 
     <Overlay
       v-model:opened="opened"
-      ref="menuPanel"
       class="w-60"
     >
       <div
@@ -35,7 +47,6 @@
           ref="searchInput"
           v-model="searchText"
           @focus="focus"
-          @blur="unfocus"
           label="Rechercher un token"
         />
         <Btn
@@ -52,43 +63,29 @@
         key-field="value"
         v-slot="{ item: option }"
         class="flex flex-col overflow-clip max-h-60"
-        style="scrollbar-gutter: stable"
       >
         <slot
           name="option"
           v-bind="{ on: optionEvents, option: option }"
         >
-          <Btn
-            @click="optionEvents.onClick(option)"
-            :flat="option.value !== model?.value"
-            class="flex items-center gap-4 p-4 user-select-none h-12 [&.selected]:bg-primary [&.selected]:border-t [&.selected]:border-b border-white/20 mt-[-1px] drop-shadow-md"
-            :class="{
-              selected: model && option.value === model.value,
-            }"
+          <MenuOption
+            :option="option"
+            v-bind="optionEvents"
+            :model="model"
           >
-            <slot
-              name="option-icon"
-              v-bind="{ option: option }"
-            >
-              <span
-                v-if="option.icon"
-                class="mi"
-                >{{ option.icon }}</span
-              >
-            </slot>
-
-            <slot
-              name="option-label"
-              v-bind="{ option: option }"
-            >
-              <div
-                v-if="option.label"
-                class="text-ellipsis overflow-clip whitespace-nowrap min-w-0"
-              >
-                {{ option.label }}
-              </div>
-            </slot>
-          </Btn>
+            <template #option-icon="slotProps">
+              <slot
+                name="option-icon"
+                v-bind="slotProps"
+              ></slot>
+            </template>
+            <template #option-label="slotProps">
+              <slot
+                name="option-label"
+                v-bind="slotProps"
+              ></slot>
+            </template>
+          </MenuOption>
         </slot>
       </RecycleScroller>
     </Overlay>
@@ -141,12 +138,7 @@ const props = defineProps({
 const emit = defineEmits(["option-clicked", "cleared"]);
 
 const model = defineModel({
-  get: (v) =>
-    props.returnValue
-      ? props.options.find((option) =>
-          props.returnValue ? option[props.returnValue] === v : option === v,
-        )
-      : v,
+  get: (v) => v,
   set: (v) => (props.returnValue ? v[props.returnValue] : v),
 });
 const scroller = ref();
@@ -156,11 +148,9 @@ const opened = defineModel("opened", {
   default: false,
 });
 const internalFullWidth = ref(false);
-const localPosition = ref({ x: 0, y: 0 });
 const itemSize = ref(48);
 
 const menu = ref(null);
-const menuPanel = ref(null);
 
 const filteredOptions = computed(() => {
   let filteredOptions = searchFunction(searchText.value, props.options);
@@ -170,9 +160,6 @@ const filteredOptions = computed(() => {
 });
 
 const onActivatorClick = (e) => {
-  let box = menuPanel.value.$el.getBoundingClientRect();
-  localPosition.value.x = box.left;
-  localPosition.value.y = box.top;
   toggle();
 };
 
@@ -202,35 +189,14 @@ const clearValue = () => {
   emit("cleared");
 };
 
-const resize = () => {
-  nextTick(() => {
-    let box = menuPanel.value.$el.getBoundingClientRect();
-
-    if (box.x + box.width > window.innerWidth) {
-      menuPanel.value.$el.style.right = "16px";
-    }
-    if (box.y + box.height > window.innerHeight) {
-      menuPanel.value.$el.style.bottom = "16px";
-    }
-    if (box.x < 16) {
-      menuPanel.value.$el.style.left = "16px";
-    }
-    if (box.y < 16) {
-      menuPanel.value.$el.style.top = "16px";
-    }
-  });
-};
-
 const searchInput = ref();
 const focus = (e) => {
   internalFullWidth.value = true;
 };
 
-const unfocus = (e) => {};
-
 const open = () => {
   opened.value = true;
-  resize();
+
   nextTick(() => {
     if (model.value) {
       let foundOptionIndex = props.options.findIndex((option) =>

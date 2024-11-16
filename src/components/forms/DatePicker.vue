@@ -6,14 +6,17 @@
     readOnly
   >
   </InputText>
-  <!-- class="hidden md:block" -->
   <Overlay
+    class="hidden md:block"
     v-model:opened="opened"
     no-activator
   >
-    <CalendarPicker v-model="date"></CalendarPicker>
+    <CalendarPicker
+      v-model="date"
+      @validate="opened = false"
+    ></CalendarPicker>
   </Overlay>
-  <!-- <Drawer
+  <Drawer
     class="block md:hidden"
     v-model:opened="opened"
   >
@@ -48,7 +51,7 @@
       </template>
       <Btn @click="validate">Valider</Btn>
     </div>
-  </Drawer> -->
+  </Drawer>
 </template>
 
 <script setup>

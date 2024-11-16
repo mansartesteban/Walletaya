@@ -1,55 +1,73 @@
 <template>
   <Btn
-    @click="optionEvents.onClick(option)"
-    :flat="option.value !== model?.value"
+    @click="onOptionClicked"
+    :flat="!selected"
     class="flex items-center gap-4 p-4 user-select-none h-12 [&.selected]:bg-primary [&.selected]:border-t [&.selected]:border-b border-white/20 mt-[-1px] drop-shadow-md"
-    :class="{
-      selected: model && option.value === model.value,
-    }"
+    :class="{ selected }"
   >
     <slot
       name="option-icon"
-      v-bind="{ option: option }"
+      v-bind="{ option: option, selected }"
     >
       <span
-        v-if="option.icon"
+        v-if="computedOption.icon"
         class="mi"
-        >{{ option.icon }}</span
+        >{{ computedOption.icon }}</span
       >
     </slot>
 
     <slot
       name="option-label"
-      v-bind="{ option: option }"
+      v-bind="{ option: option, selected }"
     >
       <div
-        v-if="option.label"
-        class="text-ellipsis overflow-clip whitespace-nowrap min-w-0"
+        v-if="computedOption.label"
+        class="text-ellipsis overflow-clip whitespace-nowrap w-0 flex-1"
       >
-        {{ option.label }}
+        {{ computedOption.label }}
       </div>
     </slot>
   </Btn>
 </template>
 
 <script setup>
+import { useOption } from "./useOption";
+
 const props = defineProps({
   option: {
-    type: Object,
-    validator: (option) => option.value && option.label,
+    type: [Object, Number, Array, Boolean, String],
+    validator: (option) => {
+      option = useOption(option);
+      return (
+        ![undefined, null].includes(option.value) &&
+        ![undefined, null].includes(option.label)
+      );
+    },
+  },
+  model: {
+    type: [Object, Number, Array, Boolean, String],
+    validator: (option) => {
+      option = useOption(option);
+      return (
+        ![undefined, null].includes(option.value) &&
+        ![undefined, null].includes(option.label)
+      );
+    },
   },
 });
 
-const emit = defineEmits(["option-clicked"]);
+const emit = defineEmits(["click"]);
 
-const selectValue = (option) => {
-  if (option.callback) {
-    option.callback(option);
+const computedOption = computed(() => useOption(props.option));
+const computedModel = computed(() => useOption(props.model));
+const selected = computed(
+  () => computedOption.value.value === computedModel.value.value,
+);
+
+const onOptionClicked = () => {
+  if (computedOption.value.callback) {
+    computedOption.value.callback(computedOption.value);
   }
-  emit("click", option);
+  emit("click", props.option);
 };
-
-const optionEvents = ref({
-  onClick: selectValue,
-});
 </script>

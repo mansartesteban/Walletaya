@@ -44,8 +44,7 @@
       <template #option="{ on, option }">
         <slot
           name="option"
-          v-bind="{ option }"
-          v-on="on"
+          v-bind="{ on, option }"
         ></slot>
       </template>
       <template #option-icon="{ option }">

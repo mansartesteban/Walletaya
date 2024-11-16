@@ -20,8 +20,14 @@
     <template #option-label="{ option }">
       <div class="flex flex-1 items-center justify-between">
         <div class="flex flex-1 flex-col gap-1">
-          <div class="text-ellipsis leading-4">{{ option.label }}</div>
-          <span class="sublabel leading-4 text-white/50">{{
+          <div class="flex">
+            <div
+              class="text-ellipsis leading-4 overflow-clip whitespace-nowrap text-left block w-0 flex-1"
+            >
+              {{ option.label }}
+            </div>
+          </div>
+          <span class="sublabel leading-4 text-white/50 text-left">{{
             option.symbol
           }}</span>
         </div>

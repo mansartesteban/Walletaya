@@ -23,7 +23,7 @@
     <slot>
       <div
         v-if="label"
-        class="whitespace-nowrap text-ellipsis overflow-clip pointer-events-none"
+        class="whitespace-nowrap text-ellipsis overflow-clip pointer-events-none w-0 flex-1"
       >
         {{ label }}
       </div>
