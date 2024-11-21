@@ -1,6 +1,6 @@
 <template>
   <div
-    class="group/drawer fixed z-40 top-0 left-0 right-0 bottom-0 flex items-end pointer-events-none [&.opened]:pointer-events-auto"
+    class="group/drawer fixed z-40 top-0 left-0 right-0 bottom-0 flex flex-col justify-end pointer-events-none [&.opened]:pointer-events-auto"
     :class="{ opened }"
   >
     <div
@@ -20,7 +20,14 @@
         @touchend.passive="onDragEnd"
         ref="drawerTouch"
         class="p-4"
-      ></div>
+      >
+        <Btn
+          flat
+          class="absolute top-0 right-4 w-8"
+          @click="close"
+          ><span class="mi">close</span></Btn
+        >
+      </div>
 
       <div
         class="p-4 h-[calc(100%-2rem-.25rem)] overflow-y-auto before:content-[''] before:absolute before:h-1 before:w-8 before:rounded-full before:bg-white/25 before:left-1/2 before:-translate-x-1/2 before:top-[calc(3rem/2-4px)]"
@@ -32,6 +39,8 @@
 </template>
 
 <script setup>
+import { watch } from "vue";
+
 const opened = defineModel("opened");
 
 const drawerView = ref(null);
@@ -66,6 +75,19 @@ const close = () => {
 const computedStyle = computed(() => ({
   top: `${Math.max(top.value - (originalBox.value?.top || 0), 0)}px`,
 }));
+
+const escapeListener = (e) => {
+  console.log("e", e);
+  e.key.toLowerCase() === "escape" && close();
+};
+
+watch(opened, () => {
+  if (opened.value) {
+    window.addEventListener("keyup", escapeListener);
+  } else {
+    window.removeEventListener("keyup", escapeListener);
+  }
+});
 
 defineExpose({
   close,

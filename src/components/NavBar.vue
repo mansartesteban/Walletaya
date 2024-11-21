@@ -1,7 +1,21 @@
 <template>
   <div
-    class="fixed flex items-stretch justify-content-space-evenly bottom-0 h-16 w-full bg-primary"
+    class="fixed flex items-stretch justify-content-space-evenly bottom-0 h-16 w-full"
   >
+    <div
+      :class="{ 'has-fab': hasFab }"
+      class="group absolute top-0 left-0 right-0 bottom-0 -z-10 flex items-end overflow-clip"
+    >
+      <div
+        class="group-[.has-fab]:rounded-tr-xl bg-primary-nogradient flex-1 h-full"
+      ></div>
+      <div
+        class="group-[:not(.has-fab)]:hidden relative bg-primary-nogradient w-16 h-6 before:content-[''] before:absolute before:rounded-bl-full before:shadow-[0_2rem_0_var(--primary-color)] before:-top-16 before:left-0 before:transparent before:w-8 before:h-16 after:content-[''] after:absolute after:rounded-br-full after:-top-16 after:right-0 after:transparent after:w-8 after:h-16 after:shadow-[0_2rem_0_var(--primary-color)]"
+      ></div>
+      <div
+        class="group-[.has-fab]:rounded-tl-xl bg-primary-nogradient flex-1 h-full"
+      ></div>
+    </div>
     <template v-for="menu in menus">
       <router-link
         class="group"
@@ -77,7 +91,7 @@ const menus = ref([
   {
     label: "Mon compte",
     route: { name: "Account" },
-    icon: "query_stats",
+    icon: "person",
   },
   {
     label: "Sandbox",
@@ -134,6 +148,12 @@ watch(
     );
   },
 );
+
+const hasFab = ref(false);
+
+watch(route, () => {
+  hasFab.value = !!document.querySelector(".fab");
+});
 
 onMounted(() => {
   let elements = [...document.querySelectorAll(".tool-dock-app")].reverse();

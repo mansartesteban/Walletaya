@@ -25,7 +25,7 @@ export const search = (searchText = "", items = []) => {
       );
 };
 
-export const formatNumber = (n, format = "space-coma", decimalCount = 4) => {
+export const formatNumber = (n, format = "space-coma", decimalCount = 8) => {
   let [integer, floating] = n.toString().split(".");
 
   integer = integer

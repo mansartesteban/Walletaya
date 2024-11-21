@@ -11,20 +11,22 @@
     <label
       v-if="label"
       :for="id"
-      class="absolute w-full pr-8 text-ellipsis whitespace-nowrap overflow-clip group-[.group-input:not(.filled):not(.focused)]:-translate-y-1/2 group-[.group-input:not(.filled):not(.focused)]:text-white/65 group-[.group-input:not(.filled):not(.focused)]:top-1/2 group-[.group-input:not(.filled):not(.focused)]:text-base group-[.group-input.filled]:left-4 group-[.group-input.filled]:top-2 group-[.group-input.filled]:text-xs group-[.group-input.focused]:left-4 group-[.group-input.focused]:top-2 group-[.group-input.focused]:text-xs"
+      class="absolute w-full pr-8 text-ellipsis whitespace-nowrap overflow-clip group-[.group-input:not(.filled):not(.focused)]:-translate-y-1/2 group-[.group-input:not(.filled):not(.focused)]:text-white/65 group-[.group-input:not(.filled):not(.focused)]:top-1/2 group-[.group-input:not(.filled):not(.focused)]:text-base group-[.group-input.filled]:left-4 group-[.group-input.filled]:top-2 group-[.group-input.filled]:text-xs group-[.group-input.focused]:left-4 group-[.group-input.focused]:top-2 group-[.group-input.focused]:text-xs transition-all"
       >{{ label }}</label
     >
     <div class="flex flex-1 items-center gap-4">
       <input
+        v-model="model"
         ref="input"
         type="text"
-        :id="id"
         class="bg-transparent outline-none w-full placeholder:text-white/40 group-[.group-input:not(.no-label)]:mt-4 [&:disabled]:pointer-events-none"
-        v-model="model"
-        @focus="onFocus"
-        @blur="onBlur"
+        :id="id"
         :placeholder="computedPlaceholder"
         :disabled="readOnly"
+        :type="type"
+        @focus="onFocus"
+        @blur="onBlur"
+        @input="onInput"
       />
       <div
         v-if="append"
@@ -44,6 +46,10 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
+  type: {
+    type: String,
+    default: "text",
+  },
   id: {
     type: [String, Number],
     default: () => uuid(),
@@ -62,7 +68,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["focus", "blur"]);
+const emit = defineEmits(["focus", "blur", "input"]);
 const model = defineModel();
 
 const isFocused = ref(false);
@@ -72,13 +78,61 @@ const computedPlaceholder = computed(() =>
   isFocused.value && !model.value ? props.placeholder : "",
 );
 
+const computedMessages = computed(() => useInputMessage(props.messages));
+
+const useInputMessage = (messages) => {
+  if (typeof messages === "string") {
+    return [
+      {
+        severity: "error",
+        text: messages,
+      },
+    ];
+  }
+
+  if (typeof messages === "object" && !Array.isArray(messages)) {
+    if (!messages.severity) {
+      messages.severity = "error";
+    }
+    if (!messages.text) {
+      messages.text = "Une erreur est survenue";
+    }
+    return [messages];
+  }
+
+  if (Array.isArray(messages)) {
+    messages = messages.map((message) => {
+      if (!message.severity) {
+        message.severity = "error";
+      }
+      if (!message.text) {
+        message.text = "Une erreur est survenue";
+      }
+      return message;
+    });
+    return messages;
+  }
+
+  return [
+    {
+      severity: "error",
+      message: "Une erreur est survenue",
+    },
+  ];
+};
+
 const onFocus = (e) => {
   isFocused.value = true;
   emit("focus", e);
 };
+
 const onBlur = (e) => {
   isFocused.value = false;
   emit("blur", e);
+};
+
+const onInput = (e) => {
+  emit("input", e);
 };
 
 const focus = (e) => {

@@ -3,12 +3,6 @@
     ref="detailSection"
     class="wallet-token-detail flex flex-col gap-2 px-4 pb-4"
   >
-    <!-- <div> -->
-    <!-- agg :
-      <br>
-      <br>
-      <pre>{{ aggregate }}</pre> -->
-    <!-- </div> -->
     <div class="flex items-baseline gap-2">
       <span class="text-white/50">Valeur lissée</span>
       <span class="text-xs">

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --primary-color: #054f61;
+  --primary-color: #0a5256;
   --success-color: #009b5f;
   --error-color: #c0243e;
   --warning-color: #c88842;
@@ -43,11 +43,21 @@ body {
     background: var(--primary-gradient);
   }
 
+  .bg-primary-nogradient {
+    background: var(--primary-color);
+  }
+
   .outline-primary {
     outline-color: var(--primary-color);
   }
   .border-primary {
     border-color: var(--primary-color);
+  }
+  .text-primary {
+    background: var(--primary-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .bg-glass {

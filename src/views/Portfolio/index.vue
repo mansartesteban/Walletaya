@@ -1,21 +1,25 @@
 <template>
   <Tabs>
-    <!-- <Menu :options="[{ label: 'Portfolio 1', value: 1 }]" full-width class="m-4">
-      <template #activator-label="{ option }">{{ option?.label }}</template>
-</Menu> -->
-    <Tab
-      title="Historique"
-      anchor="history2"
-      noGutters
+    <!-- <Menu
+      :options="[{ label: 'Portfolio 1', value: 1 }]"
+      full-width
+      class="m-4"
     >
-      <PortfolioHistory></PortfolioHistory>
-    </Tab>
+      <template #activator-label="{ option }">{{ option?.label }}</template>
+    </Menu> -->
     <Tab
       title="Portefeuille"
       anchor="wallet"
       noGutters
     >
       <PortfolioWallet></PortfolioWallet>
+    </Tab>
+    <Tab
+      title="Historique"
+      anchor="history2"
+      noGutters
+    >
+      <PortfolioHistory></PortfolioHistory>
     </Tab>
   </Tabs>
 </template>

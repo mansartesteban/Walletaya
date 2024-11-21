@@ -28,3 +28,13 @@ OK - Vérifier le ripple sur les boutons
 - Retirer tous les scrollbar
 - Personnaliser les couleurs
 - Position des menus overlay par rapport à la fenêtre
+- Avoir plusieurs portefeuille
+  - Pouvoir ajouter des transactions par portfeuille
+  - Pouvoir créer des vues
+    - Pouvoir ajouter les tokens qu'on veut sur une vue
+    - Pouvoir filtrer par portefeuille
+- Sur historique, quand on est fitlrer sur un token et qu'on ajoute une transaction, présélectionner ce token sur le débit
+- Select/Menu si on lance la recherche, rescroller tout en haut
+- date/time picker en mobile : pb de scroll horizontal
+- Réfléchir comment masquer "proprement" les scrollbar
+- Limiter à 5 chiffres les valeurs de token dans les forms

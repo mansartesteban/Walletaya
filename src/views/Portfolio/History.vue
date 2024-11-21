@@ -23,7 +23,7 @@
           <CIcon :token="transaction.creditToken"></CIcon>
           <div class="flex flex-col gap-1">
             <div>{{ transaction.creditToken.symbol }}</div>
-            <div class="sublabel nowrap">
+            <div class="nowrap">
               {{ amount(transaction.creditValue, false, 4) }}
             </div>
           </div>
@@ -32,7 +32,7 @@
           <div class="text-green-600 nowrap">
             + {{ amount(transaction.creditAmount, true) }}
           </div>
-          <div class="sublabel nowrap">
+          <div class="nowrap">
             {{ amount(transaction.creditValue * transaction.creditAmount) }}
           </div>
         </div>
@@ -46,7 +46,7 @@
           <CIcon :token="transaction.debitToken"></CIcon>
           <div class="flex flex-col gap-2">
             <div>{{ transaction.debitToken.symbol }}</div>
-            <div class="sublabel nowrap">
+            <div class="nowrap">
               {{ amount(transaction.debitValue, false, 4) }}
             </div>
           </div>
@@ -55,7 +55,7 @@
           <div class="text-red-600 nowrap">
             - {{ amount(transaction.debitAmount, true) }}
           </div>
-          <div class="sublabel nowrap">
+          <div class="nowrap">
             {{ amount(transaction.debitValue * transaction.debitAmount) }}
           </div>
         </div>
@@ -70,7 +70,7 @@
             <CIcon :token="transaction.creditToken"></CIcon>
             <div class="flex flex-col gap-1">
               <div>{{ transaction.creditToken.label }}</div>
-              <div class="sublabel">
+              <div class="">
                 {{ amount(transaction.creditValue, false, 4) }}
               </div>
             </div>
@@ -79,7 +79,7 @@
             <div class="text-green-600 nowrap">
               + {{ amount(transaction.creditAmount, true) }}
             </div>
-            <div class="sublabel nowrap">
+            <div class="nowrap">
               {{ amount(transaction.creditValue * transaction.creditAmount) }}
             </div>
           </div>
@@ -89,7 +89,7 @@
             <CIcon :token="transaction.debitToken"></CIcon>
             <div class="flex flex-col gap-1">
               <div>{{ transaction.debitToken.label }}</div>
-              <div class="sublabel">
+              <div class="">
                 {{ amount(transaction.debitValue, false, 4) }}
               </div>
             </div>
@@ -98,7 +98,7 @@
             <div class="text-red-600 nowrap">
               - {{ amount(transaction.debitAmount, true) }}
             </div>
-            <div class="sublabel nowrap">
+            <div class="nowrap">
               {{ amount(transaction.debitValue * transaction.debitAmount) }}
             </div>
           </div>

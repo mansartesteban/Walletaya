@@ -37,22 +37,22 @@ export default defineStore("token", {
     refreshTokens(fetchApi = false, tokens = []) {
       // console.log("fetch", fetchApi, tokens, cryptocurrencyQuotesLatest.data);
       if (fetchApi && tokens.length > 0) {
-        // coinmarketcapApi
-        //   .get("/v2/cryptocurrency/quotes/latest", {
-        //     headers: {
-        //       "X-CMC_PRO_API_KEY": "524d4c13-97d5-41ea-bc66-5c861259bd92",
-        //     },
-        //     params: {
-        //       slug: tokens.join(","),
-        //     },
-        //   })
-        //   .then((response) => {
-        //     console.log("rpon", response)
-        //     this.marketValues = {
-        //       ...this.marketValues,
-        //       ...response.data.data,
-        //     }
-        //   })
+        coinmarketcapApi
+          .get("/v2/cryptocurrency/quotes/latest", {
+            headers: {
+              "X-CMC_PRO_API_KEY": "524d4c13-97d5-41ea-bc66-5c861259bd92",
+            },
+            params: {
+              slug: tokens.join(","),
+            },
+          })
+          .then((response) => {
+            console.log("rpon", response);
+            this.marketValues = {
+              ...this.marketValues,
+              ...response.data.data,
+            };
+          });
       } else {
         this.marketValues = cryptocurrencyQuotesLatest.data;
       }

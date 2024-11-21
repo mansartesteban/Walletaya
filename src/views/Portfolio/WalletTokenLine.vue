@@ -8,14 +8,14 @@
         <CIcon :token="aggregate.token"></CIcon>
         <div class="flex flex-col gap-1">
           <div>{{ aggregate.token.label }}</div>
-          <div class="sublabel">
+          <div class="text-white/50">
             {{ tokenPrice(aggregate) }}
           </div>
         </div>
       </div>
       <div class="flex flex-col items-end gap-1">
         {{ amount(aggregate) }}
-        <div class="sublabel">
+        <div class="">
           {{ assets(aggregate) }}
         </div>
       </div>

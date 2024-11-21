@@ -4,7 +4,25 @@ const routes = [
   {
     path: "/",
     name: "root",
+    redirect: { name: "Login" },
+    children: [
+      {
+        path: "register",
+        name: "Register",
+        component: () => import("@/views/Authentication/Register.vue"),
+      },
+      {
+        path: "login",
+        name: "Login",
+        component: () => import("@/views/Authentication/Login.vue"),
+      },
+    ],
+  },
+  {
+    path: "/app",
+    name: "authenticatedRoot",
     redirect: { name: "Home" },
+    component: () => import("@/views/AppAuthenticated.vue"),
     children: [
       {
         path: "home",
@@ -45,6 +63,23 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = false;
+  if (["Register", "Login"].includes(to.name)) {
+    if (isAuthenticated) {
+      next({ name: "Home" });
+    } else {
+      next();
+    }
+  } else {
+    if (!isAuthenticated) {
+      next({ name: "Login" });
+    } else {
+      next();
+    }
+  }
 });
 
 export default (app) => {

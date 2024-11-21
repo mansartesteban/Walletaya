@@ -1,8 +1,7 @@
 <template>
-  <div
+  <button
     ref="buttonElement"
-    class="relative select-none overflow-clip flex items-center justify-center gap-4 [&.full-width]:w-full [&:not(.rounded-full)]:rounded-2xl p-4 cursor-pointer text-center [&.fab]:fixed [&.fab]:right-4 [&.fab]:bottom-[calc(1rem+64px)] [&.fab]:drop-shadow-lg [&.fab]:rounded-full [&.fab]:w-16 [&.fab]:h-16 [&.fab]:flex [&.fab]:items-center [&.fab]:justify-center [&.fab]:bg-primary [&.icon-only]:flex-none [&.primary]:bg-primary [&.success]:bg-green-600 [&.warning]:bg-amber-600 [&.error]:bg-red-600 [&.info]:bg-sky-600 [&.flat]:bg-none [&.xs]:h-2 [&.xs]:w-2 [&.sm]:h-4 [&.sm]:w-4 [&.md]:h-8 [&.md]:w-8 [&.lg]:h-12 [&.lg]:w-12 [&.xl]:h-16 [&.xl]:w-16 [&.2xl]:h-20 [&.2xl]:w-20 [&.outlined]:outline [&.outlined]:outline-2 [&.outlined]:outline-primary"
-    @click="onClick"
+    class="[&:not(.absolute):not(.fixed):not(.fab)]:relative select-none overflow-clip flex items-center justify-center gap-4 [&.full-width]:w-full [&:not(.rounded-full)]:rounded-2xl p-4 cursor-pointer text-center [&.fab]:fixed [&.fab]:right-1/2 [&.fab]:translate-x-1/2 [&.fab]:bottom-[calc(1rem+13px)] [&.fab]:drop-shadow-lg [&.fab]:rounded-full [&.fab]:w-14 [&.fab]:h-14 [&.fab]:flex [&.fab]:items-center [&.fab]:justify-center [&.fab]:bg-white [&.fab]:z-[100] [&.icon-only]:flex-none [&.primary]:bg-primary [&.success]:bg-green-600 [&.warning]:bg-amber-600 [&.error]:bg-red-600 [&.info]:bg-sky-600 [&.flat]:bg-none [&.xs]:h-2 [&.xs]:w-2 [&.sm]:h-4 [&.sm]:w-4 [&.md]:h-8 [&.md]:w-8 [&.lg]:h-12 [&.lg]:w-12 [&.xl]:h-16 [&.xl]:w-16 [&.2xl]:h-20 [&.2xl]:w-20 [&.outlined]:outline [&.outlined]:outline-2 [&.outlined]:outline-primary"
     :class="[
       severity,
       size,
@@ -19,6 +18,8 @@
         'icon-only': icon && !label && !$slots.default,
       },
     ]"
+    :type="submit ? 'submit' : 'button'"
+    @click="onClick"
   >
     <slot>
       <div
@@ -38,7 +39,7 @@
       class="ripple absolute bg-white/25 rounded-full w-4 h-4 [&:not(.active)]:hidden -translate-x-1/2 -translate-y-1/2 pointer-events-none"
       :class="{ active: ripple.state }"
     ></div>
-  </div>
+  </button>
 </template>
 
 <script setup>
@@ -95,8 +96,12 @@ const props = defineProps({
     type: String,
     default: "primary",
     validator: (v) => {
-      return [("primary", "success", "warning", "error", "info")];
+      return ["primary", "success", "warning", "error", "info"].includes(v);
     },
+  },
+  submit: {
+    type: Boolean,
+    default: false,
   },
 });
 
