@@ -3,6 +3,11 @@
     @submit.prevent="onSubmit"
     class="flex flex-col flex-1 gap-4"
   >
+    <Message
+      v-if="mainError"
+      severity="error"
+      >{{ mainError }}</Message
+    >
     <Input
       v-for="field in fields"
       v-model="model[field.name]"
@@ -12,7 +17,17 @@
       :messages="errors[field.name]"
       @input="clearError(field.name)"
     ></Input>
-    <Btn submit>{{ submitLabel }}</Btn>
+    <div class="flex gap-4">
+      <Btn
+        class="flex-1"
+        submit
+        >{{ submitLabel }}</Btn
+      >
+      <Btn
+        v-if="secondaryAction"
+        v-bind="secondaryAction"
+      ></Btn>
+    </div>
   </form>
 </template>
 
@@ -46,27 +61,23 @@ const props = defineProps({
     type: String,
     default: "Envoyer",
   },
+  secondaryAction: {
+    type: Object,
+    default: null,
+  },
 });
 
 const model = reactive({});
 const errors = reactive({});
+const mainError = ref(null);
 
 const onSubmit = (e) => {
-  console.log("e", e, props.action);
-  props
-    .action(model)
-    .then((response) => {
-      console.log("response", response);
-      if (response.errors) {
-        response.errors.forEach(
-          (error) => (errors[error.field] = error.message),
-        );
-      }
-    })
-    .catch((response) => {
-      console.log("response (err)", response);
+  props.action(model).then((response) => {
+    if (response.errors) {
       response.errors.forEach((error) => (errors[error.field] = error.message));
-    });
+    }
+    mainError.value = response.message;
+  });
 };
 
 const clearError = (fieldName) => {

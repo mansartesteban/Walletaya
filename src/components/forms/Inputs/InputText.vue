@@ -18,7 +18,6 @@
       <input
         v-model="model"
         ref="input"
-        type="text"
         class="bg-transparent outline-none w-full placeholder:text-white/40 group-[.group-input:not(.no-label)]:mt-4 [&:disabled]:pointer-events-none"
         :id="id"
         :placeholder="computedPlaceholder"
@@ -77,49 +76,6 @@ const input = ref();
 const computedPlaceholder = computed(() =>
   isFocused.value && !model.value ? props.placeholder : "",
 );
-
-const computedMessages = computed(() => useInputMessage(props.messages));
-
-const useInputMessage = (messages) => {
-  if (typeof messages === "string") {
-    return [
-      {
-        severity: "error",
-        text: messages,
-      },
-    ];
-  }
-
-  if (typeof messages === "object" && !Array.isArray(messages)) {
-    if (!messages.severity) {
-      messages.severity = "error";
-    }
-    if (!messages.text) {
-      messages.text = "Une erreur est survenue";
-    }
-    return [messages];
-  }
-
-  if (Array.isArray(messages)) {
-    messages = messages.map((message) => {
-      if (!message.severity) {
-        message.severity = "error";
-      }
-      if (!message.text) {
-        message.text = "Une erreur est survenue";
-      }
-      return message;
-    });
-    return messages;
-  }
-
-  return [
-    {
-      severity: "error",
-      message: "Une erreur est survenue",
-    },
-  ];
-};
 
 const onFocus = (e) => {
   isFocused.value = true;

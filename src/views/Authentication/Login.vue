@@ -7,8 +7,10 @@
       <Glass class="rounded-2xl p-8">
         <h2 class="flex-1 text-center pb-4">Connexion</h2>
         <Form
+          class="w-80"
           :fields="fields"
           :action="Auth.login"
+          :secondaryAction="secondaryAction"
         ></Form>
       </Glass>
     </div>
@@ -38,4 +40,9 @@ const fields = reactive([
     // value: "Azerty123456",
   },
 ]);
+
+const secondaryAction = reactive(
+  null,
+  // { icon: "fingerprint" },
+);
 </script>
